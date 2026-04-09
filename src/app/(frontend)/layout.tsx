@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
+import type { SiteSetting } from '@/payload-types'
 
-import { cn } from '@/utilities/ui'
 import { Plus_Jakarta_Sans, Inter, DM_Mono } from 'next/font/google'
 import React from 'react'
 
@@ -11,6 +11,7 @@ import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
+import { getCachedGlobal } from '@/utilities/getGlobals'
 
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
@@ -43,8 +44,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html className={`${jakarta.variable} ${inter.variable} ${dmMono.variable}`} lang="en" suppressHydrationWarning>
       <head>
         <InitTheme />
-        <link href="/favicon.ico" rel="icon" sizes="32x32" />
-        <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
       <body>
         <Providers>
@@ -63,11 +62,40 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   )
 }
 
-export const metadata: Metadata = {
-  metadataBase: new URL(getServerSideURL()),
-  openGraph: mergeOpenGraph(),
-  twitter: {
-    card: 'summary_large_image',
-    creator: '@payloadcms',
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getCachedGlobal('site-settings', 1)() as SiteSetting
+
+  const siteName = settings.siteName || 'Revnator'
+  const defaultTitle = settings.defaultMetaTitle || 'Revnator — B2B Sales OS'
+  const defaultDescription =
+    settings.defaultMetaDescription ||
+    'Revnator is the all-in-one B2B Sales OS that unifies your contacts, accounts, email, pipeline, and revenue operations.'
+
+  const faviconUrl =
+    settings.favicon && typeof settings.favicon === 'object' ? settings.favicon.url : null
+
+  const ogImage =
+    settings.defaultOgImage && typeof settings.defaultOgImage === 'object'
+      ? settings.defaultOgImage.url
+      : null
+
+  return {
+    metadataBase: new URL(getServerSideURL()),
+    title: {
+      default: defaultTitle,
+      template: `%s | ${siteName}`,
+    },
+    description: defaultDescription,
+    icons: faviconUrl ? { icon: [{ url: faviconUrl }] } : undefined,
+    openGraph: mergeOpenGraph({
+      siteName,
+      title: defaultTitle,
+      description: defaultDescription,
+      images: ogImage ? [{ url: ogImage }] : undefined,
+    }),
+    twitter: {
+      card: 'summary_large_image',
+      creator: '@revnator',
+    },
+  }
 }

@@ -20,7 +20,7 @@ const collections: CollectionSlug[] = [
   'search',
 ]
 
-const globals: GlobalSlug[] = ['header', 'footer']
+const globals: GlobalSlug[] = ['header', 'footer', 'site-settings']
 
 const categories = ['Technology', 'News', 'Finance', 'Design', 'Software', 'Engineering']
 
@@ -48,9 +48,7 @@ export const seed = async ({
     globals.map((global) =>
       payload.updateGlobal({
         slug: global,
-        data: {
-          navItems: [],
-        },
+        data: {} as Record<string, unknown>,
         depth: 0,
         context: {
           disableRevalidate: true,
@@ -221,54 +219,38 @@ export const seed = async ({
     payload.updateGlobal({
       slug: 'header',
       data: {
-        navItems: [
-          {
-            link: {
-              type: 'custom',
-              label: 'Posts',
-              url: '/posts',
-            },
-          },
-          {
-            link: {
-              type: 'reference',
-              label: 'Contact',
-              reference: {
-                relationTo: 'pages',
-                value: contactPage.id,
-              },
-            },
-          },
+        mainNav: [
+          { label: 'Platform', hasDropdown: true, dropdownType: 'platform' },
+          { label: 'Sales OS', hasDropdown: true, dropdownType: 'salesOS' },
+          { label: 'Resources', hasDropdown: true, dropdownType: 'resources' },
+          { label: 'Pricing', hasDropdown: false, directLink: '/pricing' },
+          { label: 'Company', hasDropdown: true, dropdownType: 'company' },
+          { label: 'Docs', hasDropdown: false, directLink: '/docs' },
         ],
       },
     }),
     payload.updateGlobal({
       slug: 'footer',
       data: {
-        navItems: [
+        columns: [
           {
-            link: {
-              type: 'custom',
-              label: 'Admin',
-              url: '/admin',
-            },
+            title: 'Platform',
+            links: [
+              { label: 'Platform overview', href: '/platform' },
+              { label: 'Contacts', href: '/platform/contacts' },
+            ],
           },
           {
-            link: {
-              type: 'custom',
-              label: 'Source Code',
-              newTab: true,
-              url: 'https://github.com/payloadcms/payload/tree/main/templates/website',
-            },
+            title: 'Company',
+            links: [
+              { label: 'About', href: '/about' },
+              { label: 'Contact', href: '/contact' },
+            ],
           },
-          {
-            link: {
-              type: 'custom',
-              label: 'Payload',
-              newTab: true,
-              url: 'https://payloadcms.com/',
-            },
-          },
+        ],
+        bottomLinks: [
+          { label: 'Privacy', href: '/legal/privacy-policy' },
+          { label: 'Terms', href: '/legal/terms-of-service' },
         ],
       },
     }),

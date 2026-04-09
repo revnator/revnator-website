@@ -4,17 +4,27 @@ import React from 'react'
 
 import type { Header as HeaderType } from '@/payload-types'
 
-import { CMSLink } from '@/components/Link'
 import Link from 'next/link'
 import { SearchIcon } from 'lucide-react'
 
 export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
-  const navItems = data?.navItems || []
+  const mainNav = data?.mainNav || []
 
   return (
     <nav className="flex gap-3 items-center">
-      {navItems.map(({ link }, i) => {
-        return <CMSLink key={i} {...link} appearance="link" />
+      {mainNav.map((item) => {
+        if (!item.hasDropdown && item.directLink) {
+          return (
+            <Link key={item.id ?? item.label} href={item.directLink} className="text-sm">
+              {item.label}
+            </Link>
+          )
+        }
+        return (
+          <span key={item.id ?? item.label} className="text-sm">
+            {item.label}
+          </span>
+        )
       })}
       <Link href="/search">
         <span className="sr-only">Search</span>

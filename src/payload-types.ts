@@ -112,10 +112,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    'site-settings': SiteSetting;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
   widgets: {
@@ -1637,26 +1639,138 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Header {
   id: number;
-  navItems?:
+  /**
+   * Use the logo from Site Settings, or override here.
+   */
+  useLogoFromSiteSettings?: boolean | null;
+  logoOverride?: (number | null) | Media;
+  /**
+   * Wordmark text shown next to or instead of the logo.
+   */
+  logoText?: string | null;
+  showLogoText?: boolean | null;
+  mainNav?:
     | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: number | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-        };
+        label: string;
+        hasDropdown?: boolean | null;
+        /**
+         * URL this nav item links to. Used only when there's no dropdown.
+         */
+        directLink?: string | null;
+        /**
+         * Pick a pre-built dropdown layout. 'Custom' gives you a flexible single-column dropdown.
+         */
+        dropdownType?: ('platform' | 'salesOS' | 'resources' | 'company' | 'custom') | null;
         id?: string | null;
       }[]
     | null;
+  /**
+   * Section label shown above the module grid.
+   */
+  platformLabel?: string | null;
+  platformModules?:
+    | {
+        name: string;
+        /**
+         * Short description (~50 chars)
+         */
+        description: string;
+        /**
+         * Lucide icon name. See the full icon list at lucide.dev
+         */
+        icon:
+          | 'Users'
+          | 'Building2'
+          | 'Mail'
+          | 'GitBranch'
+          | 'LayoutDashboard'
+          | 'Calendar'
+          | 'MessageCircle'
+          | 'Sparkles'
+          | 'FileText'
+          | 'Database'
+          | 'Filter'
+          | 'Layers'
+          | 'BarChart3'
+          | 'Zap'
+          | 'Target'
+          | 'Briefcase';
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  platformPromoCard?: {
+    badge?: string | null;
+    title?: string | null;
+    linkText?: string | null;
+    href?: string | null;
+  };
+  useCasesLabel?: string | null;
+  useCasesItems?:
+    | {
+        name: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  industriesLabel?: string | null;
+  industriesItems?:
+    | {
+        name: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  featuredCaseStudy: {
+    typeLabel?: string | null;
+    title: string;
+    href: string;
+    icon?: ('Trophy' | 'Award' | 'Star' | 'TrendingUp') | null;
+  };
+  footerLink?: {
+    text?: string | null;
+    href?: string | null;
+  };
+  learnLabel?: string | null;
+  learnItems?:
+    | {
+        name: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  downloadLabel?: string | null;
+  downloadItems?:
+    | {
+        name: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  featuredResource: {
+    typeLabel?: string | null;
+    title: string;
+    linkText?: string | null;
+    href: string;
+    thumbnailIcon?: ('BookOpen' | 'FileText' | 'Video' | 'BarChart3' | 'Trophy' | 'FileCode') | null;
+  };
+  viewAllLink?: {
+    text?: string | null;
+    href?: string | null;
+  };
+  companyItems?:
+    | {
+        name: string;
+        description: string;
+        icon?: ('Info' | 'Mail' | 'Newspaper' | 'Shield' | 'Briefcase' | 'Building2' | 'Users') | null;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  loginText?: string | null;
+  loginHref?: string | null;
+  primaryCtaText?: string | null;
+  primaryCtaHref?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1666,23 +1780,41 @@ export interface Header {
  */
 export interface Footer {
   id: number;
-  navItems?:
+  /**
+   * Use the logo from Site Settings, or override here.
+   */
+  useLogoFromSiteSettings?: boolean | null;
+  logoOverride?: (number | null) | Media;
+  /**
+   * Show the brand text next to the logo. Disable if your logo already includes the wordmark.
+   */
+  showLogoText?: boolean | null;
+  description?: string | null;
+  copyrightText?: string | null;
+  columns?:
     | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: number | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-        };
+        title: string;
+        links?:
+          | {
+              label: string;
+              href: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  socialLinks?:
+    | {
+        platform: 'linkedin' | 'twitter' | 'github' | 'youtube' | 'facebook' | 'instagram';
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  bottomLinks?:
+    | {
+        label: string;
+        href: string;
         id?: string | null;
       }[]
     | null;
@@ -1691,23 +1823,167 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: number;
+  siteName?: string | null;
+  tagline?: string | null;
+  logo?: (number | null) | Media;
+  /**
+   * Logo variant for dark backgrounds
+   */
+  logoDark?: (number | null) | Media;
+  favicon?: (number | null) | Media;
+  /**
+   * Fallback meta title when pages don't specify one (max 60 chars)
+   */
+  defaultMetaTitle?: string | null;
+  /**
+   * Fallback meta description (max 160 chars)
+   */
+  defaultMetaDescription?: string | null;
+  /**
+   * Default Open Graph image (1200×630) used when pages don't specify one
+   */
+  defaultOgImage?: (number | null) | Media;
+  /**
+   * Appended to page titles, e.g. "Pricing | Revnator"
+   */
+  titleSuffix?: string | null;
+  socialLinks?: {
+    linkedin?: string | null;
+    /**
+     * Full URL, e.g. https://x.com/revnator
+     */
+    twitter?: string | null;
+    youtube?: string | null;
+    github?: string | null;
+  };
+  /**
+   * Domain configured in Plausible (e.g. revnator.com)
+   */
+  plausibleDomain?: string | null;
+  /**
+   * Plausible script source URL (leave blank for default cloud)
+   */
+  plausibleSrc?: string | null;
+  contactEmail?: string | null;
+  supportEmail?: string | null;
+  address?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
-  navItems?:
+  useLogoFromSiteSettings?: T;
+  logoOverride?: T;
+  logoText?: T;
+  showLogoText?: T;
+  mainNav?:
     | T
     | {
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-            };
+        label?: T;
+        hasDropdown?: T;
+        directLink?: T;
+        dropdownType?: T;
         id?: T;
       };
+  platformLabel?: T;
+  platformModules?:
+    | T
+    | {
+        name?: T;
+        description?: T;
+        icon?: T;
+        href?: T;
+        id?: T;
+      };
+  platformPromoCard?:
+    | T
+    | {
+        badge?: T;
+        title?: T;
+        linkText?: T;
+        href?: T;
+      };
+  useCasesLabel?: T;
+  useCasesItems?:
+    | T
+    | {
+        name?: T;
+        href?: T;
+        id?: T;
+      };
+  industriesLabel?: T;
+  industriesItems?:
+    | T
+    | {
+        name?: T;
+        href?: T;
+        id?: T;
+      };
+  featuredCaseStudy?:
+    | T
+    | {
+        typeLabel?: T;
+        title?: T;
+        href?: T;
+        icon?: T;
+      };
+  footerLink?:
+    | T
+    | {
+        text?: T;
+        href?: T;
+      };
+  learnLabel?: T;
+  learnItems?:
+    | T
+    | {
+        name?: T;
+        href?: T;
+        id?: T;
+      };
+  downloadLabel?: T;
+  downloadItems?:
+    | T
+    | {
+        name?: T;
+        href?: T;
+        id?: T;
+      };
+  featuredResource?:
+    | T
+    | {
+        typeLabel?: T;
+        title?: T;
+        linkText?: T;
+        href?: T;
+        thumbnailIcon?: T;
+      };
+  viewAllLink?:
+    | T
+    | {
+        text?: T;
+        href?: T;
+      };
+  companyItems?:
+    | T
+    | {
+        name?: T;
+        description?: T;
+        icon?: T;
+        href?: T;
+        id?: T;
+      };
+  loginText?: T;
+  loginHref?: T;
+  primaryCtaText?: T;
+  primaryCtaHref?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -1717,20 +1993,69 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
-  navItems?:
+  useLogoFromSiteSettings?: T;
+  logoOverride?: T;
+  showLogoText?: T;
+  description?: T;
+  copyrightText?: T;
+  columns?:
     | T
     | {
-        link?:
+        title?: T;
+        links?:
           | T
           | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
               label?: T;
+              href?: T;
+              id?: T;
             };
         id?: T;
       };
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        href?: T;
+        id?: T;
+      };
+  bottomLinks?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  siteName?: T;
+  tagline?: T;
+  logo?: T;
+  logoDark?: T;
+  favicon?: T;
+  defaultMetaTitle?: T;
+  defaultMetaDescription?: T;
+  defaultOgImage?: T;
+  titleSuffix?: T;
+  socialLinks?:
+    | T
+    | {
+        linkedin?: T;
+        twitter?: T;
+        youtube?: T;
+        github?: T;
+      };
+  plausibleDomain?: T;
+  plausibleSrc?: T;
+  contactEmail?: T;
+  supportEmail?: T;
+  address?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
