@@ -2,45 +2,43 @@
 const config = {
   theme: {
     extend: {
-      colors: {
-        rev: {
-          primary: 'var(--rev-primary)',
-          'primary-dark': 'var(--rev-primary-dark)',
-          accent: 'var(--rev-accent)',
-          light: 'var(--rev-light)',
-          dark: 'var(--rev-dark)',
-          background: 'var(--rev-background)',
-          white: 'var(--rev-white)',
-          muted: 'var(--rev-muted)',
-          'body-text': 'var(--rev-body-text)',
-          error: 'var(--rev-error)',
-          warning: 'var(--rev-warning)',
-        },
-      },
+      /* Colors defined in globals.css @theme inline block (Tailwind v4 native) */
       fontFamily: {
-        heading: ['var(--font-heading)', 'Plus Jakarta Sans', 'sans-serif'],
-        body: ['var(--font-body)', 'Inter', 'sans-serif'],
-        code: ['var(--font-code)', 'DM Mono', 'monospace'],
+        heading: ['var(--font-jakarta)', 'system-ui', 'sans-serif'],
+        body: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-dm-mono)', 'monospace'],
+      },
+      fontSize: {
+        'hero': ['52px', { lineHeight: '1.12', letterSpacing: '-0.02em' }],
+        'h1': ['40px', { lineHeight: '48px', letterSpacing: '-0.02em' }],
+        'h2': ['32px', { lineHeight: '40px', letterSpacing: '-0.01em' }],
+        'h3': ['24px', { lineHeight: '32px' }],
+        'h4': ['20px', { lineHeight: '28px' }],
+      },
+      maxWidth: {
+        'container': '1280px',
+        'prose-narrow': '720px',
+        'prose-wide': '860px',
       },
       typography: {
         DEFAULT: {
           css: [
             {
-              '--tw-prose-body': 'var(--rev-body-text)',
-              '--tw-prose-headings': 'var(--rev-dark)',
+              '--tw-prose-body': '#2D2640',
+              '--tw-prose-headings': '#130F1E',
               h1: {
                 fontWeight: 'normal',
                 marginBottom: '0.25em',
-                fontFamily: 'var(--font-heading)',
+                fontFamily: 'var(--font-jakarta), system-ui, sans-serif',
               },
               h2: {
-                fontFamily: 'var(--font-heading)',
+                fontFamily: 'var(--font-jakarta), system-ui, sans-serif',
               },
               h3: {
-                fontFamily: 'var(--font-heading)',
+                fontFamily: 'var(--font-jakarta), system-ui, sans-serif',
               },
               h4: {
-                fontFamily: 'var(--font-heading)',
+                fontFamily: 'var(--font-jakarta), system-ui, sans-serif',
               },
             },
           ],

@@ -1,0 +1,48 @@
+import React from 'react'
+import Link from 'next/link'
+
+export function PlatformHero(): React.ReactElement {
+  return (
+    <section className="relative overflow-hidden bg-dark py-20">
+      {/* Background glow */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(circle at center, rgba(110,51,177,0.12) 0%, transparent 55%)',
+        }}
+      />
+
+      <div className="relative z-10 mx-auto max-w-container px-6 text-center md:px-12">
+        {/* Badge */}
+        <span className="inline-block rounded-2xl bg-accent/[0.12] px-3.5 py-1.5 font-heading text-xs font-semibold uppercase tracking-[0.15em] text-accent">
+          Platform
+        </span>
+
+        <h1 className="mx-auto mt-6 max-w-[740px] font-heading text-[44px] font-bold leading-[1.12] tracking-[-0.02em] text-white">
+          One platform. Nine modules. Zero&nbsp;compromises.
+        </h1>
+
+        <p className="mx-auto mt-5 max-w-[580px] font-body text-lg text-white/55">
+          Every tool your revenue team needs — CRM, outreach, pipeline, calendar, docs,
+          chat, forms, and AI — unified in a single workspace.
+        </p>
+
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <Link
+            href="/signup"
+            className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3.5 font-body text-sm font-semibold text-white transition-all hover:bg-primary-dark hover:scale-[1.02] focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-dark"
+          >
+            Start free trial
+          </Link>
+          <Link
+            href="/pricing"
+            className="inline-flex items-center justify-center rounded-lg border-[1.5px] border-white/25 bg-transparent px-6 py-3.5 font-body text-sm font-semibold text-white transition-colors hover:border-white/50 focus:ring-2 focus:ring-white/40 focus:ring-offset-2 focus:ring-offset-dark"
+          >
+            See pricing
+          </Link>
+        </div>
+      </div>
+    </section>
+  )
+}

@@ -43,11 +43,8 @@
   --breakpoint-lg: 64rem;
   --breakpoint-xl: 80rem;
   --breakpoint-2xl: 86rem;
-  --font-heading: var(--font-heading);
-  --font-body: var(--font-body);
-  --font-code: var(--font-code);
-  --font-sans: var(--font-body);
-  --font-mono: var(--font-code);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-dm-mono);
 }
 
 @layer utilities {
@@ -90,20 +87,7 @@
 }
 
 :root {
-  /* Revnator Brand Colors */
-  --rev-primary: #6E33B1;
-  --rev-primary-dark: #5A2A94;
-  --rev-accent: #34D399;
-  --rev-light: #E4DBFF;
-  --rev-dark: #130F1E;
-  --rev-background: #F5F3FA;
-  --rev-white: #FFFFFF;
-  --rev-muted: #9b8fad;
-  --rev-body-text: #2D2640;
-  --rev-error: #e05555;
-  --rev-warning: #F59E0B;
-
-  /* Semantic Mappings */
+  /* Semantic Mappings (Payload template compatibility) */
   --background: #F5F3FA;
   --foreground: #2D2640;
   --card: #FFFFFF;
@@ -181,33 +165,29 @@
 }
 
 @theme inline {
-  /* Revnator Brand Colors */
-  --color-rev-primary: var(--rev-primary);
-  --color-rev-primary-dark: var(--rev-primary-dark);
-  --color-rev-accent: var(--rev-accent);
-  --color-rev-light: var(--rev-light);
-  --color-rev-dark: var(--rev-dark);
-  --color-rev-background: var(--rev-background);
-  --color-rev-white: var(--rev-white);
-  --color-rev-muted: var(--rev-muted);
-  --color-rev-body-text: var(--rev-body-text);
-  --color-rev-error: var(--rev-error);
-  --color-rev-warning: var(--rev-warning);
+  /* Revnator Brand Tokens — these are the canonical color definitions */
+  --color-primary: #6E33B1;
+  --color-primary-dark: #5A2A94;
+  --color-accent: #34D399;
+  --color-light: #E4DBFF;
+  --color-dark: #130F1E;
+  --color-bg: #F5F3FA;
+  --color-muted: #9b8fad;
+  --color-body: #2D2640;
+  --color-error: #e05555;
+  --color-warning: #F59E0B;
 
-  /* Semantic Colors */
+  /* Semantic Colors (Payload template compatibility) */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
@@ -232,25 +212,29 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-success: var(--success);
-  --color-warning: var(--warning);
-  --color-error: var(--error);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground min-h-[100vh] flex flex-col;
-    font-family: var(--font-body);
+    font-family: var(--font-inter), system-ui, sans-serif;
+    color: var(--color-body);
+    background-color: var(--color-bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading);
+    font-family: var(--font-jakarta), system-ui, sans-serif;
+    color: var(--color-dark);
   }
 
   code, pre {
-    font-family: var(--font-code);
+    font-family: var(--font-dm-mono), monospace;
   }
 }
 

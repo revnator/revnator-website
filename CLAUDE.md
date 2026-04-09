@@ -96,6 +96,32 @@ It is separate from the main Revnator app (which lives at `E:\7. Revnator\sales-
 - Use Tailwind's default palette (red-500, blue-500, etc.) — only custom tokens
 - Apply colors via inline styles (use Tailwind classes or CSS variables)
 
+### 3.1.1 Tailwind v4 Token Convention (CRITICAL)
+
+All color tokens are defined ONLY in `src/app/(frontend)/globals.css` inside the `@theme inline` block as hardcoded hex values:
+
+```css
+@theme inline {
+  --color-primary: #6E33B1;
+  --color-primary-dark: #5A2A94;
+  --color-accent: #34D399;
+  --color-light: #E4DBFF;
+  --color-dark: #130F1E;
+  --color-bg: #F5F3FA;
+  --color-muted: #9b8fad;
+  --color-body: #2D2640;
+  --color-error: #e05555;
+  --color-warning: #F59E0B;
+}
+```
+
+**DO NOT:**
+- Define colors in `tailwind.config.mjs` (Tailwind v4 reads from CSS, not the config file)
+- Use `var()` indirection like `--color-primary: var(--primary)` — this breaks Tailwind v4's internal `color-mix()` handling
+- Duplicate tokens in `:root` and `@theme inline`
+
+This was the source of a hard-to-debug issue where `bg-primary` rendered as a washed-out lighter shade instead of solid `#6E33B1`.
+
 ### 3.2 Typography (all sans-serif, no exceptions)
 
 ```
