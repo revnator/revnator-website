@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import Link from 'next/link'
 import type { Metadata } from 'next'
 import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
@@ -108,13 +109,17 @@ async function getRelatedPosts(post: BlogPost): Promise<BlogPostCard[]> {
 }
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
-  const payload = await getPayload({ config })
-  const result = await payload.find({
-    collection: 'blog-posts',
-    where: { status: { equals: 'published' } },
-    limit: 100,
-  })
-  return result.docs.map((doc) => ({ slug: doc.slug }))
+  try {
+    const payload = await getPayload({ config })
+    const result = await payload.find({
+      collection: 'blog-posts',
+      where: { status: { equals: 'published' } },
+      limit: 100,
+    })
+    return result.docs.map((doc) => ({ slug: doc.slug }))
+  } catch {
+    return []
+  }
 }
 
 export async function generateMetadata({
@@ -122,25 +127,29 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
-  const { slug } = await params
-  const postDoc = await getBlogPostBySlug(slug)()
-  if (!postDoc) return {}
+  try {
+    const { slug } = await params
+    const postDoc = await getBlogPostBySlug(slug)()
+    if (!postDoc) return {}
 
-  const title = postDoc.meta?.title ?? `${postDoc.title} | Revnator Blog`
-  const description = postDoc.meta?.description ?? postDoc.excerpt
+    const title = postDoc.meta?.title ?? `${postDoc.title} | Revnator Blog`
+    const description = postDoc.meta?.description ?? postDoc.excerpt
 
-  // OG image: meta image > featured image > site default (from layout)
-  const ogImageUrl =
-    getOgImageUrl(postDoc.meta?.image) || getOgImageUrl(postDoc.featuredImage)
+    // OG image: meta image > featured image > site default (from layout)
+    const ogImageUrl =
+      getOgImageUrl(postDoc.meta?.image) || getOgImageUrl(postDoc.featuredImage)
 
-  return {
-    title,
-    description,
-    openGraph: {
+    return {
       title,
       description,
-      images: ogImageUrl ? [{ url: ogImageUrl }] : undefined,
-    },
+      openGraph: {
+        title,
+        description,
+        images: ogImageUrl ? [{ url: ogImageUrl }] : undefined,
+      },
+    }
+  } catch {
+    return { title: 'Revnator', description: 'The sales OS for closers' }
   }
 }
 
@@ -149,24 +158,37 @@ export default async function BlogPostPage({
 }: {
   params: Promise<{ slug: string }>
 }): Promise<React.ReactElement> {
-  const { slug } = await params
-  const postDoc = await getBlogPostBySlug(slug)()
+  try {
+    const { slug } = await params
+    const postDoc = await getBlogPostBySlug(slug)()
 
-  if (!postDoc) notFound()
+    if (!postDoc) notFound()
 
-  const postCard = toCard(postDoc)
-  const relatedPosts = await getRelatedPosts(postDoc)
+    const postCard = toCard(postDoc)
+    const relatedPosts = await getRelatedPosts(postDoc)
 
-  return (
-    <main>
-      <BlogPostHeader post={postCard} />
-      <section className="bg-white pt-8 pb-12">
-        <div className="blog-prose mx-auto max-w-prose-narrow px-6 md:px-12">
-          <RichText data={postDoc.body} />
+    return (
+      <main>
+        <BlogPostHeader post={postCard} />
+        <section className="bg-white pt-8 pb-12">
+          <div className="blog-prose mx-auto max-w-prose-narrow px-6 md:px-12">
+            <RichText data={postDoc.body} />
+          </div>
+        </section>
+        <BlogPostFooter post={postCard} />
+        <RelatedPosts posts={relatedPosts} />
+      </main>
+    )
+  } catch (error) {
+    console.error('Failed to render blog post:', error)
+    return (
+      <main className="min-h-[60vh] flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="font-heading text-2xl font-bold text-dark">Page temporarily unavailable</h1>
+          <p className="mt-4 font-body text-muted">Please try again in a moment.</p>
+          <Link href="/" className="mt-6 inline-block font-body text-sm font-semibold text-primary hover:underline">Go to homepage</Link>
         </div>
-      </section>
-      <BlogPostFooter post={postCard} />
-      <RelatedPosts posts={relatedPosts} />
-    </main>
-  )
+      </main>
+    )
+  }
 }

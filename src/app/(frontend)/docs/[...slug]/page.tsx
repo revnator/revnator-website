@@ -1,4 +1,5 @@
 import { notFound, redirect } from 'next/navigation'
+import Link from 'next/link'
 import type { Metadata } from 'next'
 import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
@@ -122,17 +123,21 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string[] }>
 }): Promise<Metadata> {
-  const { slug } = await params
+  try {
+    const { slug } = await params
 
-  if (slug.length === 1) return {}
+    if (slug.length === 1) return {}
 
-  const [sectionSlug, pageSlug] = slug
-  const page = await getDocPage(sectionSlug, pageSlug)
-  if (!page) return {}
+    const [sectionSlug, pageSlug] = slug
+    const page = await getDocPage(sectionSlug, pageSlug)
+    if (!page) return {}
 
-  return {
-    title: `${page.title} — Revnator Docs`,
-    description: page.meta?.description || `Documentation for ${page.title} in Revnator.`,
+    return {
+      title: `${page.title} — Revnator Docs`,
+      description: page.meta?.description || `Documentation for ${page.title} in Revnator.`,
+    }
+  } catch {
+    return { title: 'Revnator', description: 'The sales OS for closers' }
   }
 }
 
@@ -143,54 +148,67 @@ export default async function DocsSlugPage({
 }: {
   params: Promise<{ slug: string[] }>
 }): Promise<React.ReactElement> {
-  const { slug } = await params
+  try {
+    const { slug } = await params
 
-  // Single segment: redirect to first page in section
-  if (slug.length === 1) {
-    const firstPageSlug = await getFirstPageInSection(slug[0])
-    if (!firstPageSlug) notFound()
-    redirect(`/docs/${firstPageSlug}`)
+    // Single segment: redirect to first page in section
+    if (slug.length === 1) {
+      const firstPageSlug = await getFirstPageInSection(slug[0])
+      if (!firstPageSlug) notFound()
+      redirect(`/docs/${firstPageSlug}`)
+    }
+
+    const [sectionSlug, pageSlug] = slug
+    const page = await getDocPage(sectionSlug, pageSlug)
+    if (!page) notFound()
+
+    const sections = await getDocsSidebar()
+    const fullSlug = `${sectionSlug}/${pageSlug}`
+
+    // Extract section title for breadcrumb
+    const section = typeof page.section === 'object' ? page.section as DocSection : null
+    const sectionTitle = section?.title ?? sectionSlug
+
+    // Extract H2 headings for TOC
+    const tocHeadings = extractH2Headings(page.body)
+
+    // Build all section IDs for nav link resolution
+    const allSections = sections.map((s) => {
+      // We need to find the section ID; use the sidebar data which has slugs
+      return { slug: s.slug, id: 0 } // IDs not needed since we populated depth 2
+    })
+
+    // Build prev/next nav links
+    const prev = getNavLink(page.previousPage, allSections)
+    const next = getNavLink(page.nextPage, allSections)
+
+    return (
+      <DocsLayout activeSlug={fullSlug} tocHeadings={tocHeadings} sections={sections}>
+        <DocsBreadcrumb category={sectionTitle} pageTitle={page.title} />
+
+        <h1 className="font-heading text-h2 font-bold text-dark">{page.title}</h1>
+        <p className="mt-2 font-body text-xs text-muted">
+          Updated {formatDate(page.lastUpdated)}
+        </p>
+
+        <div className="mt-8">
+          <DocsContent body={page.body} />
+        </div>
+
+        <DocsBottomNav prev={prev} next={next} />
+        <DocsFeedback />
+      </DocsLayout>
+    )
+  } catch (error) {
+    console.error('Failed to render doc page:', error)
+    return (
+      <main className="min-h-[60vh] flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="font-heading text-2xl font-bold text-dark">Page temporarily unavailable</h1>
+          <p className="mt-4 font-body text-muted">Please try again in a moment.</p>
+          <Link href="/" className="mt-6 inline-block font-body text-sm font-semibold text-primary hover:underline">Go to homepage</Link>
+        </div>
+      </main>
+    )
   }
-
-  const [sectionSlug, pageSlug] = slug
-  const page = await getDocPage(sectionSlug, pageSlug)
-  if (!page) notFound()
-
-  const sections = await getDocsSidebar()
-  const fullSlug = `${sectionSlug}/${pageSlug}`
-
-  // Extract section title for breadcrumb
-  const section = typeof page.section === 'object' ? page.section as DocSection : null
-  const sectionTitle = section?.title ?? sectionSlug
-
-  // Extract H2 headings for TOC
-  const tocHeadings = extractH2Headings(page.body)
-
-  // Build all section IDs for nav link resolution
-  const allSections = sections.map((s) => {
-    // We need to find the section ID; use the sidebar data which has slugs
-    return { slug: s.slug, id: 0 } // IDs not needed since we populated depth 2
-  })
-
-  // Build prev/next nav links
-  const prev = getNavLink(page.previousPage, allSections)
-  const next = getNavLink(page.nextPage, allSections)
-
-  return (
-    <DocsLayout activeSlug={fullSlug} tocHeadings={tocHeadings} sections={sections}>
-      <DocsBreadcrumb category={sectionTitle} pageTitle={page.title} />
-
-      <h1 className="font-heading text-h2 font-bold text-dark">{page.title}</h1>
-      <p className="mt-2 font-body text-xs text-muted">
-        Updated {formatDate(page.lastUpdated)}
-      </p>
-
-      <div className="mt-8">
-        <DocsContent body={page.body} />
-      </div>
-
-      <DocsBottomNav prev={prev} next={next} />
-      <DocsFeedback />
-    </DocsLayout>
-  )
 }

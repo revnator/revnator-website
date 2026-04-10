@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 import config from '@payload-config'
@@ -76,18 +77,31 @@ const getBlogData = unstable_cache(
 )
 
 export default async function BlogPage(): Promise<React.ReactElement> {
-  const { categories, posts } = await getBlogData()
+  try {
+    const { categories, posts } = await getBlogData()
 
-  const categoryNames = ['All', ...categories.map((c) => c.name)]
-  const postCards = posts.map(toCard)
-  const featuredPost = postCards[0] ?? null
-  const remainingPosts = postCards.slice(1)
+    const categoryNames = ['All', ...categories.map((c) => c.name)]
+    const postCards = posts.map(toCard)
+    const featuredPost = postCards[0] ?? null
+    const remainingPosts = postCards.slice(1)
 
-  return (
-    <main>
-      <BlogHero />
-      {featuredPost && <BlogFeaturedPost post={featuredPost} />}
-      <BlogListingClient posts={remainingPosts} categories={categoryNames} />
-    </main>
-  )
+    return (
+      <main>
+        <BlogHero />
+        {featuredPost && <BlogFeaturedPost post={featuredPost} />}
+        <BlogListingClient posts={remainingPosts} categories={categoryNames} />
+      </main>
+    )
+  } catch (error) {
+    console.error('Failed to render blog listing:', error)
+    return (
+      <main className="min-h-[60vh] flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="font-heading text-2xl font-bold text-dark">Page temporarily unavailable</h1>
+          <p className="mt-4 font-body text-muted">Please try again in a moment.</p>
+          <Link href="/" className="mt-6 inline-block font-body text-sm font-semibold text-primary hover:underline">Go to homepage</Link>
+        </div>
+      </main>
+    )
+  }
 }

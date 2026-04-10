@@ -77,13 +77,17 @@ export async function generateMetadata({
 }: {
   params: Promise<{ type: string }>
 }): Promise<Metadata> {
-  const { type } = await params
-  if (!isValidType(type)) return {}
+  try {
+    const { type } = await params
+    if (!isValidType(type)) return {}
 
-  const cfg = typeConfig[type]
-  return {
-    title: `${cfg.label} | Resources | Revnator`,
-    description: `Browse all ${cfg.label.toLowerCase()} from Revnator — guides, insights, and tools to help your sales team close more deals.`,
+    const cfg = typeConfig[type]
+    return {
+      title: `${cfg.label} | Resources | Revnator`,
+      description: `Browse all ${cfg.label.toLowerCase()} from Revnator — guides, insights, and tools to help your sales team close more deals.`,
+    }
+  } catch {
+    return { title: 'Revnator', description: 'The sales OS for closers' }
   }
 }
 
@@ -92,76 +96,89 @@ export default async function ResourceTypeListingPage({
 }: {
   params: Promise<{ type: string }>
 }): Promise<React.ReactElement> {
-  const { type } = await params
+  try {
+    const { type } = await params
 
-  if (!isValidType(type)) notFound()
+    if (!isValidType(type)) notFound()
 
-  const cfg = typeConfig[type]
-  const resources = await getResources(type)
-  const IconComponent = cfg.icon
+    const cfg = typeConfig[type]
+    const resources = await getResources(type)
+    const IconComponent = cfg.icon
 
-  return (
-    <main>
-      {/* Hero */}
-      <section className="bg-bg pb-2 pt-16">
-        <div className="mx-auto max-w-container px-6 md:px-12">
-          <nav className="mb-4 font-body text-sm text-muted">
-            <Link href="/resources" className="text-primary hover:underline">
-              Resources
-            </Link>
-            <span className="mx-2">/</span>
-            <span className="text-body">{cfg.label}</span>
-          </nav>
-          <h1 className="font-heading text-[40px] leading-[48px] font-bold tracking-[-0.01em] text-dark">
-            {cfg.label}
-          </h1>
-          <p className="mt-2 font-body text-lg text-muted">
-            Browse all {cfg.label.toLowerCase()} from Revnator
-          </p>
-        </div>
-      </section>
-
-      {/* Grid */}
-      <section className="bg-bg pb-20 pt-8">
-        <div className="mx-auto max-w-container px-6 md:px-12">
-          {resources.length > 0 ? (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {resources.map((resource) => (
-                <Link
-                  key={resource.id}
-                  href={`/resources/${type}/${resource.slug}`}
-                  className="group flex flex-col overflow-hidden rounded-2xl border border-light bg-white transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(19,15,30,0.08)]"
-                >
-                  {/* Thumbnail */}
-                  <div className="flex h-[180px] w-full items-center justify-center bg-light">
-                    <IconComponent size={36} className="text-primary/60" />
-                  </div>
-
-                  {/* Body */}
-                  <div className="flex flex-1 flex-col p-5">
-                    <span className="inline-block w-fit rounded-full bg-light px-3 py-0.5 font-heading text-[10px] font-semibold uppercase tracking-[0.1em] text-primary">
-                      {cfg.displayLabel}
-                    </span>
-                    <h3 className="mt-3 line-clamp-2 font-heading text-base font-semibold text-dark">
-                      {resource.title}
-                    </h3>
-                    <p className="mt-2 line-clamp-2 font-body text-[13px] text-muted">
-                      {resource.description}
-                    </p>
-                    <span className="mt-4 font-body text-[13px] font-medium text-primary">
-                      {cfg.cta} &rarr;
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <p className="py-16 text-center font-body text-sm text-muted">
-              No {cfg.label.toLowerCase()} available yet.
+    return (
+      <main>
+        {/* Hero */}
+        <section className="bg-bg pb-2 pt-16">
+          <div className="mx-auto max-w-container px-6 md:px-12">
+            <nav className="mb-4 font-body text-sm text-muted">
+              <Link href="/resources" className="text-primary hover:underline">
+                Resources
+              </Link>
+              <span className="mx-2">/</span>
+              <span className="text-body">{cfg.label}</span>
+            </nav>
+            <h1 className="font-heading text-[40px] leading-[48px] font-bold tracking-[-0.01em] text-dark">
+              {cfg.label}
+            </h1>
+            <p className="mt-2 font-body text-lg text-muted">
+              Browse all {cfg.label.toLowerCase()} from Revnator
             </p>
-          )}
+          </div>
+        </section>
+
+        {/* Grid */}
+        <section className="bg-bg pb-20 pt-8">
+          <div className="mx-auto max-w-container px-6 md:px-12">
+            {resources.length > 0 ? (
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {resources.map((resource) => (
+                  <Link
+                    key={resource.id}
+                    href={`/resources/${type}/${resource.slug}`}
+                    className="group flex flex-col overflow-hidden rounded-2xl border border-light bg-white transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(19,15,30,0.08)]"
+                  >
+                    {/* Thumbnail */}
+                    <div className="flex h-[180px] w-full items-center justify-center bg-light">
+                      <IconComponent size={36} className="text-primary/60" />
+                    </div>
+
+                    {/* Body */}
+                    <div className="flex flex-1 flex-col p-5">
+                      <span className="inline-block w-fit rounded-full bg-light px-3 py-0.5 font-heading text-[10px] font-semibold uppercase tracking-[0.1em] text-primary">
+                        {cfg.displayLabel}
+                      </span>
+                      <h3 className="mt-3 line-clamp-2 font-heading text-base font-semibold text-dark">
+                        {resource.title}
+                      </h3>
+                      <p className="mt-2 line-clamp-2 font-body text-[13px] text-muted">
+                        {resource.description}
+                      </p>
+                      <span className="mt-4 font-body text-[13px] font-medium text-primary">
+                        {cfg.cta} &rarr;
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <p className="py-16 text-center font-body text-sm text-muted">
+                No {cfg.label.toLowerCase()} available yet.
+              </p>
+            )}
+          </div>
+        </section>
+      </main>
+    )
+  } catch (error) {
+    console.error('Failed to render resource type listing:', error)
+    return (
+      <main className="min-h-[60vh] flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="font-heading text-2xl font-bold text-dark">Page temporarily unavailable</h1>
+          <p className="mt-4 font-body text-muted">Please try again in a moment.</p>
+          <Link href="/" className="mt-6 inline-block font-body text-sm font-semibold text-primary hover:underline">Go to homepage</Link>
         </div>
-      </section>
-    </main>
-  )
+      </main>
+    )
+  }
 }
