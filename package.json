@@ -18,6 +18,9 @@
     "seed:use-cases": "cross-env NODE_OPTIONS=--no-deprecation npx tsx src/scripts/seed-use-cases.ts",
     "seed:industries": "cross-env NODE_OPTIONS=--no-deprecation npx tsx src/scripts/seed-industries.ts",
     "seed:blog": "cross-env NODE_OPTIONS=--no-deprecation npx tsx src/scripts/seed-blog.ts",
+    "seed:news": "cross-env NODE_OPTIONS=--no-deprecation npx tsx src/scripts/seed-news.ts",
+    "seed:legal": "cross-env NODE_OPTIONS=--no-deprecation npx tsx src/scripts/seed-legal.ts",
+    "seed:resources": "cross-env NODE_OPTIONS=--no-deprecation npx tsx src/scripts/seed-resources.ts",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
   },
   "dependencies": {

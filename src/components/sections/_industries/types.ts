@@ -7,6 +7,7 @@ export interface IndustryHeroData {
   secondaryCta: { label: string; href: string }
   builtForLabel: string
   builtForTags: string[]
+  heroImage?: { url: string; alt: string } | null
 }
 
 export interface IndustryStat {

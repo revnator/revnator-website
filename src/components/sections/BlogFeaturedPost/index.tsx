@@ -12,9 +12,19 @@ export function BlogFeaturedPost({ post }: { post: BlogPostCard }): React.ReactE
           className="group flex flex-col overflow-hidden rounded-2xl border border-light bg-white transition-shadow hover:shadow-[0_8px_24px_rgba(19,15,30,0.08)] md:flex-row"
         >
           {/* Thumbnail */}
-          <div className="flex aspect-[16/10] items-center justify-center bg-light md:w-[55%]">
-            <ImageIcon size={48} className="text-muted" />
-          </div>
+          {post.featuredImage ? (
+            <div className="md:w-[55%] overflow-hidden">
+              <img
+                src={post.featuredImage.url}
+                alt={post.featuredImage.alt}
+                className="w-full h-full object-cover aspect-[16/10]"
+              />
+            </div>
+          ) : (
+            <div className="flex aspect-[16/10] items-center justify-center bg-light md:w-[55%]">
+              <ImageIcon size={48} className="text-muted" />
+            </div>
+          )}
 
           {/* Text */}
           <div className="flex flex-col justify-center p-8 md:w-[45%]">

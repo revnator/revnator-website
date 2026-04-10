@@ -85,7 +85,15 @@ export function UseCaseSolution({
 
           {/* Image */}
           <div className={cn(reverse && 'lg:[direction:ltr]')}>
-            <BrowserFrame />
+            {data.image ? (
+              <img
+                src={data.image.url}
+                alt={data.image.alt}
+                className="w-full rounded-xl border border-light object-cover"
+              />
+            ) : (
+              <BrowserFrame />
+            )}
           </div>
         </div>
       </div>

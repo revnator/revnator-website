@@ -1,14 +1,17 @@
 import React from 'react'
 import Link from 'next/link'
 import { Check, Play } from 'lucide-react'
-import type { WebinarResource } from '../_resources/resourcesData'
+import type { Webinar } from '@/payload-types'
+import { getImageUrl, getImageAlt } from '@/lib/getImageUrl'
 import { LeadCaptureForm } from '../LeadCaptureForm'
 
 export function WebinarLayout({
   resource,
 }: {
-  resource: WebinarResource
+  resource: Webinar
 }): React.ReactElement {
+  const imageUrl = getImageUrl(resource.featuredImage, 'blogFeatured')
+
   return (
     <main className="bg-white">
       <div className="mx-auto max-w-container px-6 pb-20 pt-16 md:px-12">
@@ -55,6 +58,17 @@ export function WebinarLayout({
               </p>
             )}
 
+            {/* Featured image */}
+            {imageUrl ? (
+              <div className="mt-6">
+                <img
+                  src={imageUrl}
+                  alt={getImageAlt(resource.featuredImage, resource.title)}
+                  className="w-full rounded-xl border border-light"
+                />
+              </div>
+            ) : null}
+
             {/* Description */}
             <p className="mt-4 font-body text-base leading-[1.7] text-body">
               {resource.description}
@@ -64,7 +78,7 @@ export function WebinarLayout({
             <div className="mt-8 flex flex-col gap-3">
               {resource.speakers.map((speaker) => (
                 <div
-                  key={speaker.name}
+                  key={speaker.id}
                   className="flex items-center gap-3 rounded-xl bg-bg p-4"
                 >
                   <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-light font-heading text-sm font-semibold text-primary">
@@ -89,12 +103,12 @@ export function WebinarLayout({
               </h2>
               <ul className="mt-4 flex flex-col gap-2.5">
                 {resource.learnings.map((item) => (
-                  <li key={item} className="flex items-start gap-2.5">
+                  <li key={item.id} className="flex items-start gap-2.5">
                     <Check
                       size={18}
                       className="mt-0.5 flex-shrink-0 text-accent"
                     />
-                    <span className="font-body text-sm text-body">{item}</span>
+                    <span className="font-body text-sm text-body">{item.text}</span>
                   </li>
                 ))}
               </ul>

@@ -40,10 +40,18 @@ export function BlogPostHeader({ post }: { post: BlogPostCard }): React.ReactEle
           <span className="font-body text-sm text-muted">{post.readTime}</span>
         </div>
 
-        {/* Featured image placeholder */}
-        <div className="mt-8 flex aspect-[16/9] w-full items-center justify-center rounded-xl bg-light">
-          <ImageIcon size={48} className="text-muted" />
-        </div>
+        {/* Featured image */}
+        {post.featuredImage ? (
+          <img
+            src={post.featuredImage.url}
+            alt={post.featuredImage.alt}
+            className="mt-8 w-full rounded-xl border border-light object-cover aspect-[16/9]"
+          />
+        ) : (
+          <div className="mt-8 flex aspect-[16/9] w-full items-center justify-center rounded-xl bg-light">
+            <ImageIcon size={48} className="text-muted" />
+          </div>
+        )}
       </div>
     </section>
   )

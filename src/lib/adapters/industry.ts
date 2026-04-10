@@ -1,4 +1,5 @@
 import type { Industry, Module } from '@/payload-types'
+import { getImageUrl, getImageAlt } from '@/lib/getImageUrl'
 import type {
   IndustryHeroData,
   IndustrySocialProofData,
@@ -10,6 +11,7 @@ import type {
 } from '@/components/sections/_industries/types'
 
 export function toHeroData(ind: Industry): IndustryHeroData {
+  const imgUrl = getImageUrl(ind.heroImage, 'heroProduct')
   return {
     breadcrumbLabel: `For ${ind.name}`,
     badge: ind.badge,
@@ -25,6 +27,9 @@ export function toHeroData(ind: Industry): IndustryHeroData {
     },
     builtForLabel: ind.builtForLabel ?? 'Trusted by teams of all sizes',
     builtForTags: (ind.builtForTags ?? []).map((t) => t.text),
+    heroImage: imgUrl
+      ? { url: imgUrl, alt: getImageAlt(ind.heroImage, ind.heroHeading) }
+      : null,
   }
 }
 

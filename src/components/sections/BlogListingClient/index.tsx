@@ -13,9 +13,19 @@ function BlogCard({ post }: { post: BlogPostCard }): React.ReactElement {
       className="group flex flex-col overflow-hidden rounded-2xl border border-light bg-white transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(19,15,30,0.08)]"
     >
       {/* Thumbnail */}
-      <div className="flex h-[200px] w-full items-center justify-center bg-light">
-        <ImageIcon size={32} className="text-muted" />
-      </div>
+      {post.featuredImage ? (
+        <div className="h-[200px] w-full overflow-hidden">
+          <img
+            src={post.featuredImage.url}
+            alt={post.featuredImage.alt}
+            className="h-full w-full object-cover"
+          />
+        </div>
+      ) : (
+        <div className="flex h-[200px] w-full items-center justify-center bg-light">
+          <ImageIcon size={32} className="text-muted" />
+        </div>
+      )}
 
       {/* Body */}
       <div className="flex flex-1 flex-col p-5">

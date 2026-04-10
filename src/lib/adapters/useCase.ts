@@ -1,4 +1,5 @@
 import type { UseCase, Module } from '@/payload-types'
+import { getImageUrl, getImageAlt } from '@/lib/getImageUrl'
 import type {
   UseCaseHeroData,
   UseCasePainPointsData,
@@ -8,6 +9,7 @@ import type {
 } from '@/components/sections/_useCases/types'
 
 export function toHeroData(uc: UseCase): UseCaseHeroData {
+  const imgUrl = getImageUrl(uc.heroImage, 'heroProduct')
   return {
     breadcrumbParent: 'Use Cases',
     breadcrumbCurrent: uc.name,
@@ -22,6 +24,9 @@ export function toHeroData(uc: UseCase): UseCaseHeroData {
       label: uc.secondaryCtaText ?? 'See pricing',
       href: uc.secondaryCtaHref ?? '/pricing',
     },
+    heroImage: imgUrl
+      ? { url: imgUrl, alt: getImageAlt(uc.heroImage, uc.heroHeading) }
+      : null,
   }
 }
 
@@ -38,12 +43,18 @@ export function toPainPointsData(uc: UseCase): UseCasePainPointsData {
 }
 
 export function toSolutionsData(uc: UseCase): UseCaseSolutionBlock[] {
-  return (uc.solutions ?? []).map((sol) => ({
-    label: sol.label,
-    heading: sol.heading,
-    description: sol.description,
-    bullets: (sol.features ?? []).map((f) => f.text),
-  }))
+  return (uc.solutions ?? []).map((sol) => {
+    const solImgUrl = getImageUrl(sol.image, 'featureScreenshot')
+    return {
+      label: sol.label,
+      heading: sol.heading,
+      description: sol.description,
+      bullets: (sol.features ?? []).map((f) => f.text),
+      image: solImgUrl
+        ? { url: solImgUrl, alt: getImageAlt(sol.image, sol.heading) }
+        : null,
+    }
+  })
 }
 
 export function toRelatedModulesData(uc: UseCase): UseCaseRelatedModulesData {

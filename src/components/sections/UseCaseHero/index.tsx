@@ -75,7 +75,15 @@ export function UseCaseHero({ data }: { data: UseCaseHeroData }): React.ReactEle
 
           {/* Image */}
           <div>
-            <BrowserFrame />
+            {data.heroImage ? (
+              <img
+                src={data.heroImage.url}
+                alt={data.heroImage.alt}
+                className="w-full rounded-xl border border-light object-cover"
+              />
+            ) : (
+              <BrowserFrame />
+            )}
           </div>
         </div>
       </div>

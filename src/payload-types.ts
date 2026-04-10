@@ -77,6 +77,14 @@ export interface Config {
     industries: Industry;
     'blog-categories': BlogCategory;
     'blog-posts': BlogPost;
+    'news-articles': NewsArticle;
+    'legal-documents': LegalDocument;
+    ebooks: Ebook;
+    'case-studies': CaseStudy;
+    webinars: Webinar;
+    whitepapers: Whitepaper;
+    templates: Template;
+    'success-stories': SuccessStory;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -104,6 +112,14 @@ export interface Config {
     industries: IndustriesSelect<false> | IndustriesSelect<true>;
     'blog-categories': BlogCategoriesSelect<false> | BlogCategoriesSelect<true>;
     'blog-posts': BlogPostsSelect<false> | BlogPostsSelect<true>;
+    'news-articles': NewsArticlesSelect<false> | NewsArticlesSelect<true>;
+    'legal-documents': LegalDocumentsSelect<false> | LegalDocumentsSelect<true>;
+    ebooks: EbooksSelect<false> | EbooksSelect<true>;
+    'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
+    webinars: WebinarsSelect<false> | WebinarsSelect<true>;
+    whitepapers: WhitepapersSelect<false> | WhitepapersSelect<true>;
+    templates: TemplatesSelect<false> | TemplatesSelect<true>;
+    'success-stories': SuccessStoriesSelect<false> | SuccessStoriesSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -130,6 +146,9 @@ export interface Config {
     'platform-page': PlatformPage;
     'support-page': SupportPage;
     'contact-page': ContactPage;
+    'news-page': NewsPage;
+    'legal-page': LegalPage;
+    'resources-page': ResourcesPage;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
@@ -142,6 +161,9 @@ export interface Config {
     'platform-page': PlatformPageSelect<false> | PlatformPageSelect<true>;
     'support-page': SupportPageSelect<false> | SupportPageSelect<true>;
     'contact-page': ContactPageSelect<false> | ContactPageSelect<true>;
+    'news-page': NewsPageSelect<false> | NewsPageSelect<true>;
+    'legal-page': LegalPageSelect<false> | LegalPageSelect<true>;
+    'resources-page': ResourcesPageSelect<false> | ResourcesPageSelect<true>;
   };
   locale: null;
   widgets: {
@@ -1466,6 +1488,435 @@ export interface BlogPost {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news-articles".
+ */
+export interface NewsArticle {
+  id: number;
+  title: string;
+  /**
+   * Only published articles appear on the site
+   */
+  status: 'draft' | 'published';
+  publishedDate: string;
+  category: 'Product Updates' | 'Company News' | 'Press Releases' | 'Funding' | 'Awards';
+  /**
+   * Recommended: 1280x720px
+   */
+  featuredImage?: (number | null) | Media;
+  /**
+   * Short summary shown on news cards. Max 300 characters.
+   */
+  excerpt: string;
+  /**
+   * Write article content here.
+   */
+  body: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  authorName?: string | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  /**
+   * URL slug. Auto-generated from title.
+   */
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "legal-documents".
+ */
+export interface LegalDocument {
+  id: number;
+  title: string;
+  /**
+   * Short description shown on the legal hub card
+   */
+  description: string;
+  icon?: ('Shield' | 'FileText' | 'Cookie' | 'Lock' | 'Scale' | 'ShieldCheck') | null;
+  lastUpdated: string;
+  effectiveDate: string;
+  /**
+   * Uncheck to hide from the legal hub
+   */
+  isPublished?: boolean | null;
+  /**
+   * Legal document content. Use headings for sections.
+   */
+  body: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  /**
+   * URL slug. Auto-generated from title.
+   */
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ebooks".
+ */
+export interface Ebook {
+  id: number;
+  title: string;
+  status: 'draft' | 'published';
+  /**
+   * Short summary shown on resource cards. Max 300 characters.
+   */
+  description: string;
+  /**
+   * Number of pages in the ebook
+   */
+  pages: number;
+  /**
+   * e.g. "20 min read"
+   */
+  readTime: string;
+  /**
+   * Introductory paragraph shown on the detail page
+   */
+  bodyIntro: string;
+  /**
+   * Table of contents / chapter list
+   */
+  chapters: {
+    title: string;
+    id?: string | null;
+  }[];
+  /**
+   * Cover image. Recommended: 1280x720px
+   */
+  featuredImage?: (number | null) | Media;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  /**
+   * URL slug. Auto-generated from title.
+   */
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-studies".
+ */
+export interface CaseStudy {
+  id: number;
+  title: string;
+  status: 'draft' | 'published';
+  description: string;
+  company: string;
+  industry: string;
+  metrics: {
+    /**
+     * e.g. "93%", "2.5x", "$85K"
+     */
+    value: string;
+    /**
+     * e.g. "increase in reply rate"
+     */
+    label: string;
+    id?: string | null;
+  }[];
+  sections: {
+    /**
+     * e.g. "THE CHALLENGE"
+     */
+    label: string;
+    heading: string;
+    paragraphs: {
+      text: string;
+      id?: string | null;
+    }[];
+    id?: string | null;
+  }[];
+  quote: {
+    text: string;
+    author: string;
+    /**
+     * Author title, e.g. "VP of Sales, TechCorp"
+     */
+    title: string;
+  };
+  featuredImage?: (number | null) | Media;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  /**
+   * URL slug. Auto-generated from title.
+   */
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "webinars".
+ */
+export interface Webinar {
+  id: number;
+  title: string;
+  status: 'draft' | 'published';
+  description: string;
+  /**
+   * Check for upcoming/live webinars, uncheck for recorded
+   */
+  isUpcoming?: boolean | null;
+  /**
+   * Display date, e.g. "Thursday, April 24, 2026"
+   */
+  date: string;
+  /**
+   * e.g. "2:00 PM EST"
+   */
+  time?: string | null;
+  /**
+   * e.g. "45 minutes"
+   */
+  duration: string;
+  speakers: {
+    name: string;
+    /**
+     * e.g. "Founder, Revnator"
+     */
+    title: string;
+    /**
+     * e.g. "SS"
+     */
+    initials: string;
+    id?: string | null;
+  }[];
+  /**
+   * What attendees will learn
+   */
+  learnings: {
+    text: string;
+    id?: string | null;
+  }[];
+  /**
+   * Number of registered attendees (optional)
+   */
+  registeredCount?: number | null;
+  featuredImage?: (number | null) | Media;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  /**
+   * URL slug. Auto-generated from title.
+   */
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "whitepapers".
+ */
+export interface Whitepaper {
+  id: number;
+  title: string;
+  status: 'draft' | 'published';
+  description: string;
+  /**
+   * e.g. "A Revnator Research Report · Q1 2026 · 32 pages"
+   */
+  subtitle: string;
+  pages: number;
+  keyFindings: {
+    /**
+     * e.g. "78%"
+     */
+    value: string;
+    /**
+     * e.g. "of sales teams use 5+ disconnected tools"
+     */
+    text: string;
+    id?: string | null;
+  }[];
+  /**
+   * Table of contents items
+   */
+  contents: {
+    title: string;
+    id?: string | null;
+  }[];
+  featuredImage?: (number | null) | Media;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  /**
+   * URL slug. Auto-generated from title.
+   */
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "templates".
+ */
+export interface Template {
+  id: number;
+  title: string;
+  status: 'draft' | 'published';
+  description: string;
+  /**
+   * e.g. "Best for: SDRs doing outbound to mid-market SaaS"
+   */
+  useCase: string;
+  /**
+   * Code/text preview shown on the detail page
+   */
+  preview: string;
+  /**
+   * What's included list items
+   */
+  included: {
+    text: string;
+    id?: string | null;
+  }[];
+  featuredImage?: (number | null) | Media;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  /**
+   * URL slug. Auto-generated from title.
+   */
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "success-stories".
+ */
+export interface SuccessStory {
+  id: number;
+  title: string;
+  status: 'draft' | 'published';
+  description: string;
+  company: string;
+  quote: {
+    text: string;
+    author: string;
+    /**
+     * Author title, e.g. "CEO, VelocityLabs"
+     */
+    title: string;
+  };
+  snapshot: {
+    /**
+     * e.g. "Industry"
+     */
+    label: string;
+    /**
+     * e.g. "SaaS"
+     */
+    value: string;
+    id?: string | null;
+  }[];
+  /**
+   * Q&A interview pairs
+   */
+  qa: {
+    question: string;
+    answer: string;
+    id?: string | null;
+  }[];
+  calloutMetric: {
+    /**
+     * e.g. "63%"
+     */
+    value: string;
+    /**
+     * e.g. "increase in meetings booked within 3 months"
+     */
+    context: string;
+  };
+  featuredImage?: (number | null) | Media;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  /**
+   * URL slug. Auto-generated from title.
+   */
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1693,6 +2144,38 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'blog-posts';
         value: number | BlogPost;
+      } | null)
+    | ({
+        relationTo: 'news-articles';
+        value: number | NewsArticle;
+      } | null)
+    | ({
+        relationTo: 'legal-documents';
+        value: number | LegalDocument;
+      } | null)
+    | ({
+        relationTo: 'ebooks';
+        value: number | Ebook;
+      } | null)
+    | ({
+        relationTo: 'case-studies';
+        value: number | CaseStudy;
+      } | null)
+    | ({
+        relationTo: 'webinars';
+        value: number | Webinar;
+      } | null)
+    | ({
+        relationTo: 'whitepapers';
+        value: number | Whitepaper;
+      } | null)
+    | ({
+        relationTo: 'templates';
+        value: number | Template;
+      } | null)
+    | ({
+        relationTo: 'success-stories';
+        value: number | SuccessStory;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -2380,6 +2863,281 @@ export interface BlogPostsSelect<T extends boolean = true> {
         id?: T;
       };
   relatedPosts?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news-articles_select".
+ */
+export interface NewsArticlesSelect<T extends boolean = true> {
+  title?: T;
+  status?: T;
+  publishedDate?: T;
+  category?: T;
+  featuredImage?: T;
+  excerpt?: T;
+  body?: T;
+  authorName?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "legal-documents_select".
+ */
+export interface LegalDocumentsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  icon?: T;
+  lastUpdated?: T;
+  effectiveDate?: T;
+  isPublished?: T;
+  body?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ebooks_select".
+ */
+export interface EbooksSelect<T extends boolean = true> {
+  title?: T;
+  status?: T;
+  description?: T;
+  pages?: T;
+  readTime?: T;
+  bodyIntro?: T;
+  chapters?:
+    | T
+    | {
+        title?: T;
+        id?: T;
+      };
+  featuredImage?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-studies_select".
+ */
+export interface CaseStudiesSelect<T extends boolean = true> {
+  title?: T;
+  status?: T;
+  description?: T;
+  company?: T;
+  industry?: T;
+  metrics?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        id?: T;
+      };
+  sections?:
+    | T
+    | {
+        label?: T;
+        heading?: T;
+        paragraphs?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  quote?:
+    | T
+    | {
+        text?: T;
+        author?: T;
+        title?: T;
+      };
+  featuredImage?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "webinars_select".
+ */
+export interface WebinarsSelect<T extends boolean = true> {
+  title?: T;
+  status?: T;
+  description?: T;
+  isUpcoming?: T;
+  date?: T;
+  time?: T;
+  duration?: T;
+  speakers?:
+    | T
+    | {
+        name?: T;
+        title?: T;
+        initials?: T;
+        id?: T;
+      };
+  learnings?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  registeredCount?: T;
+  featuredImage?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "whitepapers_select".
+ */
+export interface WhitepapersSelect<T extends boolean = true> {
+  title?: T;
+  status?: T;
+  description?: T;
+  subtitle?: T;
+  pages?: T;
+  keyFindings?:
+    | T
+    | {
+        value?: T;
+        text?: T;
+        id?: T;
+      };
+  contents?:
+    | T
+    | {
+        title?: T;
+        id?: T;
+      };
+  featuredImage?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "templates_select".
+ */
+export interface TemplatesSelect<T extends boolean = true> {
+  title?: T;
+  status?: T;
+  description?: T;
+  useCase?: T;
+  preview?: T;
+  included?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  featuredImage?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "success-stories_select".
+ */
+export interface SuccessStoriesSelect<T extends boolean = true> {
+  title?: T;
+  status?: T;
+  description?: T;
+  company?: T;
+  quote?:
+    | T
+    | {
+        text?: T;
+        author?: T;
+        title?: T;
+      };
+  snapshot?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        id?: T;
+      };
+  qa?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  calloutMetric?:
+    | T
+    | {
+        value?: T;
+        context?: T;
+      };
+  featuredImage?: T;
   meta?:
     | T
     | {
@@ -3913,6 +4671,77 @@ export interface ContactPage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news-page".
+ */
+export interface NewsPage {
+  id: number;
+  sectionLabel?: string | null;
+  heading?: string | null;
+  subheading?: string | null;
+  /**
+   * Show the press kit section at the bottom of the news page
+   */
+  pressKitEnabled?: boolean | null;
+  pressKitLabel?: string | null;
+  pressKitHeading?: string | null;
+  pressKitDescription?: string | null;
+  pressKitButtonText?: string | null;
+  pressKitButtonHref?: string | null;
+  pressContactHeading?: string | null;
+  pressContactEmail?: string | null;
+  pressContactResponse?: string | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "legal-page".
+ */
+export interface LegalPage {
+  id: number;
+  heading?: string | null;
+  subheading?: string | null;
+  lastUpdatedText?: string | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resources-page".
+ */
+export interface ResourcesPage {
+  id: number;
+  heading?: string | null;
+  subheading?: string | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -4617,6 +5446,71 @@ export interface ContactPageSelect<T extends boolean = true> {
         label?: T;
         id?: T;
       };
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news-page_select".
+ */
+export interface NewsPageSelect<T extends boolean = true> {
+  sectionLabel?: T;
+  heading?: T;
+  subheading?: T;
+  pressKitEnabled?: T;
+  pressKitLabel?: T;
+  pressKitHeading?: T;
+  pressKitDescription?: T;
+  pressKitButtonText?: T;
+  pressKitButtonHref?: T;
+  pressContactHeading?: T;
+  pressContactEmail?: T;
+  pressContactResponse?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "legal-page_select".
+ */
+export interface LegalPageSelect<T extends boolean = true> {
+  heading?: T;
+  subheading?: T;
+  lastUpdatedText?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resources-page_select".
+ */
+export interface ResourcesPageSelect<T extends boolean = true> {
+  heading?: T;
+  subheading?: T;
   meta?:
     | T
     | {

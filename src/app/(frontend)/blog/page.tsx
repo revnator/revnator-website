@@ -3,6 +3,7 @@ import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { BlogPost, BlogCategory } from '@/payload-types'
+import { getImageUrl, getImageAlt } from '@/lib/getImageUrl'
 
 import { BlogHero } from '@/components/sections/BlogHero'
 import { BlogFeaturedPost } from '@/components/sections/BlogFeaturedPost'
@@ -22,6 +23,7 @@ function formatDate(dateString: string): string {
 
 function toCard(doc: BlogPost): BlogPostCard {
   const cat = typeof doc.category === 'object' ? doc.category : null
+  const imgUrl = getImageUrl(doc.featuredImage, 'blogFeatured')
   return {
     id: doc.id,
     slug: doc.slug,
@@ -36,6 +38,9 @@ function toCard(doc: BlogPost): BlogPostCard {
       bio: doc.authorBio ?? '',
     },
     tags: (doc.tags ?? []).map((t) => t.text),
+    featuredImage: imgUrl
+      ? { url: imgUrl, alt: getImageAlt(doc.featuredImage, doc.title) }
+      : null,
   }
 }
 
@@ -57,7 +62,7 @@ const getBlogData = unstable_cache(
         },
         sort: '-publishedDate',
         limit: 100,
-        depth: 1,
+        depth: 2,
       }),
     ])
 

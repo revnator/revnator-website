@@ -3,7 +3,8 @@ import type { Metadata } from 'next'
 import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import type { BlogPost, BlogCategory } from '@/payload-types'
+import type { BlogPost } from '@/payload-types'
+import { getImageUrl, getImageAlt } from '@/lib/getImageUrl'
 
 import { BlogPostHeader } from '@/components/sections/BlogPostHeader'
 import { RichText } from '@payloadcms/richtext-lexical/react'
@@ -18,6 +19,7 @@ function formatDate(dateString: string): string {
 
 function toCard(doc: BlogPost): BlogPostCard {
   const cat = typeof doc.category === 'object' ? doc.category : null
+  const imgUrl = getImageUrl(doc.featuredImage, 'blogFeatured')
   return {
     id: doc.id,
     slug: doc.slug,
@@ -32,6 +34,9 @@ function toCard(doc: BlogPost): BlogPostCard {
       bio: doc.authorBio ?? '',
     },
     tags: (doc.tags ?? []).map((t) => t.text),
+    featuredImage: imgUrl
+      ? { url: imgUrl, alt: getImageAlt(doc.featuredImage, doc.title) }
+      : null,
   }
 }
 

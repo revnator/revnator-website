@@ -8,4 +8,5 @@ export interface BlogPostCard {
   readTime: string
   author: { name: string; initials: string; bio: string }
   tags: string[]
+  featuredImage?: { url: string; alt: string } | null
 }

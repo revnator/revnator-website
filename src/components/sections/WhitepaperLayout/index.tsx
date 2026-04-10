@@ -1,13 +1,16 @@
 import React from 'react'
 import Link from 'next/link'
-import type { WhitepaperResource } from '../_resources/resourcesData'
+import type { Whitepaper } from '@/payload-types'
+import { getImageUrl, getImageAlt } from '@/lib/getImageUrl'
 import { LeadCaptureForm } from '../LeadCaptureForm'
 
 export function WhitepaperLayout({
   resource,
 }: {
-  resource: WhitepaperResource
+  resource: Whitepaper
 }): React.ReactElement {
+  const imageUrl = getImageUrl(resource.featuredImage, 'blogFeatured')
+
   return (
     <main className="bg-white">
       <div className="mx-auto max-w-container px-6 pb-20 pt-16 md:px-12">
@@ -45,6 +48,17 @@ export function WhitepaperLayout({
               {resource.description}
             </p>
 
+            {/* Featured image */}
+            {imageUrl ? (
+              <div className="mt-6">
+                <img
+                  src={imageUrl}
+                  alt={getImageAlt(resource.featuredImage, resource.title)}
+                  className="w-full rounded-xl border border-light"
+                />
+              </div>
+            ) : null}
+
             {/* Key findings */}
             <div className="mt-8 rounded-2xl bg-bg p-6">
               <h2 className="font-heading text-base font-semibold text-dark">
@@ -53,7 +67,7 @@ export function WhitepaperLayout({
               <div className="mt-4 flex flex-col divide-y divide-light">
                 {resource.keyFindings.map((finding) => (
                   <div
-                    key={finding.value}
+                    key={finding.id}
                     className="flex items-baseline gap-4 py-3"
                   >
                     <span className="font-heading text-2xl font-bold text-primary">
@@ -74,7 +88,7 @@ export function WhitepaperLayout({
               </h2>
               <ol className="mt-4 flex flex-col gap-2 pl-5 font-body text-sm text-body list-decimal">
                 {resource.contents.map((item) => (
-                  <li key={item}>{item}</li>
+                  <li key={item.id}>{item.title}</li>
                 ))}
               </ol>
             </div>

@@ -6,6 +6,7 @@ export interface UseCaseHeroData {
   description: string
   primaryCta: { label: string; href: string }
   secondaryCta: { label: string; href: string }
+  heroImage?: { url: string; alt: string } | null
 }
 
 export interface UseCasePainPointCard {
@@ -26,6 +27,7 @@ export interface UseCaseSolutionBlock {
   description: string
   bullets: string[]
   learnMoreHref?: string
+  image?: { url: string; alt: string } | null
 }
 
 export interface UseCaseRelatedModule {

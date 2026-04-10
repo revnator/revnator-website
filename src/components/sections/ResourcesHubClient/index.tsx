@@ -11,14 +11,64 @@ import {
   Trophy,
 } from 'lucide-react'
 import { cn } from '@/utilities/ui'
-import {
-  resourceTypes,
-  typeDisplayLabel,
-  typeCardCta,
-  typeIconName,
-  type Resource,
-  type ResourceFilterCategory,
-} from '../_resources/resourcesData'
+
+// ── Types ──
+
+export const resourceTypes = [
+  'All',
+  'Ebooks',
+  'Case Studies',
+  'Webinars',
+  'Whitepapers',
+  'Templates',
+  'Success Stories',
+] as const
+
+export type ResourceFilterCategory = (typeof resourceTypes)[number]
+
+export type ResourceType =
+  | 'ebooks'
+  | 'case-studies'
+  | 'webinars'
+  | 'whitepapers'
+  | 'templates'
+  | 'success-stories'
+
+export interface ResourceCard {
+  id: string
+  slug: string
+  title: string
+  description: string
+  type: ResourceType
+  filterCategory: ResourceFilterCategory
+}
+
+const typeDisplayLabel: Record<ResourceType, string> = {
+  ebooks: 'Ebook',
+  'case-studies': 'Case Study',
+  webinars: 'Webinar',
+  whitepapers: 'Whitepaper',
+  templates: 'Template',
+  'success-stories': 'Success Story',
+}
+
+const typeCardCta: Record<ResourceType, string> = {
+  ebooks: 'Download free',
+  'case-studies': 'Read',
+  webinars: 'Watch now',
+  whitepapers: 'Download free',
+  templates: 'Get template',
+  'success-stories': 'Read',
+}
+
+const typeIconName: Record<ResourceType, string> = {
+  ebooks: 'BookOpen',
+  'case-studies': 'BarChart3',
+  webinars: 'Video',
+  whitepapers: 'FileText',
+  templates: 'FileCode',
+  'success-stories': 'Trophy',
+}
 
 const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
   BookOpen,
@@ -29,7 +79,7 @@ const iconMap: Record<string, React.ComponentType<{ size?: number; className?: s
   Trophy,
 }
 
-function ResourceCard({ resource }: { resource: Resource }): React.ReactElement {
+function ResourceCardComponent({ resource }: { resource: ResourceCard }): React.ReactElement {
   const IconComponent = iconMap[typeIconName[resource.type]]
 
   return (
@@ -66,7 +116,7 @@ function ResourceCard({ resource }: { resource: Resource }): React.ReactElement 
 export function ResourcesHubClient({
   resources,
 }: {
-  resources: Resource[]
+  resources: ResourceCard[]
 }): React.ReactElement {
   const [activeFilter, setActiveFilter] =
     useState<ResourceFilterCategory>('All')
@@ -105,7 +155,7 @@ export function ResourcesHubClient({
         {filtered.length > 0 ? (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((resource) => (
-              <ResourceCard key={resource.id} resource={resource} />
+              <ResourceCardComponent key={resource.id} resource={resource} />
             ))}
           </div>
         ) : (

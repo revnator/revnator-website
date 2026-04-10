@@ -14,6 +14,14 @@ import { UseCases } from './collections/UseCases'
 import { Industries } from './collections/Industries'
 import { BlogCategories } from './collections/BlogCategories'
 import { BlogPosts } from './collections/BlogPosts'
+import { NewsArticles } from './collections/NewsArticles'
+import { LegalDocuments } from './collections/LegalDocuments'
+import { Ebooks } from './collections/Ebooks'
+import { CaseStudies } from './collections/CaseStudies'
+import { Webinars } from './collections/Webinars'
+import { Whitepapers } from './collections/Whitepapers'
+import { Templates } from './collections/Templates'
+import { SuccessStories } from './collections/SuccessStories'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { SiteSettings } from './globals/SiteSettings'
@@ -24,6 +32,9 @@ import { AboutPage } from './globals/AboutPage/config'
 import { PlatformPage } from './globals/PlatformPage/config'
 import { SupportPage } from './globals/SupportPage/config'
 import { ContactPage } from './globals/ContactPage/config'
+import { NewsPage } from './globals/NewsPage/config'
+import { LegalPage } from './globals/LegalPage/config'
+import { ResourcesPage } from './globals/ResourcesPage/config'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
@@ -75,9 +86,9 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI,
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users, Modules, UseCases, Industries, BlogCategories, BlogPosts],
+  collections: [Pages, Posts, Media, Categories, Users, Modules, UseCases, Industries, BlogCategories, BlogPosts, NewsArticles, LegalDocuments, Ebooks, CaseStudies, Webinars, Whitepapers, Templates, SuccessStories],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer, SiteSettings, HomePage, PricingPage, WhyRevnatorPage, AboutPage, PlatformPage, SupportPage, ContactPage],
+  globals: [Header, Footer, SiteSettings, HomePage, PricingPage, WhyRevnatorPage, AboutPage, PlatformPage, SupportPage, ContactPage, NewsPage, LegalPage, ResourcesPage],
   plugins,
   secret: process.env.PAYLOAD_SECRET,
   sharp,

@@ -1,14 +1,17 @@
 import React from 'react'
 import Link from 'next/link'
 import { BookOpen } from 'lucide-react'
-import type { EbookResource } from '../_resources/resourcesData'
+import type { Ebook } from '@/payload-types'
+import { getImageUrl, getImageAlt } from '@/lib/getImageUrl'
 import { LeadCaptureForm } from '../LeadCaptureForm'
 
 export function EbookLayout({
   resource,
 }: {
-  resource: EbookResource
+  resource: Ebook
 }): React.ReactElement {
+  const imageUrl = getImageUrl(resource.featuredImage, 'blogFeatured')
+
   return (
     <main className="bg-white">
       <div className="mx-auto max-w-container px-6 pb-20 pt-16 md:px-12">
@@ -47,24 +50,34 @@ export function EbookLayout({
               {resource.bodyIntro}
             </p>
 
-            {/* 3D Book mockup */}
-            <div className="mt-8 flex h-60 items-center justify-center">
-              <div
-                className="flex h-60 w-[180px] flex-col items-center justify-center rounded-r-md bg-primary p-6 text-center shadow-[20px_20px_40px_rgba(110,51,177,0.3)]"
-                style={{
-                  transform: 'perspective(1000px) rotateY(-15deg)',
-                }}
-              >
-                <div className="absolute inset-0 overflow-hidden rounded-r-md opacity-10">
-                  <div className="absolute -left-4 top-8 h-px w-48 rotate-[30deg] bg-white" />
-                  <div className="absolute -left-4 top-20 h-px w-48 rotate-[30deg] bg-white" />
-                  <div className="absolute -left-4 top-32 h-px w-48 rotate-[30deg] bg-white" />
-                </div>
-                <span className="relative font-heading text-base font-bold leading-tight text-white">
-                  {resource.title.split(':')[0]}
-                </span>
+            {/* Featured image or 3D Book mockup fallback */}
+            {imageUrl ? (
+              <div className="mt-8">
+                <img
+                  src={imageUrl}
+                  alt={getImageAlt(resource.featuredImage, resource.title)}
+                  className="w-full rounded-xl border border-light"
+                />
               </div>
-            </div>
+            ) : (
+              <div className="mt-8 flex h-60 items-center justify-center">
+                <div
+                  className="flex h-60 w-[180px] flex-col items-center justify-center rounded-r-md bg-primary p-6 text-center shadow-[20px_20px_40px_rgba(110,51,177,0.3)]"
+                  style={{
+                    transform: 'perspective(1000px) rotateY(-15deg)',
+                  }}
+                >
+                  <div className="absolute inset-0 overflow-hidden rounded-r-md opacity-10">
+                    <div className="absolute -left-4 top-8 h-px w-48 rotate-[30deg] bg-white" />
+                    <div className="absolute -left-4 top-20 h-px w-48 rotate-[30deg] bg-white" />
+                    <div className="absolute -left-4 top-32 h-px w-48 rotate-[30deg] bg-white" />
+                  </div>
+                  <span className="relative font-heading text-base font-bold leading-tight text-white">
+                    {resource.title.split(':')[0]}
+                  </span>
+                </div>
+              </div>
+            )}
 
             {/* What's inside */}
             <div className="mt-10">
@@ -73,12 +86,12 @@ export function EbookLayout({
               </h2>
               <div className="mt-4 flex flex-col gap-2.5">
                 {resource.chapters.map((ch) => (
-                  <div key={ch} className="flex items-start gap-2.5">
+                  <div key={ch.id} className="flex items-start gap-2.5">
                     <BookOpen
                       size={18}
                       className="mt-0.5 flex-shrink-0 text-primary"
                     />
-                    <span className="font-body text-sm text-body">{ch}</span>
+                    <span className="font-body text-sm text-body">{ch.title}</span>
                   </div>
                 ))}
               </div>

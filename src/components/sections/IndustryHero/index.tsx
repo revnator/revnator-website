@@ -98,7 +98,15 @@ export function IndustryHero({ data }: { data: IndustryHeroData }): React.ReactE
 
           {/* Right — Visual */}
           <div className="hidden lg:block">
-            <BrowserFrame />
+            {data.heroImage ? (
+              <img
+                src={data.heroImage.url}
+                alt={data.heroImage.alt}
+                className="w-full rounded-xl border border-light object-cover"
+              />
+            ) : (
+              <BrowserFrame />
+            )}
           </div>
         </div>
       </div>

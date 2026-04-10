@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { Linkedin, Twitter, Link2 } from 'lucide-react'
-import type { NewsItem } from '../_news/newsData'
+import type { NewsCard } from '../NewsListingClient'
 
 function ShareButton({
   icon: Icon,
@@ -21,7 +21,7 @@ function ShareButton({
   )
 }
 
-function NewsCard({ item }: { item: NewsItem }): React.ReactElement {
+function NewsCardItem({ item }: { item: NewsCard }): React.ReactElement {
   return (
     <Link
       href={`/news/${item.slug}`}
@@ -49,7 +49,7 @@ function NewsCard({ item }: { item: NewsItem }): React.ReactElement {
 export function NewsArticleFooter({
   relatedItems,
 }: {
-  relatedItems: NewsItem[]
+  relatedItems: NewsCard[]
 }): React.ReactElement {
   return (
     <>
@@ -71,7 +71,7 @@ export function NewsArticleFooter({
           <h2 className="font-heading text-2xl font-bold text-dark">More from Revnator</h2>
           <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {relatedItems.map((item) => (
-              <NewsCard key={item.id} item={item} />
+              <NewsCardItem key={item.id} item={item} />
             ))}
           </div>
         </div>

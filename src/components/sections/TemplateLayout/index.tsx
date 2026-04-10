@@ -1,14 +1,17 @@
 import React from 'react'
 import Link from 'next/link'
 import { Check } from 'lucide-react'
-import type { TemplateResource } from '../_resources/resourcesData'
+import type { Template } from '@/payload-types'
+import { getImageUrl, getImageAlt } from '@/lib/getImageUrl'
 import { LeadCaptureForm } from '../LeadCaptureForm'
 
 export function TemplateLayout({
   resource,
 }: {
-  resource: TemplateResource
+  resource: Template
 }): React.ReactElement {
+  const imageUrl = getImageUrl(resource.featuredImage, 'blogFeatured')
+
   return (
     <main className="bg-white">
       <div className="mx-auto max-w-container px-6 pb-20 pt-16 md:px-12">
@@ -44,6 +47,17 @@ export function TemplateLayout({
               {resource.description}
             </p>
 
+            {/* Featured image */}
+            {imageUrl ? (
+              <div className="mt-6">
+                <img
+                  src={imageUrl}
+                  alt={getImageAlt(resource.featuredImage, resource.title)}
+                  className="w-full rounded-xl border border-light"
+                />
+              </div>
+            ) : null}
+
             {/* Code-style preview */}
             <div className="relative mt-8 overflow-hidden rounded-2xl bg-dark p-6">
               <pre className="font-mono text-[13px] leading-[1.7] text-light whitespace-pre-wrap">
@@ -64,12 +78,12 @@ export function TemplateLayout({
               </h2>
               <ul className="mt-4 flex flex-col gap-2.5">
                 {resource.included.map((item) => (
-                  <li key={item} className="flex items-start gap-2.5">
+                  <li key={item.id} className="flex items-start gap-2.5">
                     <Check
                       size={18}
                       className="mt-0.5 flex-shrink-0 text-accent"
                     />
-                    <span className="font-body text-sm text-body">{item}</span>
+                    <span className="font-body text-sm text-body">{item.text}</span>
                   </li>
                 ))}
               </ul>

@@ -3,13 +3,17 @@
 import React, { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { cn } from '@/utilities/ui'
-import {
-  newsCategories,
-  type NewsCategory,
-  type NewsItem,
-} from '../_news/newsData'
 
-function NewsCard({ item }: { item: NewsItem }): React.ReactElement {
+export interface NewsCard {
+  id: number
+  slug: string
+  title: string
+  excerpt: string
+  date: string
+  category: string
+}
+
+function NewsCardItem({ item }: { item: NewsCard }): React.ReactElement {
   return (
     <Link
       href={`/news/${item.slug}`}
@@ -43,10 +47,12 @@ function NewsCard({ item }: { item: NewsItem }): React.ReactElement {
 
 export function NewsListingClient({
   items,
+  categories,
 }: {
-  items: NewsItem[]
+  items: NewsCard[]
+  categories: string[]
 }): React.ReactElement {
-  const [activeFilter, setActiveFilter] = useState<NewsCategory>('All')
+  const [activeFilter, setActiveFilter] = useState('All')
 
   const filteredItems = useMemo(
     () =>
@@ -61,7 +67,7 @@ export function NewsListingClient({
       <div className="mx-auto max-w-container px-6 md:px-12">
         {/* Filter pills */}
         <div className="flex flex-wrap gap-2 pb-8">
-          {newsCategories.map((cat) => (
+          {categories.map((cat) => (
             <button
               key={cat}
               type="button"
@@ -82,7 +88,7 @@ export function NewsListingClient({
         {filteredItems.length > 0 ? (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filteredItems.map((item) => (
-              <NewsCard key={item.id} item={item} />
+              <NewsCardItem key={item.id} item={item} />
             ))}
           </div>
         ) : (
