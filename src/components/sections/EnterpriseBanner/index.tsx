@@ -1,7 +1,14 @@
 import React from 'react'
 import Link from 'next/link'
 
-export function EnterpriseBanner(): React.ReactElement {
+export interface EnterpriseBannerData {
+  heading: string
+  description: string
+  ctaLabel: string
+  ctaHref: string
+}
+
+export function EnterpriseBanner({ data }: { data: EnterpriseBannerData }): React.ReactElement {
   return (
     <section className="bg-white py-16">
       <div className="mx-auto max-w-container px-6 md:px-12">
@@ -12,21 +19,20 @@ export function EnterpriseBanner(): React.ReactElement {
               Enterprise
             </span>
             <h2 className="mt-2 font-heading text-2xl font-bold text-white">
-              Need more? Let&apos;s talk.
+              {data.heading}
             </h2>
             <p className="mt-3 max-w-[480px] font-body text-sm leading-[1.6] text-white/55">
-              Custom plans with SSO, SCIM, dedicated onboarding, SLA, white-label, and
-              priority support for teams of 20+.
+              {data.description}
             </p>
           </div>
 
           {/* CTA */}
           <div className="flex flex-[0.3] flex-col items-start md:items-end">
             <Link
-              href="/contact"
+              href={data.ctaHref}
               className="inline-flex items-center justify-center rounded-lg border-[1.5px] border-white/30 bg-transparent px-6 py-3.5 font-body text-sm font-semibold text-white transition-colors hover:border-white focus:ring-2 focus:ring-white/40 focus:ring-offset-2 focus:ring-offset-dark"
             >
-              Contact sales
+              {data.ctaLabel}
             </Link>
             <p className="mt-3 font-body text-xs text-white/40">
               or email sales@revnator.com

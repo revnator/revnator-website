@@ -9,9 +9,21 @@ import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
+import { Modules } from './collections/Modules'
+import { UseCases } from './collections/UseCases'
+import { Industries } from './collections/Industries'
+import { BlogCategories } from './collections/BlogCategories'
+import { BlogPosts } from './collections/BlogPosts'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { SiteSettings } from './globals/SiteSettings'
+import { HomePage } from './globals/HomePage/config'
+import { PricingPage } from './globals/PricingPage/config'
+import { WhyRevnatorPage } from './globals/WhyRevnatorPage/config'
+import { AboutPage } from './globals/AboutPage/config'
+import { PlatformPage } from './globals/PlatformPage/config'
+import { SupportPage } from './globals/SupportPage/config'
+import { ContactPage } from './globals/ContactPage/config'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
@@ -63,9 +75,9 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI,
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [Pages, Posts, Media, Categories, Users, Modules, UseCases, Industries, BlogCategories, BlogPosts],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer, SiteSettings],
+  globals: [Header, Footer, SiteSettings, HomePage, PricingPage, WhyRevnatorPage, AboutPage, PlatformPage, SupportPage, ContactPage],
   plugins,
   secret: process.env.PAYLOAD_SECRET,
   sharp,

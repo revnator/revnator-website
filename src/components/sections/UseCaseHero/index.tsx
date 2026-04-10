@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import type { UseCaseHeroData } from '../_useCases/salesOpsUseCaseData'
+import type { UseCaseHeroData } from '../_useCases/types'
 
 function BrowserFrame(): React.ReactElement {
   return (

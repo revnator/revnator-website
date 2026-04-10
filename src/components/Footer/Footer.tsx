@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Linkedin, Twitter, Github, Youtube, Facebook, Instagram } from 'lucide-react'
 import type { Footer as FooterType, SiteSetting } from '@/payload-types'
 import { getCachedGlobal } from '@/utilities/getGlobals'
+import { getImageUrl, getImageAlt } from '@/lib/getImageUrl'
 
 const socialIconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
   linkedin: Linkedin,
@@ -39,15 +40,8 @@ export async function Footer(): Promise<React.ReactElement> {
                   ? siteSettings?.logoDark || siteSettings?.logo
                   : footer.logoOverride
 
-                const logoUrl =
-                  logoSource && typeof logoSource === 'object' && 'url' in logoSource
-                    ? logoSource.url
-                    : null
-
-                const logoAlt =
-                  logoSource && typeof logoSource === 'object' && 'alt' in logoSource
-                    ? (logoSource.alt as string) || brandName
-                    : brandName
+                const logoUrl = getImageUrl(logoSource, 'logo')
+                const logoAlt = getImageAlt(logoSource, brandName)
 
                 return logoUrl ? (
                   <img

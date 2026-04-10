@@ -1,6 +1,6 @@
 import React from 'react'
 import { ArrowRight } from 'lucide-react'
-import type { IndustryUseCasesData } from '../_industries/agenciesData'
+import type { IndustryUseCasesData } from '../_industries/types'
 
 export function IndustryUseCases({ data }: { data: IndustryUseCasesData }): React.ReactElement {
   return (

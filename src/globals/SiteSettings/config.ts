@@ -31,19 +31,28 @@ export const SiteSettings: GlobalConfig = {
               name: 'logo',
               type: 'upload',
               relationTo: 'media',
+              admin: {
+                description:
+                  'Recommended: 480\u00D7160px (PNG, transparent background). Will be auto-resized to fit header.',
+              },
             },
             {
               name: 'logoDark',
               type: 'upload',
               relationTo: 'media',
               admin: {
-                description: 'Logo variant for dark backgrounds',
+                description:
+                  'Recommended: 480\u00D7160px (PNG, transparent background, white/light version for dark backgrounds).',
               },
             },
             {
               name: 'favicon',
               type: 'upload',
               relationTo: 'media',
+              admin: {
+                description:
+                  'Recommended: 512\u00D7512px (PNG, square). Used in browser tabs and bookmarks.',
+              },
             },
           ],
         },
@@ -71,7 +80,8 @@ export const SiteSettings: GlobalConfig = {
               type: 'upload',
               relationTo: 'media',
               admin: {
-                description: 'Default Open Graph image (1200×630) used when pages don\'t specify one',
+                description:
+                  'Recommended: 1200\u00D7630px (PNG or JPG). Used as default Open Graph share image.',
               },
             },
             {

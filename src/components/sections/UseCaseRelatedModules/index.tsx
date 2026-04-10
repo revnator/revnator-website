@@ -1,13 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
-import { LayoutDashboard, Calendar, GitBranch } from 'lucide-react'
-import type { UseCaseRelatedModulesData } from '../_useCases/salesOpsUseCaseData'
-
-const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
-  LayoutDashboard,
-  Calendar,
-  GitBranch,
-}
+import { DynamicIcon } from '@/lib/icons'
+import type { UseCaseRelatedModulesData } from '../_useCases/types'
 
 export function UseCaseRelatedModules({
   data,
@@ -30,14 +24,13 @@ export function UseCaseRelatedModules({
         {/* Cards */}
         <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
           {data.modules.map((mod) => {
-            const Icon = iconMap[mod.icon]
             return (
               <div
                 key={mod.name}
                 className="group rounded-2xl border border-light bg-white p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(19,15,30,0.08)]"
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-light">
-                  {Icon && <Icon size={20} className="text-primary" />}
+                  <DynamicIcon name={mod.icon} size={20} className="text-primary" />
                 </div>
                 <h3 className="mt-4 font-heading text-base font-semibold text-dark">
                   {mod.name}

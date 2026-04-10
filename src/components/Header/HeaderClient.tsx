@@ -5,15 +5,24 @@ import Link from 'next/link'
 import { ChevronDown, Menu } from 'lucide-react'
 import { cn } from '@/utilities/ui'
 import type { Header as HeaderType, SiteSetting } from '@/payload-types'
+import { getImageUrl, getImageAlt } from '@/lib/getImageUrl'
 import { DropdownMenu } from './DropdownMenu'
 import { PlatformDropdown } from './PlatformDropdown'
 import { SalesOSDropdown } from './SalesOSDropdown'
 import { ResourcesDropdown } from './ResourcesDropdown'
 import { CompanyDropdown } from './CompanyDropdown'
 
+interface NavModule {
+  name: string
+  description: string
+  icon: string
+  href: string
+}
+
 interface HeaderClientProps {
   header: HeaderType
   siteSettings: SiteSetting
+  navModules?: NavModule[]
 }
 
 type DropdownType = NonNullable<
@@ -33,6 +42,7 @@ const dropdownWidths: Record<string, string> = {
 export function HeaderClient({
   header,
   siteSettings,
+  navModules = [],
 }: HeaderClientProps): React.ReactElement {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -95,7 +105,7 @@ export function HeaderClient({
         return (
           <PlatformDropdown
             label={header.platformLabel ?? 'MODULES'}
-            modules={header.platformModules ?? []}
+            modules={navModules}
             promoCard={header.platformPromoCard ?? undefined}
           />
         )
@@ -140,15 +150,8 @@ export function HeaderClient({
               ? siteSettings?.logo
               : header.logoOverride
 
-            const logoUrl =
-              logoSource && typeof logoSource === 'object' && 'url' in logoSource
-                ? logoSource.url
-                : null
-
-            const logoAlt =
-              logoSource && typeof logoSource === 'object' && 'alt' in logoSource
-                ? (logoSource.alt as string) || siteSettings?.siteName || 'Revnator'
-                : siteSettings?.siteName || 'Revnator'
+            const logoUrl = getImageUrl(logoSource, 'logo')
+            const logoAlt = getImageAlt(logoSource, siteSettings?.siteName || 'Revnator')
 
             return logoUrl ? (
               <img

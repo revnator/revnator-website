@@ -80,7 +80,15 @@ export function ModuleHero({ data }: { data: ModuleHeroData }): React.ReactEleme
 
           {/* Image column */}
           <div>
-            <BrowserFrame />
+            {data.image ? (
+              <img
+                src={data.image.url}
+                alt={data.image.alt || data.heading}
+                className="rounded-xl border border-light shadow-[0_12px_32px_rgba(19,15,30,0.06)]"
+              />
+            ) : (
+              <BrowserFrame />
+            )}
           </div>
         </div>
       </div>

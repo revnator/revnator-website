@@ -3,9 +3,18 @@
 import React, { useState } from 'react'
 import { Plus, X } from 'lucide-react'
 import { cn } from '@/utilities/ui'
-import { pricingFAQs } from '../_pricing/pricingData'
 
-export function PricingFAQ(): React.ReactElement {
+export interface FAQItemData {
+  question: string
+  answer: string
+}
+
+export interface PricingFAQData {
+  heading: string
+  faqs: FAQItemData[]
+}
+
+export function PricingFAQ({ data }: { data: PricingFAQData }): React.ReactElement {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   function toggle(index: number): void {
@@ -18,7 +27,7 @@ export function PricingFAQ(): React.ReactElement {
         {/* Header */}
         <div className="text-center">
           <h2 className="font-heading text-[28px] font-bold text-dark tracking-[-0.01em]">
-            Frequently asked questions
+            {data.heading}
           </h2>
           <p className="mt-3 font-body text-[15px] text-muted">
             Can&apos;t find what you&apos;re looking for? Reach out to our team.
@@ -27,7 +36,7 @@ export function PricingFAQ(): React.ReactElement {
 
         {/* Accordion */}
         <div className="mt-12">
-          {pricingFAQs.map((faq, i) => {
+          {data.faqs.map((faq, i) => {
             const isOpen = openIndex === i
             return (
               <div key={faq.question} className="border-b border-light">

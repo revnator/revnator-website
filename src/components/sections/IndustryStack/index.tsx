@@ -1,14 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
-import { GitBranch, Mail, LayoutDashboard, FileText } from 'lucide-react'
-import type { IndustryStackData } from '../_industries/agenciesData'
-
-const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
-  GitBranch,
-  Mail,
-  LayoutDashboard,
-  FileText,
-}
+import { DynamicIcon } from '@/lib/icons'
+import type { IndustryStackData } from '../_industries/types'
 
 export function IndustryStack({ data }: { data: IndustryStackData }): React.ReactElement {
   return (
@@ -27,7 +20,6 @@ export function IndustryStack({ data }: { data: IndustryStackData }): React.Reac
         {/* Grid */}
         <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {data.modules.map((mod) => {
-            const Icon = iconMap[mod.icon]
             return (
               <Link
                 key={mod.name}
@@ -36,7 +28,7 @@ export function IndustryStack({ data }: { data: IndustryStackData }): React.Reac
               >
                 {/* Icon */}
                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-light">
-                  {Icon && <Icon size={18} className="text-primary" />}
+                  <DynamicIcon name={mod.icon} size={18} className="text-primary" />
                 </div>
 
                 {/* Name */}

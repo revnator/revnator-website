@@ -1,8 +1,12 @@
 import React from 'react'
 import Link from 'next/link'
-import { integrations } from './integrationsData'
 
-export function Integrations(): React.ReactElement {
+export interface IntegrationData {
+  name: string
+  logoUrl?: string | null
+}
+
+export function Integrations({ integrations }: { integrations: IntegrationData[] }): React.ReactElement {
   return (
     <section className="w-full bg-white py-20">
       <div className="mx-auto max-w-container px-6">
@@ -21,14 +25,18 @@ export function Integrations(): React.ReactElement {
 
         {/* Logo grid */}
         <div className="mt-12 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {integrations.map((name) => (
+          {integrations.map((item) => (
             <div
-              key={name}
+              key={item.name}
               className="flex h-[60px] items-center justify-center rounded-xl border border-light bg-bg"
             >
-              <span className="font-body text-[11px] font-medium text-muted">
-                {name}
-              </span>
+              {item.logoUrl ? (
+                <img src={item.logoUrl} alt={item.name} className="h-6 w-auto object-contain" />
+              ) : (
+                <span className="font-body text-[11px] font-medium text-muted">
+                  {item.name}
+                </span>
+              )}
             </div>
           ))}
         </div>

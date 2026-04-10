@@ -2,7 +2,6 @@ import React from 'react'
 import Link from 'next/link'
 import { Check } from 'lucide-react'
 import { cn } from '@/utilities/ui'
-import type { FeatureShowcaseData } from './featureShowcaseData'
 
 function PlaceholderFrame({ bgClass }: { bgClass: string }): React.ReactElement {
   return (
@@ -43,14 +42,27 @@ function PlaceholderFrame({ bgClass }: { bgClass: string }): React.ReactElement 
   )
 }
 
-interface FeatureShowcaseProps {
-  data: FeatureShowcaseData
+export interface FeatureShowcaseData {
+  label: string
+  heading: string
+  description: string
+  bullets: string[]
+  linkLabel: string
+  linkHref: string
   reverse?: boolean
+  imageUrl?: string | null
+  imageAlt?: string
+  bgClass?: string
+  frameBgClass?: string
 }
 
-export function FeatureShowcase({ data, reverse = false }: FeatureShowcaseProps): React.ReactElement {
+export function FeatureShowcase({ data }: { data: FeatureShowcaseData }): React.ReactElement {
+  const bgClass = data.bgClass || 'bg-white'
+  const frameBgClass = data.frameBgClass || 'bg-bg'
+  const reverse = data.reverse ?? false
+
   return (
-    <section className={cn('w-full py-24', data.bgClass)}>
+    <section className={cn('w-full py-24', bgClass)}>
       <div className="mx-auto max-w-container px-6">
         <div
           className={cn(
@@ -87,7 +99,15 @@ export function FeatureShowcase({ data, reverse = false }: FeatureShowcaseProps)
 
           {/* Image column */}
           <div className={cn(reverse && 'md:[direction:ltr]')}>
-            <PlaceholderFrame bgClass={data.frameBgClass} />
+            {data.imageUrl ? (
+              <img
+                src={data.imageUrl}
+                alt={data.imageAlt || data.heading}
+                className="rounded-xl border border-light shadow-[0_12px_32px_rgba(19,15,30,0.06)]"
+              />
+            ) : (
+              <PlaceholderFrame bgClass={frameBgClass} />
+            )}
           </div>
         </div>
       </div>

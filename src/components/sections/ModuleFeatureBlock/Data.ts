@@ -7,4 +7,5 @@ export interface ModuleFeatureBlockData {
     text: string
     href: string
   }
+  image?: { url: string; alt: string } | null
 }

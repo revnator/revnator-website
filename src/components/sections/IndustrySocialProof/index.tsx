@@ -1,5 +1,5 @@
 import React from 'react'
-import type { IndustrySocialProofData } from '../_industries/agenciesData'
+import type { IndustrySocialProofData } from '../_industries/types'
 
 export function IndustrySocialProof({
   data,

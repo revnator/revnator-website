@@ -6,12 +6,18 @@ import { cn } from '@/utilities/ui'
 import { DynamicIcon } from '@/lib/icons'
 import type { Header as HeaderType } from '@/payload-types'
 
-type PlatformModule = NonNullable<HeaderType['platformModules']>[number]
+interface NavModule {
+  name: string
+  description: string
+  icon: string
+  href: string
+}
+
 type PromoCard = NonNullable<HeaderType['platformPromoCard']>
 
 interface PlatformDropdownProps {
   label: string
-  modules: PlatformModule[]
+  modules: NavModule[]
   promoCard?: PromoCard
 }
 

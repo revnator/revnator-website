@@ -1,6 +1,6 @@
 import React from 'react'
 import { ArrowRight } from 'lucide-react'
-import type { IndustryWorkflowData } from '../_industries/agenciesData'
+import type { IndustryWorkflowData } from '../_industries/types'
 
 export function IndustryWorkflow({ data }: { data: IndustryWorkflowData }): React.ReactElement {
   return (

@@ -63,6 +63,8 @@ export const hero: Field = {
       type: 'upload',
       admin: {
         condition: (_, { type } = {}) => ['highImpact', 'mediumImpact'].includes(type),
+        description:
+          'Recommended: 1280\u00D7720px (PNG or JPG). Hero background or feature image.',
       },
       relationTo: 'media',
       required: true,

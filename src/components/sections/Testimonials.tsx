@@ -1,8 +1,15 @@
 import React from 'react'
 import { Star } from 'lucide-react'
-import { testimonials } from './testimonialsData'
 
-export function Testimonials(): React.ReactElement {
+export interface TestimonialData {
+  quote: string
+  name: string
+  title: string
+  initials: string
+  avatarUrl?: string | null
+}
+
+export function Testimonials({ testimonials }: { testimonials: TestimonialData[] }): React.ReactElement {
   return (
     <section className="w-full bg-bg py-24">
       <div className="mx-auto max-w-container px-6">
@@ -49,10 +56,14 @@ export function Testimonials(): React.ReactElement {
 
               {/* Author */}
               <div className="mt-6 flex items-center gap-3 border-t border-light pt-5">
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-light">
-                  <span className="font-body text-[13px] font-semibold text-primary">
-                    {t.initials}
-                  </span>
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-light overflow-hidden">
+                  {t.avatarUrl ? (
+                    <img src={t.avatarUrl} alt={t.name} className="h-full w-full object-cover" />
+                  ) : (
+                    <span className="font-body text-[13px] font-semibold text-primary">
+                      {t.initials}
+                    </span>
+                  )}
                 </div>
                 <div>
                   <span className="block font-body text-sm font-semibold text-dark">

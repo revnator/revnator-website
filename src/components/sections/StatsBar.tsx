@@ -1,7 +1,11 @@
 import React from 'react'
-import { stats } from './statsBarData'
 
-export function StatsBar(): React.ReactElement {
+export interface StatData {
+  value: string
+  label: string
+}
+
+export function StatsBar({ stats }: { stats: StatData[] }): React.ReactElement {
   return (
     <section className="w-full bg-dark py-20">
       <div className="mx-auto max-w-container px-6">

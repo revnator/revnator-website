@@ -4,13 +4,9 @@ import React, { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { ImageIcon } from 'lucide-react'
 import { cn } from '@/utilities/ui'
-import {
-  blogCategories,
-  type BlogCategory,
-  type BlogPost,
-} from '../_blog/blogData'
+import type { BlogPostCard } from '../_blog/types'
 
-function BlogCard({ post }: { post: BlogPost }): React.ReactElement {
+function BlogCard({ post }: { post: BlogPostCard }): React.ReactElement {
   return (
     <Link
       href={`/blog/${post.slug}`}
@@ -42,10 +38,12 @@ function BlogCard({ post }: { post: BlogPost }): React.ReactElement {
 
 export function BlogListingClient({
   posts,
+  categories,
 }: {
-  posts: BlogPost[]
+  posts: BlogPostCard[]
+  categories: string[]
 }): React.ReactElement {
-  const [activeFilter, setActiveFilter] = useState<BlogCategory>('All')
+  const [activeFilter, setActiveFilter] = useState('All')
 
   const filteredPosts = useMemo(
     () =>
@@ -60,7 +58,7 @@ export function BlogListingClient({
       <div className="mx-auto max-w-container px-6 md:px-12">
         {/* Filter pills */}
         <div className="flex flex-wrap gap-2 pb-8">
-          {blogCategories.map((cat) => (
+          {categories.map((cat) => (
             <button
               key={cat}
               type="button"

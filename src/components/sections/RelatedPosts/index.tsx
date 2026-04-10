@@ -1,12 +1,12 @@
 import React from 'react'
 import Link from 'next/link'
 import { ImageIcon } from 'lucide-react'
-import type { BlogPost } from '../_blog/blogData'
+import type { BlogPostCard } from '../_blog/types'
 
 export function RelatedPosts({
   posts,
 }: {
-  posts: BlogPost[]
+  posts: BlogPostCard[]
 }): React.ReactElement {
   return (
     <section className="bg-bg py-20">

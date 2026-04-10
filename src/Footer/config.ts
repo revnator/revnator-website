@@ -32,6 +32,8 @@ export const Footer: GlobalConfig = {
               type: 'upload',
               relationTo: 'media',
               admin: {
+                description:
+                  'Recommended: 480\u00D7160px (PNG, transparent, white/light version). Overrides Site Settings logoDark.',
                 condition: (_data, siblingData) =>
                   !siblingData?.useLogoFromSiteSettings,
               },

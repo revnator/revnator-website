@@ -81,6 +81,10 @@ export const Posts: CollectionConfig<'posts'> = {
               name: 'heroImage',
               type: 'upload',
               relationTo: 'media',
+              admin: {
+                description:
+                  'Recommended: 1280\u00D7720px (PNG or JPG). Featured image for the blog post.',
+              },
             },
             {
               name: 'content',

@@ -1,9 +1,9 @@
 import React from 'react'
 import Link from 'next/link'
 import { ImageIcon } from 'lucide-react'
-import type { BlogPost } from '../_blog/blogData'
+import type { BlogPostCard } from '../_blog/types'
 
-export function BlogFeaturedPost({ post }: { post: BlogPost }): React.ReactElement {
+export function BlogFeaturedPost({ post }: { post: BlogPostCard }): React.ReactElement {
   return (
     <section className="bg-bg pt-8 pb-8">
       <div className="mx-auto max-w-container px-6 md:px-12">

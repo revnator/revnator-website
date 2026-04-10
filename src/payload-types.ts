@@ -72,6 +72,11 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
+    modules: Module;
+    'use-cases': UseCase;
+    industries: Industry;
+    'blog-categories': BlogCategory;
+    'blog-posts': BlogPost;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -94,6 +99,11 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    modules: ModulesSelect<false> | ModulesSelect<true>;
+    'use-cases': UseCasesSelect<false> | UseCasesSelect<true>;
+    industries: IndustriesSelect<false> | IndustriesSelect<true>;
+    'blog-categories': BlogCategoriesSelect<false> | BlogCategoriesSelect<true>;
+    'blog-posts': BlogPostsSelect<false> | BlogPostsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -113,11 +123,25 @@ export interface Config {
     header: Header;
     footer: Footer;
     'site-settings': SiteSetting;
+    'home-page': HomePage;
+    'pricing-page': PricingPage;
+    'why-revnator': WhyRevnator;
+    'about-page': AboutPage;
+    'platform-page': PlatformPage;
+    'support-page': SupportPage;
+    'contact-page': ContactPage;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    'home-page': HomePageSelect<false> | HomePageSelect<true>;
+    'pricing-page': PricingPageSelect<false> | PricingPageSelect<true>;
+    'why-revnator': WhyRevnatorSelect<false> | WhyRevnatorSelect<true>;
+    'about-page': AboutPageSelect<false> | AboutPageSelect<true>;
+    'platform-page': PlatformPageSelect<false> | PlatformPageSelect<true>;
+    'support-page': SupportPageSelect<false> | SupportPageSelect<true>;
+    'contact-page': ContactPageSelect<false> | ContactPageSelect<true>;
   };
   locale: null;
   widgets: {
@@ -201,6 +225,9 @@ export interface Page {
           id?: string | null;
         }[]
       | null;
+    /**
+     * Recommended: 1280×720px (PNG or JPG). Hero background or feature image.
+     */
     media?: (number | null) | Media;
   };
   layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
@@ -229,6 +256,9 @@ export interface Page {
 export interface Post {
   id: number;
   title: string;
+  /**
+   * Recommended: 1280×720px (PNG or JPG). Featured image for the blog post.
+   */
   heroImage?: (number | null) | Media;
   content: {
     root: {
@@ -315,7 +345,7 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    square?: {
+    card?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -323,7 +353,7 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    small?: {
+    logo?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -331,7 +361,7 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    medium?: {
+    logoLarge?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -339,7 +369,7 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    large?: {
+    favicon?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -347,7 +377,7 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    xlarge?: {
+    heroProduct?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -355,7 +385,47 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    og?: {
+    featureScreenshot?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    blogThumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    blogFeatured?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    ogImage?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    avatar?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    icon?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -544,6 +614,9 @@ export interface ContentBlock {
  * via the `definition` "MediaBlock".
  */
 export interface MediaBlock {
+  /**
+   * Recommended: 1280×720px (PNG or JPG). Will be auto-resized.
+   */
   media: number | Media;
   id?: string | null;
   blockName?: string | null;
@@ -785,6 +858,614 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "modules".
+ */
+export interface Module {
+  id: number;
+  /**
+   * Module name (e.g., 'Contact Lifecycle Management')
+   */
+  name: string;
+  /**
+   * Category badge shown on the module page (e.g., 'CRM', 'EMAIL', 'PIPELINE')
+   */
+  badge: string;
+  /**
+   * Lucide icon used in headers, related modules, and platform grid
+   */
+  icon:
+    | 'Activity'
+    | 'AlertTriangle'
+    | 'ArrowRight'
+    | 'AtSign'
+    | 'BarChart3'
+    | 'Bell'
+    | 'BookOpen'
+    | 'Brain'
+    | 'Briefcase'
+    | 'Building2'
+    | 'Calendar'
+    | 'CheckSquare'
+    | 'Clock'
+    | 'Code'
+    | 'CreditCard'
+    | 'Database'
+    | 'DollarSign'
+    | 'EyeOff'
+    | 'FileText'
+    | 'Filter'
+    | 'GitBranch'
+    | 'Globe'
+    | 'Hash'
+    | 'Heart'
+    | 'HelpCircle'
+    | 'Layers'
+    | 'LayoutDashboard'
+    | 'Lightbulb'
+    | 'Link'
+    | 'ListX'
+    | 'Mail'
+    | 'MapPin'
+    | 'MessageCircle'
+    | 'Phone'
+    | 'Plug'
+    | 'RefreshCw'
+    | 'Rocket'
+    | 'Search'
+    | 'Send'
+    | 'Shield'
+    | 'Sparkles'
+    | 'SplitSquareHorizontal'
+    | 'Target'
+    | 'TrendingDown'
+    | 'TrendingUp'
+    | 'Unlink'
+    | 'Upload'
+    | 'Users'
+    | 'Zap';
+  /**
+   * Short description for cards and grids (~80 chars). Falls back to heroDescription if empty.
+   */
+  shortDescription?: string | null;
+  /**
+   * Short feature bullets shown on platform overview cards (3 recommended)
+   */
+  cardFeatures?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Display order in lists. Lower numbers appear first.
+   */
+  order?: number | null;
+  /**
+   * Uncheck to hide this module from the site without deleting it
+   */
+  isPublished?: boolean | null;
+  /**
+   * Main heading on the module page hero (e.g., 'Manage every contact, from first touch to closed deal')
+   */
+  heroHeading: string;
+  /**
+   * 1-2 sentence description below the heading
+   */
+  heroDescription: string;
+  heroPrimaryCtaText?: string | null;
+  heroPrimaryCtaHref?: string | null;
+  heroSecondaryCtaText?: string | null;
+  heroSecondaryCtaHref?: string | null;
+  /**
+   * Recommended: 1200×800px (PNG or JPG). Product screenshot for module hero. Falls back to placeholder if empty.
+   */
+  heroImage?: (number | null) | Media;
+  /**
+   * 5-6 quick-glance capabilities shown in a horizontal strip below the hero
+   */
+  capabilities: {
+    icon:
+      | 'Activity'
+      | 'AlertTriangle'
+      | 'ArrowRight'
+      | 'AtSign'
+      | 'BarChart3'
+      | 'Bell'
+      | 'BookOpen'
+      | 'Brain'
+      | 'Briefcase'
+      | 'Building2'
+      | 'Calendar'
+      | 'CheckSquare'
+      | 'Clock'
+      | 'Code'
+      | 'CreditCard'
+      | 'Database'
+      | 'DollarSign'
+      | 'EyeOff'
+      | 'FileText'
+      | 'Filter'
+      | 'GitBranch'
+      | 'Globe'
+      | 'Hash'
+      | 'Heart'
+      | 'HelpCircle'
+      | 'Layers'
+      | 'LayoutDashboard'
+      | 'Lightbulb'
+      | 'Link'
+      | 'ListX'
+      | 'Mail'
+      | 'MapPin'
+      | 'MessageCircle'
+      | 'Phone'
+      | 'Plug'
+      | 'RefreshCw'
+      | 'Rocket'
+      | 'Search'
+      | 'Send'
+      | 'Shield'
+      | 'Sparkles'
+      | 'SplitSquareHorizontal'
+      | 'Target'
+      | 'TrendingDown'
+      | 'TrendingUp'
+      | 'Unlink'
+      | 'Upload'
+      | 'Users'
+      | 'Zap';
+    title: string;
+    id?: string | null;
+  }[];
+  featureBlocks: {
+    /**
+     * Section label like 'ORGANIZE', 'SEGMENT', 'CUSTOMIZE'
+     */
+    label: string;
+    heading: string;
+    description: string;
+    features: {
+      text: string;
+      id?: string | null;
+    }[];
+    ctaText: string;
+    ctaHref: string;
+    /**
+     * Recommended: 900×600px (PNG or JPG). Feature screenshot. Falls back to placeholder if empty.
+     */
+    image?: (number | null) | Media;
+    id?: string | null;
+  }[];
+  comparisonLabel?: string | null;
+  /**
+   * e.g., 'Not just another CRM. A sales-first contact system.'
+   */
+  comparisonHeading: string;
+  comparisonCards?:
+    | {
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  comparisonStats?:
+    | {
+        /**
+         * e.g., "50K+", "30 sec", "100%"
+         */
+        number: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  relatedModules?:
+    | {
+        /**
+         * Pick another module to cross-link from this page
+         */
+        module?: (number | null) | Module;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * e.g., 'Start managing your contacts today'
+   */
+  ctaHeading: string;
+  ctaSubheading: string;
+  ctaPrimaryText?: string | null;
+  ctaPrimaryHref?: string | null;
+  ctaSecondaryText?: string | null;
+  ctaSecondaryHref?: string | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  /**
+   * URL slug. Auto-generated from name. Edit if needed.
+   */
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "use-cases".
+ */
+export interface UseCase {
+  id: number;
+  /**
+   * Use case name (e.g., 'Sales Operations', 'CRM')
+   */
+  name: string;
+  /**
+   * Display order in lists. Lower numbers appear first.
+   */
+  order?: number | null;
+  /**
+   * Uncheck to hide this use case from the site without deleting it
+   */
+  isPublished?: boolean | null;
+  /**
+   * Uppercase badge text above the headline
+   */
+  badge?: string | null;
+  /**
+   * Main heading on the use case page hero
+   */
+  heroHeading: string;
+  /**
+   * 1-2 sentence description below the heading
+   */
+  heroDescription: string;
+  primaryCtaText?: string | null;
+  primaryCtaHref?: string | null;
+  secondaryCtaText?: string | null;
+  secondaryCtaHref?: string | null;
+  /**
+   * Recommended: 1200×800px (PNG or JPG)
+   */
+  heroImage?: (number | null) | Media;
+  painSectionLabel?: string | null;
+  painHeading: string;
+  /**
+   * Exactly 3 pain point cards
+   */
+  painCards?:
+    | {
+        icon:
+          | 'Activity'
+          | 'AlertTriangle'
+          | 'ArrowRight'
+          | 'AtSign'
+          | 'BarChart3'
+          | 'Bell'
+          | 'BookOpen'
+          | 'Brain'
+          | 'Briefcase'
+          | 'Building2'
+          | 'Calendar'
+          | 'CheckSquare'
+          | 'Clock'
+          | 'Code'
+          | 'CreditCard'
+          | 'Database'
+          | 'DollarSign'
+          | 'EyeOff'
+          | 'FileText'
+          | 'Filter'
+          | 'GitBranch'
+          | 'Globe'
+          | 'Hash'
+          | 'Heart'
+          | 'HelpCircle'
+          | 'Layers'
+          | 'LayoutDashboard'
+          | 'Lightbulb'
+          | 'Link'
+          | 'ListX'
+          | 'Mail'
+          | 'MapPin'
+          | 'MessageCircle'
+          | 'Phone'
+          | 'Plug'
+          | 'RefreshCw'
+          | 'Rocket'
+          | 'Search'
+          | 'Send'
+          | 'Shield'
+          | 'Sparkles'
+          | 'SplitSquareHorizontal'
+          | 'Target'
+          | 'TrendingDown'
+          | 'TrendingUp'
+          | 'Unlink'
+          | 'Upload'
+          | 'Users'
+          | 'Zap';
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Solution blocks with features (2-4 recommended)
+   */
+  solutions?:
+    | {
+        /**
+         * Uppercase section label (e.g., 'UNIFIED TASKS')
+         */
+        label: string;
+        heading: string;
+        description: string;
+        features?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * Recommended: 900×600px. Falls back to placeholder if empty.
+         */
+        image?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  relatedModulesLabel?: string | null;
+  relatedModulesHeading?: string | null;
+  relatedModules?:
+    | {
+        /**
+         * Pick a module to cross-link from this page
+         */
+        module?: (number | null) | Module;
+        id?: string | null;
+      }[]
+    | null;
+  ctaHeading?: string | null;
+  ctaSubheading?: string | null;
+  ctaPrimaryText?: string | null;
+  ctaPrimaryHref?: string | null;
+  ctaSecondaryText?: string | null;
+  ctaSecondaryHref?: string | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  /**
+   * URL slug. Auto-generated from name. Edit if needed.
+   */
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "industries".
+ */
+export interface Industry {
+  id: number;
+  /**
+   * Industry name (e.g., 'Agencies', 'SaaS Sales')
+   */
+  name: string;
+  /**
+   * Display order in lists. Lower numbers appear first.
+   */
+  order?: number | null;
+  /**
+   * Uncheck to hide this industry page from the site without deleting it
+   */
+  isPublished?: boolean | null;
+  /**
+   * Uppercase badge text (e.g., 'FOR AGENCIES')
+   */
+  badge: string;
+  heroHeading: string;
+  heroDescription: string;
+  primaryCtaText?: string | null;
+  primaryCtaHref?: string | null;
+  secondaryCtaText?: string | null;
+  secondaryCtaHref?: string | null;
+  builtForLabel?: string | null;
+  builtForTags?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Recommended: 1200×800px (PNG or JPG)
+   */
+  heroImage?: (number | null) | Media;
+  socialProofLabel?: string | null;
+  /**
+   * Exactly 4 stat cards
+   */
+  stats?:
+    | {
+        /**
+         * e.g., "200+", "3.2x"
+         */
+        number: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  useCasesSectionLabel?: string | null;
+  useCasesHeading?: string | null;
+  /**
+   * Exactly 3 use case cards
+   */
+  useCaseCards?:
+    | {
+        /**
+         * e.g., "01"
+         */
+        number: string;
+        title: string;
+        description: string;
+        tagLabel: string;
+        id?: string | null;
+      }[]
+    | null;
+  workflowSectionLabel?: string | null;
+  workflowHeading?: string | null;
+  workflowSubheading?: string | null;
+  workflowSteps?:
+    | {
+        number: string;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  testimonialQuote: string;
+  testimonialAuthorName?: string | null;
+  testimonialAuthorTitle?: string | null;
+  testimonialAuthorInitials?: string | null;
+  stackLabel?: string | null;
+  stackHeading?: string | null;
+  stackModules?:
+    | {
+        module: number | Module;
+        /**
+         * e.g., 'Track every pitch from lead to signed contract'
+         */
+        reason?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  ctaHeading?: string | null;
+  ctaSubheading?: string | null;
+  ctaPrimaryText?: string | null;
+  ctaPrimaryHref?: string | null;
+  ctaSecondaryText?: string | null;
+  ctaSecondaryHref?: string | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  /**
+   * URL slug. Auto-generated from name. Edit if needed.
+   */
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-categories".
+ */
+export interface BlogCategory {
+  id: number;
+  name: string;
+  /**
+   * URL slug. Auto-generated from name.
+   */
+  slug: string;
+  /**
+   * Display order. Lower numbers appear first.
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-posts".
+ */
+export interface BlogPost {
+  id: number;
+  title: string;
+  /**
+   * Only published posts appear on the site
+   */
+  status: 'draft' | 'published';
+  /**
+   * Display date on the blog. Future dates won't show until that date.
+   */
+  publishedDate: string;
+  category: number | BlogCategory;
+  /**
+   * Recommended: 1280x720px
+   */
+  featuredImage?: (number | null) | Media;
+  /**
+   * Short summary shown on blog cards. Max 300 characters.
+   */
+  excerpt: string;
+  /**
+   * Write your blog post content here. Use the toolbar for formatting, headings, lists, code blocks, and images.
+   */
+  body: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Estimated reading time shown on the post
+   */
+  readTime?: string | null;
+  authorName: string;
+  authorInitials: string;
+  authorBio?: string | null;
+  /**
+   * Recommended: 200x200px square
+   */
+  authorPhoto?: (number | null) | Media;
+  /**
+   * Tags shown at the bottom of the post
+   */
+  tags?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * 3 related posts shown at the bottom. If empty, auto-selected by category.
+   */
+  relatedPosts?: (number | BlogPost)[] | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  /**
+   * URL slug. Auto-generated from title.
+   */
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -992,6 +1673,26 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: number | User;
+      } | null)
+    | ({
+        relationTo: 'modules';
+        value: number | Module;
+      } | null)
+    | ({
+        relationTo: 'use-cases';
+        value: number | UseCase;
+      } | null)
+    | ({
+        relationTo: 'industries';
+        value: number | Industry;
+      } | null)
+    | ({
+        relationTo: 'blog-categories';
+        value: number | BlogCategory;
+      } | null)
+    | ({
+        relationTo: 'blog-posts';
+        value: number | BlogPost;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1253,7 +1954,7 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        square?:
+        card?:
           | T
           | {
               url?: T;
@@ -1263,7 +1964,7 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        small?:
+        logo?:
           | T
           | {
               url?: T;
@@ -1273,7 +1974,7 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        medium?:
+        logoLarge?:
           | T
           | {
               url?: T;
@@ -1283,7 +1984,7 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        large?:
+        favicon?:
           | T
           | {
               url?: T;
@@ -1293,7 +1994,7 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        xlarge?:
+        heroProduct?:
           | T
           | {
               url?: T;
@@ -1303,7 +2004,57 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        og?:
+        featureScreenshot?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        blogThumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        blogFeatured?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        ogImage?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        avatar?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        icon?:
           | T
           | {
               url?: T;
@@ -1357,6 +2108,288 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "modules_select".
+ */
+export interface ModulesSelect<T extends boolean = true> {
+  name?: T;
+  badge?: T;
+  icon?: T;
+  shortDescription?: T;
+  cardFeatures?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  order?: T;
+  isPublished?: T;
+  heroHeading?: T;
+  heroDescription?: T;
+  heroPrimaryCtaText?: T;
+  heroPrimaryCtaHref?: T;
+  heroSecondaryCtaText?: T;
+  heroSecondaryCtaHref?: T;
+  heroImage?: T;
+  capabilities?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        id?: T;
+      };
+  featureBlocks?:
+    | T
+    | {
+        label?: T;
+        heading?: T;
+        description?: T;
+        features?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        ctaText?: T;
+        ctaHref?: T;
+        image?: T;
+        id?: T;
+      };
+  comparisonLabel?: T;
+  comparisonHeading?: T;
+  comparisonCards?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  comparisonStats?:
+    | T
+    | {
+        number?: T;
+        label?: T;
+        id?: T;
+      };
+  relatedModules?:
+    | T
+    | {
+        module?: T;
+        id?: T;
+      };
+  ctaHeading?: T;
+  ctaSubheading?: T;
+  ctaPrimaryText?: T;
+  ctaPrimaryHref?: T;
+  ctaSecondaryText?: T;
+  ctaSecondaryHref?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "use-cases_select".
+ */
+export interface UseCasesSelect<T extends boolean = true> {
+  name?: T;
+  order?: T;
+  isPublished?: T;
+  badge?: T;
+  heroHeading?: T;
+  heroDescription?: T;
+  primaryCtaText?: T;
+  primaryCtaHref?: T;
+  secondaryCtaText?: T;
+  secondaryCtaHref?: T;
+  heroImage?: T;
+  painSectionLabel?: T;
+  painHeading?: T;
+  painCards?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  solutions?:
+    | T
+    | {
+        label?: T;
+        heading?: T;
+        description?: T;
+        features?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        image?: T;
+        id?: T;
+      };
+  relatedModulesLabel?: T;
+  relatedModulesHeading?: T;
+  relatedModules?:
+    | T
+    | {
+        module?: T;
+        id?: T;
+      };
+  ctaHeading?: T;
+  ctaSubheading?: T;
+  ctaPrimaryText?: T;
+  ctaPrimaryHref?: T;
+  ctaSecondaryText?: T;
+  ctaSecondaryHref?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "industries_select".
+ */
+export interface IndustriesSelect<T extends boolean = true> {
+  name?: T;
+  order?: T;
+  isPublished?: T;
+  badge?: T;
+  heroHeading?: T;
+  heroDescription?: T;
+  primaryCtaText?: T;
+  primaryCtaHref?: T;
+  secondaryCtaText?: T;
+  secondaryCtaHref?: T;
+  builtForLabel?: T;
+  builtForTags?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  heroImage?: T;
+  socialProofLabel?: T;
+  stats?:
+    | T
+    | {
+        number?: T;
+        label?: T;
+        id?: T;
+      };
+  useCasesSectionLabel?: T;
+  useCasesHeading?: T;
+  useCaseCards?:
+    | T
+    | {
+        number?: T;
+        title?: T;
+        description?: T;
+        tagLabel?: T;
+        id?: T;
+      };
+  workflowSectionLabel?: T;
+  workflowHeading?: T;
+  workflowSubheading?: T;
+  workflowSteps?:
+    | T
+    | {
+        number?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  testimonialQuote?: T;
+  testimonialAuthorName?: T;
+  testimonialAuthorTitle?: T;
+  testimonialAuthorInitials?: T;
+  stackLabel?: T;
+  stackHeading?: T;
+  stackModules?:
+    | T
+    | {
+        module?: T;
+        reason?: T;
+        id?: T;
+      };
+  ctaHeading?: T;
+  ctaSubheading?: T;
+  ctaPrimaryText?: T;
+  ctaPrimaryHref?: T;
+  ctaSecondaryText?: T;
+  ctaSecondaryHref?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-categories_select".
+ */
+export interface BlogCategoriesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-posts_select".
+ */
+export interface BlogPostsSelect<T extends boolean = true> {
+  title?: T;
+  status?: T;
+  publishedDate?: T;
+  category?: T;
+  featuredImage?: T;
+  excerpt?: T;
+  body?: T;
+  readTime?: T;
+  authorName?: T;
+  authorInitials?: T;
+  authorBio?: T;
+  authorPhoto?: T;
+  tags?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  relatedPosts?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1643,6 +2676,9 @@ export interface Header {
    * Use the logo from Site Settings, or override here.
    */
   useLogoFromSiteSettings?: boolean | null;
+  /**
+   * Recommended: 480×160px (PNG, transparent). Overrides Site Settings logo.
+   */
   logoOverride?: (number | null) | Media;
   /**
    * Wordmark text shown next to or instead of the logo.
@@ -1668,37 +2704,6 @@ export interface Header {
    * Section label shown above the module grid.
    */
   platformLabel?: string | null;
-  platformModules?:
-    | {
-        name: string;
-        /**
-         * Short description (~50 chars)
-         */
-        description: string;
-        /**
-         * Lucide icon name. See the full icon list at lucide.dev
-         */
-        icon:
-          | 'Users'
-          | 'Building2'
-          | 'Mail'
-          | 'GitBranch'
-          | 'LayoutDashboard'
-          | 'Calendar'
-          | 'MessageCircle'
-          | 'Sparkles'
-          | 'FileText'
-          | 'Database'
-          | 'Filter'
-          | 'Layers'
-          | 'BarChart3'
-          | 'Zap'
-          | 'Target'
-          | 'Briefcase';
-        href: string;
-        id?: string | null;
-      }[]
-    | null;
   platformPromoCard?: {
     badge?: string | null;
     title?: string | null;
@@ -1784,6 +2789,9 @@ export interface Footer {
    * Use the logo from Site Settings, or override here.
    */
   useLogoFromSiteSettings?: boolean | null;
+  /**
+   * Recommended: 480×160px (PNG, transparent, white/light version). Overrides Site Settings logoDark.
+   */
   logoOverride?: (number | null) | Media;
   /**
    * Show the brand text next to the logo. Disable if your logo already includes the wordmark.
@@ -1829,11 +2837,17 @@ export interface SiteSetting {
   id: number;
   siteName?: string | null;
   tagline?: string | null;
+  /**
+   * Recommended: 480×160px (PNG, transparent background). Will be auto-resized to fit header.
+   */
   logo?: (number | null) | Media;
   /**
-   * Logo variant for dark backgrounds
+   * Recommended: 480×160px (PNG, transparent background, white/light version for dark backgrounds).
    */
   logoDark?: (number | null) | Media;
+  /**
+   * Recommended: 512×512px (PNG, square). Used in browser tabs and bookmarks.
+   */
   favicon?: (number | null) | Media;
   /**
    * Fallback meta title when pages don't specify one (max 60 chars)
@@ -1844,7 +2858,7 @@ export interface SiteSetting {
    */
   defaultMetaDescription?: string | null;
   /**
-   * Default Open Graph image (1200×630) used when pages don't specify one
+   * Recommended: 1200×630px (PNG or JPG). Used as default Open Graph share image.
    */
   defaultOgImage?: (number | null) | Media;
   /**
@@ -1876,6 +2890,1029 @@ export interface SiteSetting {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page".
+ */
+export interface HomePage {
+  id: number;
+  /**
+   * Uppercase badge text above the headline
+   */
+  heroBadge?: string | null;
+  /**
+   * Main headline (the accent word is separate)
+   */
+  heroHeadline?: string | null;
+  /**
+   * Underlined accent word appended to the headline
+   */
+  heroHeadlineAccent?: string | null;
+  heroSubheadline?: string | null;
+  heroPrimaryCta?: {
+    label?: string | null;
+    href?: string | null;
+  };
+  heroSecondaryCta?: {
+    label?: string | null;
+    href?: string | null;
+  };
+  /**
+   * Small text below the CTA buttons
+   */
+  heroTrustLine?: string | null;
+  /**
+   * Floating stat cards on the browser mockup (2 recommended)
+   */
+  heroStats?:
+    | {
+        /**
+         * e.g. "↑ 34% reply rate"
+         */
+        label: string;
+        type: 'trending-up' | 'check-circle';
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Text shown above the logo strip
+   */
+  trustedByLabel?: string | null;
+  /**
+   * Company logos (upload transparent PNGs). Placeholder boxes shown if empty.
+   */
+  trustedByLogos?:
+    | {
+        /**
+         * Company name (used as alt text)
+         */
+        name: string;
+        /**
+         * Recommended: 240×80px (PNG, transparent background)
+         */
+        logo?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Section heading (optional — leave blank to hide)
+   */
+  capabilitiesHeading?: string | null;
+  /**
+   * 4 capability cards with icon, title, description, and link
+   */
+  capabilities?:
+    | {
+        icon:
+          | 'Activity'
+          | 'AlertTriangle'
+          | 'ArrowRight'
+          | 'AtSign'
+          | 'BarChart3'
+          | 'Bell'
+          | 'BookOpen'
+          | 'Brain'
+          | 'Briefcase'
+          | 'Building2'
+          | 'Calendar'
+          | 'CheckSquare'
+          | 'Clock'
+          | 'Code'
+          | 'CreditCard'
+          | 'Database'
+          | 'DollarSign'
+          | 'EyeOff'
+          | 'FileText'
+          | 'Filter'
+          | 'GitBranch'
+          | 'Globe'
+          | 'Hash'
+          | 'Heart'
+          | 'HelpCircle'
+          | 'Layers'
+          | 'LayoutDashboard'
+          | 'Lightbulb'
+          | 'Link'
+          | 'ListX'
+          | 'Mail'
+          | 'MapPin'
+          | 'MessageCircle'
+          | 'Phone'
+          | 'Plug'
+          | 'RefreshCw'
+          | 'Rocket'
+          | 'Search'
+          | 'Send'
+          | 'Shield'
+          | 'Sparkles'
+          | 'SplitSquareHorizontal'
+          | 'Target'
+          | 'TrendingDown'
+          | 'TrendingUp'
+          | 'Unlink'
+          | 'Upload'
+          | 'Users'
+          | 'Zap';
+        title: string;
+        description: string;
+        /**
+         * Link to module page, e.g. /platform/contacts
+         */
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Alternating left/right feature sections (3 recommended)
+   */
+  featureShowcases?:
+    | {
+        /**
+         * Uppercase section label, e.g. "OUTREACH"
+         */
+        label: string;
+        heading: string;
+        description: string;
+        bullets?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * e.g. "Explore Outreach"
+         */
+        linkLabel: string;
+        /**
+         * e.g. /platform/outreach
+         */
+        linkHref: string;
+        /**
+         * Flip the layout (image on left, text on right)
+         */
+        reverse?: boolean | null;
+        /**
+         * Recommended: 900×600px. Falls back to placeholder frame if empty.
+         */
+        image?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * 4 stats shown in a horizontal bar
+   */
+  stats?:
+    | {
+        /**
+         * e.g. "9+", "100%", "5 min", "$0"
+         */
+        value: string;
+        /**
+         * e.g. "Modules in one platform"
+         */
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Section heading (optional)
+   */
+  testimonialsHeading?: string | null;
+  /**
+   * Customer testimonial cards (3 recommended)
+   */
+  testimonials?:
+    | {
+        quote: string;
+        /**
+         * e.g. "Sarah M."
+         */
+        name: string;
+        /**
+         * e.g. "Head of Sales, TechCorp"
+         */
+        title: string;
+        /**
+         * Shown in the avatar circle, e.g. "SM"
+         */
+        initials: string;
+        /**
+         * Recommended: 200×200px. Falls back to initials if empty.
+         */
+        avatar?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Section heading (optional)
+   */
+  integrationsHeading?: string | null;
+  integrationsSubheading?: string | null;
+  /**
+   * Integration names/logos (12 recommended)
+   */
+  integrations?:
+    | {
+        /**
+         * e.g. "Gmail", "Salesforce", "Slack"
+         */
+        name: string;
+        /**
+         * Recommended: 96×96px (PNG, transparent). Falls back to text pill if empty.
+         */
+        logo?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  ctaHeading?: string | null;
+  ctaSubheading?: string | null;
+  ctaPrimaryCta?: {
+    label?: string | null;
+    href?: string | null;
+  };
+  ctaSecondaryCta?: {
+    label?: string | null;
+    href?: string | null;
+  };
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pricing-page".
+ */
+export interface PricingPage {
+  id: number;
+  /**
+   * Uppercase section label
+   */
+  heroLabel?: string | null;
+  heroHeading?: string | null;
+  heroSubheading?: string | null;
+  /**
+   * Note below the billing toggle
+   */
+  heroTrialNote?: string | null;
+  /**
+   * Pricing plans (4 recommended: Free, Starter, Growth, Pro)
+   */
+  plans?:
+    | {
+        /**
+         * e.g. "Free", "Starter", "Growth", "Pro"
+         */
+        name: string;
+        monthlyPrice: number;
+        annualPrice: number;
+        /**
+         * e.g. "forever", "/user/mo"
+         */
+        period: string;
+        description: string;
+        features?:
+          | {
+              text: string;
+              included?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
+        ctaLabel: string;
+        ctaHref: string;
+        /**
+         * Highlight this plan as the recommended option
+         */
+        highlighted?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  enterpriseHeading?: string | null;
+  enterpriseDescription?: string | null;
+  enterpriseCtaLabel?: string | null;
+  enterpriseCtaHref?: string | null;
+  comparisonHeading?: string | null;
+  /**
+   * Feature comparison categories (6 recommended)
+   */
+  comparisonCategories?:
+    | {
+        /**
+         * e.g. "Contacts & CRM", "Email & Outreach"
+         */
+        name: string;
+        rows?:
+          | {
+              feature: string;
+              free: string;
+              starter: string;
+              growth: string;
+              pro: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  faqHeading?: string | null;
+  /**
+   * Pricing FAQ items (8 recommended)
+   */
+  faqs?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  ctaHeading?: string | null;
+  ctaSubheading?: string | null;
+  ctaPrimaryCta?: {
+    label?: string | null;
+    href?: string | null;
+  };
+  ctaSecondaryCta?: {
+    label?: string | null;
+    href?: string | null;
+  };
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "why-revnator".
+ */
+export interface WhyRevnator {
+  id: number;
+  heroLabel?: string | null;
+  heroHeading?: string | null;
+  heroSubheading?: string | null;
+  heroPrimaryCta?: {
+    label?: string | null;
+    href?: string | null;
+  };
+  heroSecondaryCta?: {
+    label?: string | null;
+    href?: string | null;
+  };
+  painPointsLabel?: string | null;
+  painPointsHeading?: string | null;
+  /**
+   * Numbered pain point cards (3 recommended)
+   */
+  painPoints?:
+    | {
+        /**
+         * e.g. "01", "02"
+         */
+        number: string;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  beforeAfterLabel?: string | null;
+  beforeAfterHeading?: string | null;
+  /**
+   * "Without Revnator" tool list (left column)
+   */
+  withoutTools?:
+    | {
+        name: string;
+        /**
+         * e.g. "$90/mo"
+         */
+        price: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * "With Revnator" capability list (right column)
+   */
+  withCapabilities?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Price shown on the Revnator side
+   */
+  revnatorPrice?: string | null;
+  valuePropsLabel?: string | null;
+  valuePropsHeading?: string | null;
+  /**
+   * Value proposition blocks with icon, heading, description, and bullets
+   */
+  valueProps?:
+    | {
+        icon:
+          | 'Activity'
+          | 'AlertTriangle'
+          | 'ArrowRight'
+          | 'AtSign'
+          | 'BarChart3'
+          | 'Bell'
+          | 'BookOpen'
+          | 'Brain'
+          | 'Briefcase'
+          | 'Building2'
+          | 'Calendar'
+          | 'CheckSquare'
+          | 'Clock'
+          | 'Code'
+          | 'CreditCard'
+          | 'Database'
+          | 'DollarSign'
+          | 'EyeOff'
+          | 'FileText'
+          | 'Filter'
+          | 'GitBranch'
+          | 'Globe'
+          | 'Hash'
+          | 'Heart'
+          | 'HelpCircle'
+          | 'Layers'
+          | 'LayoutDashboard'
+          | 'Lightbulb'
+          | 'Link'
+          | 'ListX'
+          | 'Mail'
+          | 'MapPin'
+          | 'MessageCircle'
+          | 'Phone'
+          | 'Plug'
+          | 'RefreshCw'
+          | 'Rocket'
+          | 'Search'
+          | 'Send'
+          | 'Shield'
+          | 'Sparkles'
+          | 'SplitSquareHorizontal'
+          | 'Target'
+          | 'TrendingDown'
+          | 'TrendingUp'
+          | 'Unlink'
+          | 'Upload'
+          | 'Users'
+          | 'Zap';
+        heading: string;
+        description: string;
+        bullets?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  faqHeading?: string | null;
+  faqs?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  ctaHeading?: string | null;
+  ctaSubheading?: string | null;
+  ctaPrimaryCta?: {
+    label?: string | null;
+    href?: string | null;
+  };
+  ctaSecondaryCta?: {
+    label?: string | null;
+    href?: string | null;
+  };
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-page".
+ */
+export interface AboutPage {
+  id: number;
+  heroLabel?: string | null;
+  heroHeading?: string | null;
+  heroSubheading?: string | null;
+  missionLabel?: string | null;
+  missionHeading?: string | null;
+  missionParagraphs?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  storyLabel?: string | null;
+  storyHeading?: string | null;
+  /**
+   * Timeline milestones (4 recommended)
+   */
+  milestones?:
+    | {
+        year: string;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  valuesLabel?: string | null;
+  valuesHeading?: string | null;
+  values?:
+    | {
+        icon:
+          | 'Activity'
+          | 'AlertTriangle'
+          | 'ArrowRight'
+          | 'AtSign'
+          | 'BarChart3'
+          | 'Bell'
+          | 'BookOpen'
+          | 'Brain'
+          | 'Briefcase'
+          | 'Building2'
+          | 'Calendar'
+          | 'CheckSquare'
+          | 'Clock'
+          | 'Code'
+          | 'CreditCard'
+          | 'Database'
+          | 'DollarSign'
+          | 'EyeOff'
+          | 'FileText'
+          | 'Filter'
+          | 'GitBranch'
+          | 'Globe'
+          | 'Hash'
+          | 'Heart'
+          | 'HelpCircle'
+          | 'Layers'
+          | 'LayoutDashboard'
+          | 'Lightbulb'
+          | 'Link'
+          | 'ListX'
+          | 'Mail'
+          | 'MapPin'
+          | 'MessageCircle'
+          | 'Phone'
+          | 'Plug'
+          | 'RefreshCw'
+          | 'Rocket'
+          | 'Search'
+          | 'Send'
+          | 'Shield'
+          | 'Sparkles'
+          | 'SplitSquareHorizontal'
+          | 'Target'
+          | 'TrendingDown'
+          | 'TrendingUp'
+          | 'Unlink'
+          | 'Upload'
+          | 'Users'
+          | 'Zap';
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  teamLabel?: string | null;
+  teamHeading?: string | null;
+  teamSubheading?: string | null;
+  founder?: {
+    initials?: string | null;
+    name?: string | null;
+    title?: string | null;
+    bio?: string | null;
+    /**
+     * Recommended: 200×200px
+     */
+    avatar?: (number | null) | Media;
+  };
+  ctaHeading?: string | null;
+  ctaSubheading?: string | null;
+  ctaPrimaryCta?: {
+    label?: string | null;
+    href?: string | null;
+  };
+  ctaSecondaryCta?: {
+    label?: string | null;
+    href?: string | null;
+  };
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "platform-page".
+ */
+export interface PlatformPage {
+  id: number;
+  heroBadge?: string | null;
+  heroHeading?: string | null;
+  heroSubheading?: string | null;
+  heroPrimaryCta?: {
+    label?: string | null;
+    href?: string | null;
+  };
+  heroSecondaryCta?: {
+    label?: string | null;
+    href?: string | null;
+  };
+  /**
+   * Uppercase section label above the heading
+   */
+  gridLabel?: string | null;
+  gridHeading?: string | null;
+  gridSubheading?: string | null;
+  connectedLabel?: string | null;
+  connectedHeading?: string | null;
+  connectedSubheading?: string | null;
+  connectedStats?:
+    | {
+        value: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  pricingLabel?: string | null;
+  pricingHeading?: string | null;
+  pricingSubheading?: string | null;
+  pricingPills?:
+    | {
+        name: string;
+        price: string;
+        id?: string | null;
+      }[]
+    | null;
+  ctaHeading?: string | null;
+  ctaSubheading?: string | null;
+  ctaPrimaryCta?: {
+    label?: string | null;
+    href?: string | null;
+  };
+  ctaSecondaryCta?: {
+    label?: string | null;
+    href?: string | null;
+  };
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "support-page".
+ */
+export interface SupportPage {
+  id: number;
+  heroLabel?: string | null;
+  heroHeading?: string | null;
+  heroSubheading?: string | null;
+  /**
+   * Support channel cards (3 recommended)
+   */
+  channels?:
+    | {
+        icon:
+          | 'Activity'
+          | 'AlertTriangle'
+          | 'ArrowRight'
+          | 'AtSign'
+          | 'BarChart3'
+          | 'Bell'
+          | 'BookOpen'
+          | 'Brain'
+          | 'Briefcase'
+          | 'Building2'
+          | 'Calendar'
+          | 'CheckSquare'
+          | 'Clock'
+          | 'Code'
+          | 'CreditCard'
+          | 'Database'
+          | 'DollarSign'
+          | 'EyeOff'
+          | 'FileText'
+          | 'Filter'
+          | 'GitBranch'
+          | 'Globe'
+          | 'Hash'
+          | 'Heart'
+          | 'HelpCircle'
+          | 'Layers'
+          | 'LayoutDashboard'
+          | 'Lightbulb'
+          | 'Link'
+          | 'ListX'
+          | 'Mail'
+          | 'MapPin'
+          | 'MessageCircle'
+          | 'Phone'
+          | 'Plug'
+          | 'RefreshCw'
+          | 'Rocket'
+          | 'Search'
+          | 'Send'
+          | 'Shield'
+          | 'Sparkles'
+          | 'SplitSquareHorizontal'
+          | 'Target'
+          | 'TrendingDown'
+          | 'TrendingUp'
+          | 'Unlink'
+          | 'Upload'
+          | 'Users'
+          | 'Zap';
+        title: string;
+        description: string;
+        linkText: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  kbHeading?: string | null;
+  kbCategories?:
+    | {
+        icon:
+          | 'Activity'
+          | 'AlertTriangle'
+          | 'ArrowRight'
+          | 'AtSign'
+          | 'BarChart3'
+          | 'Bell'
+          | 'BookOpen'
+          | 'Brain'
+          | 'Briefcase'
+          | 'Building2'
+          | 'Calendar'
+          | 'CheckSquare'
+          | 'Clock'
+          | 'Code'
+          | 'CreditCard'
+          | 'Database'
+          | 'DollarSign'
+          | 'EyeOff'
+          | 'FileText'
+          | 'Filter'
+          | 'GitBranch'
+          | 'Globe'
+          | 'Hash'
+          | 'Heart'
+          | 'HelpCircle'
+          | 'Layers'
+          | 'LayoutDashboard'
+          | 'Lightbulb'
+          | 'Link'
+          | 'ListX'
+          | 'Mail'
+          | 'MapPin'
+          | 'MessageCircle'
+          | 'Phone'
+          | 'Plug'
+          | 'RefreshCw'
+          | 'Rocket'
+          | 'Search'
+          | 'Send'
+          | 'Shield'
+          | 'Sparkles'
+          | 'SplitSquareHorizontal'
+          | 'Target'
+          | 'TrendingDown'
+          | 'TrendingUp'
+          | 'Unlink'
+          | 'Upload'
+          | 'Users'
+          | 'Zap';
+        title: string;
+        /**
+         * e.g. "12 articles"
+         */
+        articleCount: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  faqHeading?: string | null;
+  faqs?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  ctaHeading?: string | null;
+  ctaSubheading?: string | null;
+  ctaPrimaryCta?: {
+    label?: string | null;
+    href?: string | null;
+  };
+  ctaSecondaryCta?: {
+    label?: string | null;
+    href?: string | null;
+  };
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-page".
+ */
+export interface ContactPage {
+  id: number;
+  heroLabel?: string | null;
+  heroHeading?: string | null;
+  heroSubheading?: string | null;
+  /**
+   * Contact cards (3 recommended: Sales, Support, Partnerships)
+   */
+  contactOptions?:
+    | {
+        icon:
+          | 'Activity'
+          | 'AlertTriangle'
+          | 'ArrowRight'
+          | 'AtSign'
+          | 'BarChart3'
+          | 'Bell'
+          | 'BookOpen'
+          | 'Brain'
+          | 'Briefcase'
+          | 'Building2'
+          | 'Calendar'
+          | 'CheckSquare'
+          | 'Clock'
+          | 'Code'
+          | 'CreditCard'
+          | 'Database'
+          | 'DollarSign'
+          | 'EyeOff'
+          | 'FileText'
+          | 'Filter'
+          | 'GitBranch'
+          | 'Globe'
+          | 'Hash'
+          | 'Heart'
+          | 'HelpCircle'
+          | 'Layers'
+          | 'LayoutDashboard'
+          | 'Lightbulb'
+          | 'Link'
+          | 'ListX'
+          | 'Mail'
+          | 'MapPin'
+          | 'MessageCircle'
+          | 'Phone'
+          | 'Plug'
+          | 'RefreshCw'
+          | 'Rocket'
+          | 'Search'
+          | 'Send'
+          | 'Shield'
+          | 'Sparkles'
+          | 'SplitSquareHorizontal'
+          | 'Target'
+          | 'TrendingDown'
+          | 'TrendingUp'
+          | 'Unlink'
+          | 'Upload'
+          | 'Users'
+          | 'Zap';
+        title: string;
+        linkLabel: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Info blocks shown alongside the contact form
+   */
+  contactInfoBlocks?:
+    | {
+        icon:
+          | 'Activity'
+          | 'AlertTriangle'
+          | 'ArrowRight'
+          | 'AtSign'
+          | 'BarChart3'
+          | 'Bell'
+          | 'BookOpen'
+          | 'Brain'
+          | 'Briefcase'
+          | 'Building2'
+          | 'Calendar'
+          | 'CheckSquare'
+          | 'Clock'
+          | 'Code'
+          | 'CreditCard'
+          | 'Database'
+          | 'DollarSign'
+          | 'EyeOff'
+          | 'FileText'
+          | 'Filter'
+          | 'GitBranch'
+          | 'Globe'
+          | 'Hash'
+          | 'Heart'
+          | 'HelpCircle'
+          | 'Layers'
+          | 'LayoutDashboard'
+          | 'Lightbulb'
+          | 'Link'
+          | 'ListX'
+          | 'Mail'
+          | 'MapPin'
+          | 'MessageCircle'
+          | 'Phone'
+          | 'Plug'
+          | 'RefreshCw'
+          | 'Rocket'
+          | 'Search'
+          | 'Send'
+          | 'Shield'
+          | 'Sparkles'
+          | 'SplitSquareHorizontal'
+          | 'Target'
+          | 'TrendingDown'
+          | 'TrendingUp'
+          | 'Unlink'
+          | 'Upload'
+          | 'Users'
+          | 'Zap';
+        /**
+         * e.g. "OFFICE", "SUPPORT HOURS"
+         */
+        label: string;
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  formHeading?: string | null;
+  /**
+   * Subject dropdown options for the contact form
+   */
+  subjectOptions?:
+    | {
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -1893,15 +3930,6 @@ export interface HeaderSelect<T extends boolean = true> {
         id?: T;
       };
   platformLabel?: T;
-  platformModules?:
-    | T
-    | {
-        name?: T;
-        description?: T;
-        icon?: T;
-        href?: T;
-        id?: T;
-      };
   platformPromoCard?:
     | T
     | {
@@ -2056,6 +4084,546 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   contactEmail?: T;
   supportEmail?: T;
   address?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page_select".
+ */
+export interface HomePageSelect<T extends boolean = true> {
+  heroBadge?: T;
+  heroHeadline?: T;
+  heroHeadlineAccent?: T;
+  heroSubheadline?: T;
+  heroPrimaryCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  heroSecondaryCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  heroTrustLine?: T;
+  heroStats?:
+    | T
+    | {
+        label?: T;
+        type?: T;
+        id?: T;
+      };
+  trustedByLabel?: T;
+  trustedByLogos?:
+    | T
+    | {
+        name?: T;
+        logo?: T;
+        id?: T;
+      };
+  capabilitiesHeading?: T;
+  capabilities?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        href?: T;
+        id?: T;
+      };
+  featureShowcases?:
+    | T
+    | {
+        label?: T;
+        heading?: T;
+        description?: T;
+        bullets?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        linkLabel?: T;
+        linkHref?: T;
+        reverse?: T;
+        image?: T;
+        id?: T;
+      };
+  stats?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        id?: T;
+      };
+  testimonialsHeading?: T;
+  testimonials?:
+    | T
+    | {
+        quote?: T;
+        name?: T;
+        title?: T;
+        initials?: T;
+        avatar?: T;
+        id?: T;
+      };
+  integrationsHeading?: T;
+  integrationsSubheading?: T;
+  integrations?:
+    | T
+    | {
+        name?: T;
+        logo?: T;
+        id?: T;
+      };
+  ctaHeading?: T;
+  ctaSubheading?: T;
+  ctaPrimaryCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  ctaSecondaryCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pricing-page_select".
+ */
+export interface PricingPageSelect<T extends boolean = true> {
+  heroLabel?: T;
+  heroHeading?: T;
+  heroSubheading?: T;
+  heroTrialNote?: T;
+  plans?:
+    | T
+    | {
+        name?: T;
+        monthlyPrice?: T;
+        annualPrice?: T;
+        period?: T;
+        description?: T;
+        features?:
+          | T
+          | {
+              text?: T;
+              included?: T;
+              id?: T;
+            };
+        ctaLabel?: T;
+        ctaHref?: T;
+        highlighted?: T;
+        id?: T;
+      };
+  enterpriseHeading?: T;
+  enterpriseDescription?: T;
+  enterpriseCtaLabel?: T;
+  enterpriseCtaHref?: T;
+  comparisonHeading?: T;
+  comparisonCategories?:
+    | T
+    | {
+        name?: T;
+        rows?:
+          | T
+          | {
+              feature?: T;
+              free?: T;
+              starter?: T;
+              growth?: T;
+              pro?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  faqHeading?: T;
+  faqs?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  ctaHeading?: T;
+  ctaSubheading?: T;
+  ctaPrimaryCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  ctaSecondaryCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "why-revnator_select".
+ */
+export interface WhyRevnatorSelect<T extends boolean = true> {
+  heroLabel?: T;
+  heroHeading?: T;
+  heroSubheading?: T;
+  heroPrimaryCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  heroSecondaryCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  painPointsLabel?: T;
+  painPointsHeading?: T;
+  painPoints?:
+    | T
+    | {
+        number?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  beforeAfterLabel?: T;
+  beforeAfterHeading?: T;
+  withoutTools?:
+    | T
+    | {
+        name?: T;
+        price?: T;
+        id?: T;
+      };
+  withCapabilities?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  revnatorPrice?: T;
+  valuePropsLabel?: T;
+  valuePropsHeading?: T;
+  valueProps?:
+    | T
+    | {
+        icon?: T;
+        heading?: T;
+        description?: T;
+        bullets?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  faqHeading?: T;
+  faqs?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  ctaHeading?: T;
+  ctaSubheading?: T;
+  ctaPrimaryCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  ctaSecondaryCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-page_select".
+ */
+export interface AboutPageSelect<T extends boolean = true> {
+  heroLabel?: T;
+  heroHeading?: T;
+  heroSubheading?: T;
+  missionLabel?: T;
+  missionHeading?: T;
+  missionParagraphs?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  storyLabel?: T;
+  storyHeading?: T;
+  milestones?:
+    | T
+    | {
+        year?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  valuesLabel?: T;
+  valuesHeading?: T;
+  values?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  teamLabel?: T;
+  teamHeading?: T;
+  teamSubheading?: T;
+  founder?:
+    | T
+    | {
+        initials?: T;
+        name?: T;
+        title?: T;
+        bio?: T;
+        avatar?: T;
+      };
+  ctaHeading?: T;
+  ctaSubheading?: T;
+  ctaPrimaryCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  ctaSecondaryCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "platform-page_select".
+ */
+export interface PlatformPageSelect<T extends boolean = true> {
+  heroBadge?: T;
+  heroHeading?: T;
+  heroSubheading?: T;
+  heroPrimaryCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  heroSecondaryCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  gridLabel?: T;
+  gridHeading?: T;
+  gridSubheading?: T;
+  connectedLabel?: T;
+  connectedHeading?: T;
+  connectedSubheading?: T;
+  connectedStats?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        id?: T;
+      };
+  pricingLabel?: T;
+  pricingHeading?: T;
+  pricingSubheading?: T;
+  pricingPills?:
+    | T
+    | {
+        name?: T;
+        price?: T;
+        id?: T;
+      };
+  ctaHeading?: T;
+  ctaSubheading?: T;
+  ctaPrimaryCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  ctaSecondaryCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "support-page_select".
+ */
+export interface SupportPageSelect<T extends boolean = true> {
+  heroLabel?: T;
+  heroHeading?: T;
+  heroSubheading?: T;
+  channels?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        linkText?: T;
+        href?: T;
+        id?: T;
+      };
+  kbHeading?: T;
+  kbCategories?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        articleCount?: T;
+        href?: T;
+        id?: T;
+      };
+  faqHeading?: T;
+  faqs?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  ctaHeading?: T;
+  ctaSubheading?: T;
+  ctaPrimaryCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  ctaSecondaryCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-page_select".
+ */
+export interface ContactPageSelect<T extends boolean = true> {
+  heroLabel?: T;
+  heroHeading?: T;
+  heroSubheading?: T;
+  contactOptions?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        linkLabel?: T;
+        href?: T;
+        id?: T;
+      };
+  contactInfoBlocks?:
+    | T
+    | {
+        icon?: T;
+        label?: T;
+        text?: T;
+        id?: T;
+      };
+  formHeading?: T;
+  subjectOptions?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

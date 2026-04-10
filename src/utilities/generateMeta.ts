@@ -4,16 +4,16 @@ import type { Media, Page, Post, Config } from '../payload-types'
 
 import { mergeOpenGraph } from './mergeOpenGraph'
 import { getServerSideURL } from './getURL'
+import { getImageUrl } from '@/lib/getImageUrl'
 
 const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
   const serverUrl = getServerSideURL()
 
   let url = serverUrl + '/og-default.webp'
 
-  if (image && typeof image === 'object' && 'url' in image) {
-    const ogUrl = image.sizes?.og?.url
-
-    url = ogUrl ? serverUrl + ogUrl : serverUrl + image.url
+  if (image && typeof image === 'object') {
+    const resolved = getImageUrl(image, 'ogImage')
+    url = resolved ? serverUrl + resolved : serverUrl + (image.url ?? '/og-default.webp')
   }
 
   return url

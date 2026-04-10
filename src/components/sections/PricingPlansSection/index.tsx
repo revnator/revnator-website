@@ -4,12 +4,33 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import { Check, Minus } from 'lucide-react'
 import { cn } from '@/utilities/ui'
-import {
-  pricingHeroData,
-  pricingPlans,
-  type BillingPeriod,
-  type PricingPlan,
-} from '../_pricing/pricingData'
+
+type BillingPeriod = 'monthly' | 'annual'
+
+export interface PlanFeatureData {
+  text: string
+  included: boolean
+}
+
+export interface PricingPlanData {
+  name: string
+  monthlyPrice: number
+  annualPrice: number
+  period: string
+  description: string
+  features: PlanFeatureData[]
+  ctaLabel: string
+  ctaHref: string
+  highlighted: boolean
+}
+
+export interface PricingPlansSectionData {
+  label: string
+  heading: string
+  subheading: string
+  trialNote: string
+  plans: PricingPlanData[]
+}
 
 function BillingToggle({
   period,
@@ -60,7 +81,7 @@ function PlanCard({
   plan,
   period,
 }: {
-  plan: PricingPlan
+  plan: PricingPlanData
   period: BillingPeriod
 }): React.ReactElement {
   const price = period === 'annual' ? plan.annualPrice : plan.monthlyPrice
@@ -76,36 +97,25 @@ function PlanCard({
         'bg-white',
       )}
     >
-      {/* Popular badge */}
       {plan.highlighted && (
         <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1.5 font-heading text-[11px] font-semibold uppercase text-white">
           Most Popular
         </span>
       )}
 
-      {/* Plan name */}
       <h3 className="font-heading text-lg font-semibold text-dark">{plan.name}</h3>
 
-      {/* Price */}
       <div className="mt-2 flex items-baseline gap-1">
         <span className="font-heading text-[40px] font-extrabold leading-none text-dark">
           {isFree ? 'Free' : `$${price}`}
         </span>
-        {!isFree && (
-          <span className="font-body text-sm text-muted">{plan.period}</span>
-        )}
-        {isFree && (
-          <span className="font-body text-sm text-muted">{plan.period}</span>
-        )}
+        <span className="font-body text-sm text-muted">{plan.period}</span>
       </div>
 
-      {/* Description */}
       <p className="mt-2 font-body text-[13px] text-muted">{plan.description}</p>
 
-      {/* Divider */}
       <div className="my-5 h-px bg-light" />
 
-      {/* Features */}
       <ul className="flex flex-1 flex-col gap-2">
         {plan.features.map((f) => (
           <li key={f.text} className="flex items-start gap-2.5">
@@ -126,7 +136,6 @@ function PlanCard({
         ))}
       </ul>
 
-      {/* CTA */}
       <Link
         href={plan.ctaHref}
         className={cn(
@@ -142,7 +151,7 @@ function PlanCard({
   )
 }
 
-export function PricingPlansSection(): React.ReactElement {
+export function PricingPlansSection({ data }: { data: PricingPlansSectionData }): React.ReactElement {
   const [period, setPeriod] = useState<BillingPeriod>('annual')
 
   return (
@@ -151,16 +160,15 @@ export function PricingPlansSection(): React.ReactElement {
         {/* Hero header */}
         <div className="text-center">
           <span className="font-heading text-xs font-semibold uppercase tracking-[0.15em] text-primary">
-            {pricingHeroData.label}
+            {data.label}
           </span>
           <h1 className="mt-4 font-heading text-h1 font-bold leading-[1.15] text-dark">
-            {pricingHeroData.heading}
+            {data.heading}
           </h1>
           <p className="mx-auto mt-4 max-w-[520px] font-body text-lg text-muted">
-            {pricingHeroData.subheading}
+            {data.subheading}
           </p>
 
-          {/* Billing toggle */}
           <div className="mt-8">
             <BillingToggle period={period} onChange={setPeriod} />
           </div>
@@ -168,14 +176,13 @@ export function PricingPlansSection(): React.ReactElement {
 
         {/* Plan cards */}
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
-          {pricingPlans.map((plan) => (
+          {data.plans.map((plan) => (
             <PlanCard key={plan.name} plan={plan} period={period} />
           ))}
         </div>
 
-        {/* Trial note */}
         <p className="mt-6 text-center font-body text-[13px] text-muted">
-          {pricingHeroData.trialNote}
+          {data.trialNote}
         </p>
       </div>
     </section>

@@ -1,8 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
-import type { BlogPost } from '../_blog/blogData'
+import type { BlogPostCard } from '../_blog/types'
 
-export function BlogPostFooter({ post }: { post: BlogPost }): React.ReactElement {
+export function BlogPostFooter({ post }: { post: BlogPostCard }): React.ReactElement {
   return (
     <section className="bg-white pt-12">
       <div className="mx-auto max-w-prose-narrow border-t border-light px-6 md:px-12">

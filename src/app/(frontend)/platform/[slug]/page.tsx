@@ -1,5 +1,10 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
+import { unstable_cache } from 'next/cache'
+import { getPayload } from 'payload'
+import config from '@payload-config'
+import type { Module } from '@/payload-types'
+
 import { ModuleHero } from '@/components/sections/ModuleHero'
 import { ModuleCapabilitiesStrip } from '@/components/sections/ModuleCapabilitiesStrip'
 import { ModuleFeatureBlock } from '@/components/sections/ModuleFeatureBlock'
@@ -7,12 +12,41 @@ import { ModuleComparison } from '@/components/sections/ModuleComparison'
 import { RelatedModules } from '@/components/sections/RelatedModules'
 import { ModuleCTA } from '@/components/sections/ModuleCTA'
 import {
-  contactsModuleData,
-  type ModulePageData,
-} from '@/components/sections/_modules/contactsModuleData'
+  toHeroData,
+  toCapabilitiesData,
+  toFeatureBlocksData,
+  toComparisonData,
+  toRelatedModulesData,
+  toCTAData,
+} from '@/lib/adapters/module'
 
-const moduleData: Record<string, ModulePageData> = {
-  contacts: contactsModuleData,
+const getModuleBySlug = (slug: string) =>
+  unstable_cache(
+    async () => {
+      const payload = await getPayload({ config })
+      const result = await payload.find({
+        collection: 'modules',
+        where: {
+          slug: { equals: slug },
+          isPublished: { equals: true },
+        },
+        limit: 1,
+        depth: 2,
+      })
+      return (result.docs[0] as Module | undefined) ?? null
+    },
+    [`module-${slug}`],
+    { tags: [`module-${slug}`] },
+  )
+
+export async function generateStaticParams(): Promise<{ slug: string }[]> {
+  const payload = await getPayload({ config })
+  const result = await payload.find({
+    collection: 'modules',
+    where: { isPublished: { equals: true } },
+    limit: 100,
+  })
+  return result.docs.map((doc) => ({ slug: doc.slug }))
 }
 
 export async function generateMetadata({
@@ -21,12 +55,18 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  const data = moduleData[slug]
-  if (!data) return {}
+  const moduleDoc = await getModuleBySlug(slug)()
+  if (!moduleDoc) return {}
 
   return {
-    title: `${data.hero.heading} | Revnator`,
-    description: data.hero.description,
+    title: moduleDoc.meta?.title ?? moduleDoc.name,
+    description: moduleDoc.meta?.description ?? moduleDoc.heroDescription,
+    openGraph: {
+      images:
+        moduleDoc.meta?.image && typeof moduleDoc.meta.image === 'object'
+          ? [{ url: moduleDoc.meta.image.url ?? '' }]
+          : undefined,
+    },
   }
 }
 
@@ -36,20 +76,27 @@ export default async function ModulePage({
   params: Promise<{ slug: string }>
 }): Promise<React.ReactElement> {
   const { slug } = await params
-  const data = moduleData[slug]
+  const moduleDoc = await getModuleBySlug(slug)()
 
-  if (!data) notFound()
+  if (!moduleDoc) notFound()
+
+  const heroData = toHeroData(moduleDoc)
+  const capabilitiesData = toCapabilitiesData(moduleDoc)
+  const featureBlocksData = toFeatureBlocksData(moduleDoc)
+  const comparisonData = toComparisonData(moduleDoc)
+  const relatedModulesData = toRelatedModulesData(moduleDoc)
+  const ctaData = toCTAData(moduleDoc)
 
   return (
     <main>
-      <ModuleHero data={data.hero} />
-      <ModuleCapabilitiesStrip data={data.capabilities} />
-      {data.featureBlocks.map((block, i) => (
+      <ModuleHero data={heroData} />
+      <ModuleCapabilitiesStrip data={capabilitiesData} />
+      {featureBlocksData.map((block, i) => (
         <ModuleFeatureBlock key={block.label} data={block} reverse={i % 2 === 1} />
       ))}
-      <ModuleComparison data={data.comparison} />
-      <RelatedModules data={data.relatedModules} />
-      <ModuleCTA data={data.cta} />
+      <ModuleComparison data={comparisonData} />
+      <RelatedModules data={relatedModulesData} />
+      <ModuleCTA data={ctaData} />
     </main>
   )
 }

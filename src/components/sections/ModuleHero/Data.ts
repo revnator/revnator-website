@@ -7,4 +7,5 @@ export interface ModuleHeroData {
   description: string
   primaryCta: { label: string; href: string }
   secondaryCta: { label: string; href: string }
+  image?: { url: string; alt: string } | null
 }

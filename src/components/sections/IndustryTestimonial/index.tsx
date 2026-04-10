@@ -1,5 +1,5 @@
 import React from 'react'
-import type { IndustryTestimonialData } from '../_industries/agenciesData'
+import type { IndustryTestimonialData } from '../_industries/types'
 
 export function IndustryTestimonial({
   data,

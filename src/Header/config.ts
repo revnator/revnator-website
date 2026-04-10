@@ -32,6 +32,8 @@ export const Header: GlobalConfig = {
               type: 'upload',
               relationTo: 'media',
               admin: {
+                description:
+                  'Recommended: 480\u00D7160px (PNG, transparent). Overrides Site Settings logo.',
                 condition: (_data, siblingData) =>
                   !siblingData?.useLogoFromSiteSettings,
               },
@@ -151,118 +153,6 @@ export const Header: GlobalConfig = {
               admin: {
                 description: 'Section label shown above the module grid.',
               },
-            },
-            {
-              name: 'platformModules',
-              type: 'array',
-              minRows: 1,
-              maxRows: 15,
-              admin: {
-                initCollapsed: true,
-              },
-              defaultValue: [
-                {
-                  name: 'Contacts',
-                  description: 'Manage your contact lifecycle',
-                  icon: 'Users',
-                  href: '/platform/contacts',
-                },
-                {
-                  name: 'Accounts',
-                  description: '360° view of every account',
-                  icon: 'Building2',
-                  href: '/platform/accounts',
-                },
-                {
-                  name: 'Email Outreach',
-                  description: 'Sequences and campaigns',
-                  icon: 'Mail',
-                  href: '/platform/outreach',
-                },
-                {
-                  name: 'Pipeline',
-                  description: 'Visual deal management',
-                  icon: 'GitBranch',
-                  href: '/platform/pipeline',
-                },
-                {
-                  name: 'Sales Ops',
-                  description: 'Tasks, missions, workflows',
-                  icon: 'LayoutDashboard',
-                  href: '/platform/sales-ops',
-                },
-                {
-                  name: 'Calendar',
-                  description: 'Booking pages and scheduling',
-                  icon: 'Calendar',
-                  href: '/platform/calendar',
-                },
-                {
-                  name: 'Chat',
-                  description: 'Internal team communication',
-                  icon: 'MessageCircle',
-                  href: '/platform/chat',
-                },
-                {
-                  name: 'AI SDR',
-                  description: 'AI-powered sales development',
-                  icon: 'Sparkles',
-                  href: '/platform/ai-sdr',
-                },
-                {
-                  name: 'Forms',
-                  description: 'Lead capture and routing',
-                  icon: 'FileText',
-                  href: '/platform/forms',
-                },
-              ],
-              fields: [
-                {
-                  name: 'name',
-                  type: 'text',
-                  required: true,
-                },
-                {
-                  name: 'description',
-                  type: 'text',
-                  required: true,
-                  admin: {
-                    description: 'Short description (~50 chars)',
-                  },
-                },
-                {
-                  name: 'icon',
-                  type: 'select',
-                  required: true,
-                  admin: {
-                    description:
-                      'Lucide icon name. See the full icon list at lucide.dev',
-                  },
-                  options: [
-                    { label: 'Users', value: 'Users' },
-                    { label: 'Building2', value: 'Building2' },
-                    { label: 'Mail', value: 'Mail' },
-                    { label: 'GitBranch', value: 'GitBranch' },
-                    { label: 'LayoutDashboard', value: 'LayoutDashboard' },
-                    { label: 'Calendar', value: 'Calendar' },
-                    { label: 'MessageCircle', value: 'MessageCircle' },
-                    { label: 'Sparkles', value: 'Sparkles' },
-                    { label: 'FileText', value: 'FileText' },
-                    { label: 'Database', value: 'Database' },
-                    { label: 'Filter', value: 'Filter' },
-                    { label: 'Layers', value: 'Layers' },
-                    { label: 'BarChart3', value: 'BarChart3' },
-                    { label: 'Zap', value: 'Zap' },
-                    { label: 'Target', value: 'Target' },
-                    { label: 'Briefcase', value: 'Briefcase' },
-                  ],
-                },
-                {
-                  name: 'href',
-                  type: 'text',
-                  required: true,
-                },
-              ],
             },
             {
               name: 'platformPromoCard',

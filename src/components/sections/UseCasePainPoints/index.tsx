@@ -1,12 +1,6 @@
 import React from 'react'
-import { ListX, Unlink, EyeOff } from 'lucide-react'
-import type { UseCasePainPointsData } from '../_useCases/salesOpsUseCaseData'
-
-const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
-  ListX,
-  Unlink,
-  EyeOff,
-}
+import { DynamicIcon } from '@/lib/icons'
+import type { UseCasePainPointsData } from '../_useCases/types'
 
 export function UseCasePainPoints({
   data,
@@ -29,14 +23,13 @@ export function UseCasePainPoints({
         {/* Cards */}
         <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
           {data.cards.map((card) => {
-            const Icon = iconMap[card.icon]
             return (
               <div
                 key={card.title}
                 className="rounded-2xl border border-light bg-bg p-6"
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-error/10">
-                  {Icon && <Icon size={20} className="text-error" />}
+                  <DynamicIcon name={card.icon} size={20} className="text-error" />
                 </div>
                 <h3 className="mt-4 font-heading text-base font-semibold text-dark">
                   {card.title}

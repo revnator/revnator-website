@@ -1,7 +1,7 @@
 import React from 'react'
 import { Check } from 'lucide-react'
 import { cn } from '@/utilities/ui'
-import type { UseCaseSolutionBlock } from '../_useCases/salesOpsUseCaseData'
+import type { UseCaseSolutionBlock } from '../_useCases/types'
 
 function BrowserFrame(): React.ReactElement {
   return (

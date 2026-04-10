@@ -1,24 +1,38 @@
 import React from 'react'
 
-const logos = ['LOGO', 'LOGO', 'LOGO', 'LOGO', 'LOGO', 'LOGO']
+export interface TrustedByLogo {
+  name: string
+  logoUrl?: string | null
+}
 
-export function TrustedBy(): React.ReactElement {
+export interface TrustedByData {
+  label: string
+  logos: TrustedByLogo[]
+}
+
+export function TrustedBy({ data }: { data: TrustedByData }): React.ReactElement {
+  const placeholders = data.logos.length > 0 ? data.logos : Array.from({ length: 6 }, () => ({ name: 'LOGO', logoUrl: null }))
+
   return (
     <section className="w-full bg-white py-16">
       <div className="mx-auto max-w-container px-6 text-center">
         <p className="font-body text-sm font-medium text-muted">
-          Trusted by fast-growing sales teams
+          {data.label}
         </p>
 
         <div className="mt-8 hidden md:flex items-center justify-center gap-12 flex-wrap">
-          {logos.map((label, i) => (
+          {placeholders.map((item, i) => (
             <div
-              key={i}
+              key={item.name + i}
               className="flex items-center justify-center w-[120px] h-10 rounded-md bg-light"
             >
-              <span className="font-body text-[11px] font-medium text-muted">
-                {label}
-              </span>
+              {item.logoUrl ? (
+                <img src={item.logoUrl} alt={item.name} className="h-6 w-auto object-contain" />
+              ) : (
+                <span className="font-body text-[11px] font-medium text-muted">
+                  {item.name}
+                </span>
+              )}
             </div>
           ))}
         </div>

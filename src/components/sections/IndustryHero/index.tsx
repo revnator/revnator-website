@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import type { IndustryHeroData } from '../_industries/agenciesData'
+import type { IndustryHeroData } from '../_industries/types'
 
 function BrowserFrame(): React.ReactElement {
   return (

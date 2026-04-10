@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import type { UseCaseCTAData } from '../_useCases/salesOpsUseCaseData'
+import type { UseCaseCTAData } from '../_useCases/types'
 
 export function UseCaseCTA({ data }: { data: UseCaseCTAData }): React.ReactElement {
   return (

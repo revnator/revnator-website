@@ -1,17 +1,50 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
+import { unstable_cache } from 'next/cache'
+import { getPayload } from 'payload'
+import config from '@payload-config'
+import type { UseCase } from '@/payload-types'
+
 import { UseCaseHero } from '@/components/sections/UseCaseHero'
 import { UseCasePainPoints } from '@/components/sections/UseCasePainPoints'
 import { UseCaseSolution } from '@/components/sections/UseCaseSolution'
 import { UseCaseRelatedModules } from '@/components/sections/UseCaseRelatedModules'
 import { UseCaseCTA } from '@/components/sections/UseCaseCTA'
 import {
-  salesOpsUseCaseData,
-  type UseCasePageData,
-} from '@/components/sections/_useCases/salesOpsUseCaseData'
+  toHeroData,
+  toPainPointsData,
+  toSolutionsData,
+  toRelatedModulesData,
+  toCTAData,
+} from '@/lib/adapters/useCase'
 
-const useCaseData: Record<string, UseCasePageData> = {
-  'sales-operations': salesOpsUseCaseData,
+const getUseCaseBySlug = (slug: string) =>
+  unstable_cache(
+    async () => {
+      const payload = await getPayload({ config })
+      const result = await payload.find({
+        collection: 'use-cases',
+        where: {
+          slug: { equals: slug },
+          isPublished: { equals: true },
+        },
+        limit: 1,
+        depth: 2,
+      })
+      return (result.docs[0] as UseCase | undefined) ?? null
+    },
+    [`use-case-${slug}`],
+    { tags: [`use-case-${slug}`] },
+  )
+
+export async function generateStaticParams(): Promise<{ slug: string }[]> {
+  const payload = await getPayload({ config })
+  const result = await payload.find({
+    collection: 'use-cases',
+    where: { isPublished: { equals: true } },
+    limit: 100,
+  })
+  return result.docs.map((doc) => ({ slug: doc.slug }))
 }
 
 export async function generateMetadata({
@@ -20,12 +53,18 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  const data = useCaseData[slug]
-  if (!data) return {}
+  const useCaseDoc = await getUseCaseBySlug(slug)()
+  if (!useCaseDoc) return {}
 
   return {
-    title: `${data.hero.breadcrumbCurrent} | Revnator Use Cases`,
-    description: data.hero.description,
+    title: useCaseDoc.meta?.title ?? `${useCaseDoc.name} | Revnator Use Cases`,
+    description: useCaseDoc.meta?.description ?? useCaseDoc.heroDescription,
+    openGraph: {
+      images:
+        useCaseDoc.meta?.image && typeof useCaseDoc.meta.image === 'object'
+          ? [{ url: useCaseDoc.meta.image.url ?? '' }]
+          : undefined,
+    },
   }
 }
 
@@ -35,19 +74,25 @@ export default async function UseCasePage({
   params: Promise<{ slug: string }>
 }): Promise<React.ReactElement> {
   const { slug } = await params
-  const data = useCaseData[slug]
+  const useCaseDoc = await getUseCaseBySlug(slug)()
 
-  if (!data) notFound()
+  if (!useCaseDoc) notFound()
+
+  const heroData = toHeroData(useCaseDoc)
+  const painPointsData = toPainPointsData(useCaseDoc)
+  const solutionsData = toSolutionsData(useCaseDoc)
+  const relatedModulesData = toRelatedModulesData(useCaseDoc)
+  const ctaData = toCTAData(useCaseDoc)
 
   return (
     <main>
-      <UseCaseHero data={data.hero} />
-      <UseCasePainPoints data={data.painPoints} />
-      {data.solutions.map((s, i) => (
+      <UseCaseHero data={heroData} />
+      <UseCasePainPoints data={painPointsData} />
+      {solutionsData.map((s, i) => (
         <UseCaseSolution key={s.label} data={s} reverse={i % 2 === 1} />
       ))}
-      <UseCaseRelatedModules data={data.relatedModules} />
-      <UseCaseCTA data={data.cta} />
+      <UseCaseRelatedModules data={relatedModulesData} />
+      <UseCaseCTA data={ctaData} />
     </main>
   )
 }
