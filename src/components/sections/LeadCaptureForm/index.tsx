@@ -8,6 +8,8 @@ interface LeadCaptureFormProps {
   variant: FormVariant
   title: string
   buttonText: string
+  resourceType: string
+  resourceSlug: string
 }
 
 function Field({
@@ -77,19 +79,49 @@ export function LeadCaptureForm({
   variant,
   title,
   buttonText,
+  resourceType,
+  resourceSlug,
 }: LeadCaptureFormProps): React.ReactElement {
-  const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault()
+    setIsSubmitting(true)
+    setError(null)
+
     const formData = new FormData(e.currentTarget)
-    const data = Object.fromEntries(formData.entries())
-    console.log('Form submitted:', data)
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3000)
+
+    try {
+      const response = await fetch('/api/submit-form', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          formType: resourceType,
+          source: resourceSlug,
+          firstName: formData.get('firstName') || formData.get('name') || '',
+          lastName: formData.get('lastName') || '',
+          email: formData.get('email') || '',
+          company: formData.get('company') || '',
+          teamSize: formData.get('teamSize') || '',
+        }),
+      })
+
+      if (!response.ok) {
+        const result = await response.json()
+        throw new Error(result.error || 'Submission failed')
+      }
+
+      setIsSuccess(true)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
-  if (submitted) {
+  if (isSuccess) {
     return (
       <div className="rounded-2xl border border-light bg-bg p-8 text-center">
         <p className="font-heading text-lg font-semibold text-dark">Thank you!</p>
@@ -136,11 +168,16 @@ export function LeadCaptureForm({
           </>
         )}
 
+        {error && (
+          <p className="font-body text-sm text-error">{error}</p>
+        )}
+
         <button
           type="submit"
-          className="mt-2 h-12 w-full rounded-lg bg-primary font-body text-sm font-semibold text-white transition-all hover:bg-primary-dark hover:scale-[1.01] focus:ring-2 focus:ring-primary focus:ring-offset-2"
+          disabled={isSubmitting}
+          className="mt-2 h-12 w-full rounded-lg bg-primary font-body text-sm font-semibold text-white transition-all hover:bg-primary-dark hover:scale-[1.01] focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
         >
-          {buttonText}
+          {isSubmitting ? 'Submitting...' : buttonText}
         </button>
       </form>
 

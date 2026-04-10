@@ -5,6 +5,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { NewsArticle } from '@/payload-types'
 import { getImageUrl, getImageAlt } from '@/lib/getImageUrl'
+import { getOgImageUrl } from '@/lib/getOgImageUrl'
 
 import { NewsArticleHeader } from '@/components/sections/NewsArticleHeader'
 import { RichText } from '@payloadcms/richtext-lexical/react'
@@ -88,14 +89,17 @@ export async function generateMetadata({
   const doc = await getNewsArticleBySlug(slug)()
   if (!doc) return {}
 
+  const title = doc.meta?.title ?? `${doc.title} | Revnator News`
+  const description = doc.meta?.description ?? doc.excerpt
+  const ogImageUrl = getOgImageUrl(doc.meta?.image) || getOgImageUrl(doc.featuredImage)
+
   return {
-    title: doc.meta?.title ?? `${doc.title} | Revnator News`,
-    description: doc.meta?.description ?? doc.excerpt,
+    title,
+    description,
     openGraph: {
-      images:
-        doc.meta?.image && typeof doc.meta.image === 'object'
-          ? [{ url: doc.meta.image.url ?? '' }]
-          : undefined,
+      title,
+      description,
+      images: ogImageUrl ? [{ url: ogImageUrl }] : undefined,
     },
   }
 }

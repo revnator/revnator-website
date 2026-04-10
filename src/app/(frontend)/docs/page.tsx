@@ -2,13 +2,40 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Zap, Layers, Code, Play } from 'lucide-react'
 import { DocsLayout } from '@/components/sections/DocsLayout/DocsLayout'
-import { docsQuickLinks } from '@/components/sections/_docs/docsData'
+import { getDocsSidebar } from '@/lib/getDocsSidebar'
 
 export const metadata: Metadata = {
   title: 'Documentation | Revnator',
   description:
     'Learn how to use Revnator — guides on contacts, outreach, pipeline, calendar, reporting, and more.',
 }
+
+const quickLinks = [
+  {
+    icon: 'Zap',
+    title: 'Quick Start',
+    description: 'Set up your workspace and send your first sequence in 5 minutes.',
+    href: '/docs/getting-started/quick-start',
+  },
+  {
+    icon: 'Layers',
+    title: 'Browse by Module',
+    description: 'Explore CRM, outreach, pipeline, calendar, and more.',
+    href: '/docs/contacts/overview',
+  },
+  {
+    icon: 'Code',
+    title: 'API Reference',
+    description: 'Authenticate, call endpoints, and set up webhooks.',
+    href: '/docs/api/authentication',
+  },
+  {
+    icon: 'Play',
+    title: 'Video Tutorials',
+    description: 'Watch step-by-step video walkthroughs for every feature.',
+    href: '/docs/getting-started/welcome',
+  },
+]
 
 const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
   Zap,
@@ -17,9 +44,11 @@ const iconMap: Record<string, React.ComponentType<{ size?: number; className?: s
   Play,
 }
 
-export default function DocsPage(): React.ReactElement {
+export default async function DocsPage(): Promise<React.ReactElement> {
+  const sections = await getDocsSidebar()
+
   return (
-    <DocsLayout activeSlug="getting-started/welcome">
+    <DocsLayout activeSlug="getting-started/welcome" sections={sections}>
       <h1 className="font-heading text-h2 font-bold text-dark">
         Welcome to Revnator Documentation
       </h1>
@@ -30,7 +59,7 @@ export default function DocsPage(): React.ReactElement {
 
       {/* Quick links grid */}
       <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {docsQuickLinks.map((link) => {
+        {quickLinks.map((link) => {
           const Icon = iconMap[link.icon]
           return (
             <Link

@@ -5,6 +5,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { BlogPost } from '@/payload-types'
 import { getImageUrl, getImageAlt } from '@/lib/getImageUrl'
+import { getOgImageUrl } from '@/lib/getOgImageUrl'
 
 import { BlogPostHeader } from '@/components/sections/BlogPostHeader'
 import { RichText } from '@payloadcms/richtext-lexical/react'
@@ -125,14 +126,20 @@ export async function generateMetadata({
   const postDoc = await getBlogPostBySlug(slug)()
   if (!postDoc) return {}
 
+  const title = postDoc.meta?.title ?? `${postDoc.title} | Revnator Blog`
+  const description = postDoc.meta?.description ?? postDoc.excerpt
+
+  // OG image: meta image > featured image > site default (from layout)
+  const ogImageUrl =
+    getOgImageUrl(postDoc.meta?.image) || getOgImageUrl(postDoc.featuredImage)
+
   return {
-    title: postDoc.meta?.title ?? `${postDoc.title} | Revnator Blog`,
-    description: postDoc.meta?.description ?? postDoc.excerpt,
+    title,
+    description,
     openGraph: {
-      images:
-        postDoc.meta?.image && typeof postDoc.meta.image === 'object'
-          ? [{ url: postDoc.meta.image.url ?? '' }]
-          : undefined,
+      title,
+      description,
+      images: ogImageUrl ? [{ url: ogImageUrl }] : undefined,
     },
   }
 }

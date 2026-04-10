@@ -4,6 +4,7 @@ import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { Module } from '@/payload-types'
+import { getOgImageUrl } from '@/lib/getOgImageUrl'
 
 import { ModuleHero } from '@/components/sections/ModuleHero'
 import { ModuleCapabilitiesStrip } from '@/components/sections/ModuleCapabilitiesStrip'
@@ -58,14 +59,17 @@ export async function generateMetadata({
   const moduleDoc = await getModuleBySlug(slug)()
   if (!moduleDoc) return {}
 
+  const title = moduleDoc.meta?.title ?? moduleDoc.name
+  const description = moduleDoc.meta?.description ?? moduleDoc.heroDescription
   return {
-    title: moduleDoc.meta?.title ?? moduleDoc.name,
-    description: moduleDoc.meta?.description ?? moduleDoc.heroDescription,
+    title,
+    description,
     openGraph: {
-      images:
-        moduleDoc.meta?.image && typeof moduleDoc.meta.image === 'object'
-          ? [{ url: moduleDoc.meta.image.url ?? '' }]
-          : undefined,
+      title: typeof title === 'string' ? title : undefined,
+      description: typeof description === 'string' ? description : undefined,
+      images: getOgImageUrl(moduleDoc.meta?.image)
+        ? [{ url: getOgImageUrl(moduleDoc.meta?.image)! }]
+        : undefined,
     },
   }
 }

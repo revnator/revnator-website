@@ -48,6 +48,7 @@ export const Posts: CollectionConfig<'posts'> = {
     },
   },
   admin: {
+    hidden: true,
     group: 'Legacy (to be removed)',
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {

@@ -96,6 +96,8 @@ export function TemplateLayout({
               variant="light"
               title="Get this template free"
               buttonText="Download template"
+              resourceType="template"
+              resourceSlug={resource.slug}
             />
           </div>
         </div>

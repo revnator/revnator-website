@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import type { PricingPage as PricingPageType } from '@/payload-types'
+import { getOgImageUrl } from '@/lib/getOgImageUrl'
 import { getCachedGlobal } from '@/utilities/getGlobals'
 
 import { PricingPlansSection } from '@/components/sections/PricingPlansSection'
@@ -10,11 +11,20 @@ import { PricingCTA } from '@/components/sections/PricingCTA'
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = (await getCachedGlobal('pricing-page', 1)()) as PricingPageType
+  const title = page.meta?.title || 'Pricing'
+  const description =
+    page.meta?.description ||
+    "Simple, transparent pricing for Revnator. Start free, upgrade when you're ready."
   return {
-    title: page.meta?.title || 'Pricing',
-    description:
-      page.meta?.description ||
-      "Simple, transparent pricing for Revnator. Start free, upgrade when you're ready.",
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: getOgImageUrl(page.meta?.image)
+        ? [{ url: getOgImageUrl(page.meta?.image)! }]
+        : undefined,
+    },
   }
 }
 

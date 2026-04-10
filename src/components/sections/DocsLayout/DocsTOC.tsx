@@ -2,7 +2,13 @@
 
 import React, { useState, useEffect } from 'react'
 import { cn } from '@/utilities/ui'
-import { slugifyHeading } from '../_docs/docsData'
+
+function slugifyHeading(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')
+}
 
 interface DocsTOCProps {
   headings: string[]

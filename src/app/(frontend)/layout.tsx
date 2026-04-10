@@ -16,6 +16,7 @@ import { getCachedGlobal } from '@/utilities/getGlobals'
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
 import { getImageUrl } from '@/lib/getImageUrl'
+import { getOgImageUrl } from '@/lib/getOgImageUrl'
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -73,7 +74,8 @@ export async function generateMetadata(): Promise<Metadata> {
     'Revnator is the all-in-one B2B Sales OS that unifies your contacts, accounts, email, pipeline, and revenue operations.'
 
   const faviconUrl = getImageUrl(settings.favicon, 'favicon')
-  const ogImage = getImageUrl(settings.defaultOgImage, 'ogImage')
+  const ogImage =
+    getOgImageUrl(settings.defaultOgImage) || getImageUrl(settings.defaultOgImage, 'ogImage')
 
   return {
     metadataBase: new URL(getServerSideURL()),

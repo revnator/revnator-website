@@ -104,6 +104,8 @@ export function EbookLayout({
               variant="full"
               title="Get your free copy"
               buttonText="Download now"
+              resourceType="ebook"
+              resourceSlug={resource.slug}
             />
           </div>
         </div>

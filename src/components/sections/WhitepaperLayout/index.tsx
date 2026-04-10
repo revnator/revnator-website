@@ -100,6 +100,8 @@ export function WhitepaperLayout({
               variant="full"
               title="Download the full report"
               buttonText="Download report"
+              resourceType="whitepaper"
+              resourceSlug={resource.slug}
             />
           </div>
         </div>

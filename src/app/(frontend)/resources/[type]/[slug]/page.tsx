@@ -11,6 +11,7 @@ import type {
   Template,
   SuccessStory,
 } from '@/payload-types'
+import { getOgImageUrl } from '@/lib/getOgImageUrl'
 import { EbookLayout } from '@/components/sections/EbookLayout'
 import { CaseStudyLayout } from '@/components/sections/CaseStudyLayout'
 import { WebinarLayout } from '@/components/sections/WebinarLayout'
@@ -61,12 +62,29 @@ export async function generateMetadata({
   const { type, slug } = await params
   if (!validTypes.includes(type as ResourceType)) return {}
 
-  const resource = (await getResource(type as ResourceType, slug)) as { title?: string; description?: string } | null
+  const resource = (await getResource(type as ResourceType, slug)) as {
+    title?: string
+    description?: string
+    excerpt?: string
+    meta?: { title?: string; description?: string; image?: { url?: string } | string | number }
+    featuredImage?: { url?: string } | string | number
+  } | null
   if (!resource) return {}
 
+  const title = resource.meta?.title || `${resource.title} | Revnator Resources`
+  const description = resource.meta?.description || resource.description || resource.excerpt || ''
+
+  const ogImageUrl = getOgImageUrl(resource.meta?.image) || getOgImageUrl(resource.featuredImage)
+  const ogImages = ogImageUrl ? [{ url: ogImageUrl }] : undefined
+
   return {
-    title: `${resource.title} | Revnator Resources`,
-    description: resource.description,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: ogImages,
+    },
   }
 }
 

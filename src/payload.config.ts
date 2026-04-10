@@ -22,6 +22,9 @@ import { Webinars } from './collections/Webinars'
 import { Whitepapers } from './collections/Whitepapers'
 import { Templates } from './collections/Templates'
 import { SuccessStories } from './collections/SuccessStories'
+import { DocSections } from './collections/DocSections'
+import { DocPages } from './collections/DocPages'
+import { LeadSubmissions } from './collections/LeadSubmissions'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { SiteSettings } from './globals/SiteSettings'
@@ -43,6 +46,9 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  graphQL: {
+    disablePlaygroundInProduction: true,
+  },
   admin: {
     components: {
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
@@ -86,7 +92,7 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI,
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users, Modules, UseCases, Industries, BlogCategories, BlogPosts, NewsArticles, LegalDocuments, Ebooks, CaseStudies, Webinars, Whitepapers, Templates, SuccessStories],
+  collections: [Pages, Posts, Media, Categories, Users, Modules, UseCases, Industries, BlogCategories, BlogPosts, NewsArticles, LegalDocuments, Ebooks, CaseStudies, Webinars, Whitepapers, Templates, SuccessStories, DocSections, DocPages, LeadSubmissions],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer, SiteSettings, HomePage, PricingPage, WhyRevnatorPage, AboutPage, PlatformPage, SupportPage, ContactPage, NewsPage, LegalPage, ResourcesPage],
   plugins,

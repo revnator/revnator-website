@@ -365,3 +365,117 @@ html[data-theme='light'] {
   border-top: 1px solid #E4DBFF;
   margin: 32px 0;
 }
+
+/* ── Docs prose — styles for documentation Lexical rich text ── */
+.docs-richtext h2 {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #130F1E;
+  margin-top: 40px;
+  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+  scroll-margin-top: 96px;
+}
+
+.docs-richtext h3 {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: #130F1E;
+  margin-top: 32px;
+  margin-bottom: 12px;
+  scroll-margin-top: 96px;
+}
+
+.docs-richtext h4 {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #130F1E;
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+
+.docs-richtext p {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: #2D2640;
+  margin-bottom: 20px;
+}
+
+.docs-richtext a {
+  color: #6E33B1;
+  text-decoration: underline;
+}
+
+.docs-richtext a:hover {
+  color: #5A2A94;
+}
+
+.docs-richtext ul,
+.docs-richtext ol {
+  margin: 16px 0;
+  padding-left: 20px;
+}
+
+.docs-richtext ul {
+  list-style-type: disc;
+}
+
+.docs-richtext ol {
+  list-style-type: decimal;
+}
+
+.docs-richtext li {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #2D2640;
+  margin-bottom: 8px;
+}
+
+.docs-richtext blockquote {
+  border-left: 3px solid #6E33B1;
+  padding-left: 20px;
+  font-style: italic;
+  color: #9b8fad;
+  margin: 24px 0;
+}
+
+.docs-richtext blockquote p {
+  color: inherit;
+}
+
+.docs-richtext pre {
+  background: #130F1E;
+  color: #E4DBFF;
+  border-radius: 12px;
+  padding: 20px;
+  font-family: var(--font-dm-mono), monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-x: auto;
+  margin: 24px 0;
+}
+
+.docs-richtext code:not(pre code) {
+  background: #F5F3FA;
+  color: #6E33B1;
+  font-family: var(--font-dm-mono), monospace;
+  font-size: 15px;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.docs-richtext strong {
+  font-weight: 600;
+  color: #130F1E;
+}
+
+.docs-richtext hr {
+  border: none;
+  border-top: 1px solid #E4DBFF;
+  margin: 32px 0;
+}

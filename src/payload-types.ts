@@ -85,6 +85,9 @@ export interface Config {
     whitepapers: Whitepaper;
     templates: Template;
     'success-stories': SuccessStory;
+    'doc-sections': DocSection;
+    'doc-pages': DocPage;
+    'lead-submissions': LeadSubmission;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -120,6 +123,9 @@ export interface Config {
     whitepapers: WhitepapersSelect<false> | WhitepapersSelect<true>;
     templates: TemplatesSelect<false> | TemplatesSelect<true>;
     'success-stories': SuccessStoriesSelect<false> | SuccessStoriesSelect<true>;
+    'doc-sections': DocSectionsSelect<false> | DocSectionsSelect<true>;
+    'doc-pages': DocPagesSelect<false> | DocPagesSelect<true>;
+    'lead-submissions': LeadSubmissionsSelect<false> | LeadSubmissionsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -1917,6 +1923,139 @@ export interface SuccessStory {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "doc-sections".
+ */
+export interface DocSection {
+  id: number;
+  title: string;
+  /**
+   * URL slug. Auto-generated from title.
+   */
+  slug: string;
+  /**
+   * Display order in the sidebar. Lower numbers appear first.
+   */
+  order?: number | null;
+  isPublished?: boolean | null;
+  /**
+   * Optional icon shown in the sidebar next to the section title
+   */
+  icon?:
+    | (
+        | 'Rocket'
+        | 'Users'
+        | 'Building2'
+        | 'Mail'
+        | 'GitBranch'
+        | 'LayoutDashboard'
+        | 'Calendar'
+        | 'MessageCircle'
+        | 'Sparkles'
+        | 'FileText'
+        | 'BarChart3'
+        | 'Plug'
+        | 'Code'
+        | 'Shield'
+        | 'BookOpen'
+      )
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "doc-pages".
+ */
+export interface DocPage {
+  id: number;
+  title: string;
+  /**
+   * Used in the URL: /docs/[section-slug]/[page-slug]. Must be unique within its section.
+   */
+  slug: string;
+  /**
+   * Which section this page belongs to in the sidebar
+   */
+  section: number | DocSection;
+  /**
+   * Display order within the section. Lower numbers first.
+   */
+  order?: number | null;
+  isPublished?: boolean | null;
+  lastUpdated: string;
+  /**
+   * Write documentation content. Use headings (H2, H3) for the table of contents sidebar.
+   */
+  body: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Link shown as 'Previous' at the bottom of the page
+   */
+  previousPage?: (number | null) | DocPage;
+  /**
+   * Link shown as 'Next' at the bottom of the page
+   */
+  nextPage?: (number | null) | DocPage;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lead-submissions".
+ */
+export interface LeadSubmission {
+  id: number;
+  /**
+   * Which form was submitted
+   */
+  formType: 'contact' | 'ebook' | 'whitepaper' | 'template' | 'webinar';
+  /**
+   * The page/resource that generated this submission (e.g., "cold-email-playbook")
+   */
+  source: string;
+  firstName?: string | null;
+  lastName?: string | null;
+  email: string;
+  company?: string | null;
+  teamSize?: string | null;
+  /**
+   * Subject line (contact form only)
+   */
+  subject?: string | null;
+  /**
+   * Message body (contact form only)
+   */
+  message?: string | null;
+  /**
+   * Track the status of this lead
+   */
+  status?: ('new' | 'contacted' | 'qualified' | 'closed') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -2176,6 +2315,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'success-stories';
         value: number | SuccessStory;
+      } | null)
+    | ({
+        relationTo: 'doc-sections';
+        value: number | DocSection;
+      } | null)
+    | ({
+        relationTo: 'doc-pages';
+        value: number | DocPage;
+      } | null)
+    | ({
+        relationTo: 'lead-submissions';
+        value: number | LeadSubmission;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -3146,6 +3297,61 @@ export interface SuccessStoriesSelect<T extends boolean = true> {
         description?: T;
       };
   slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "doc-sections_select".
+ */
+export interface DocSectionsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  order?: T;
+  isPublished?: T;
+  icon?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "doc-pages_select".
+ */
+export interface DocPagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  section?: T;
+  order?: T;
+  isPublished?: T;
+  lastUpdated?: T;
+  body?: T;
+  previousPage?: T;
+  nextPage?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lead-submissions_select".
+ */
+export interface LeadSubmissionsSelect<T extends boolean = true> {
+  formType?: T;
+  source?: T;
+  firstName?: T;
+  lastName?: T;
+  email?: T;
+  company?: T;
+  teamSize?: T;
+  subject?: T;
+  message?: T;
+  status?: T;
   updatedAt?: T;
   createdAt?: T;
 }

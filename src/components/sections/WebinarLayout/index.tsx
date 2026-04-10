@@ -123,6 +123,8 @@ export function WebinarLayout({
                   variant="webinar"
                   title="Reserve your spot"
                   buttonText="Register free"
+                  resourceType="webinar"
+                  resourceSlug={resource.slug}
                 />
                 {resource.registeredCount && (
                   <p className="mt-3 text-center font-body text-xs text-muted">

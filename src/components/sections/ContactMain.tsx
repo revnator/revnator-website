@@ -1,4 +1,6 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import { DynamicIcon } from '@/lib/icons'
 
 export interface ContactInfoBlockData {
@@ -14,6 +16,46 @@ export interface ContactMainData {
 }
 
 export function ContactMain({ data }: { data: ContactMainData }): React.ReactElement {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
+    e.preventDefault()
+    setIsSubmitting(true)
+    setError(null)
+
+    const formData = new FormData(e.currentTarget)
+    const formEl = e.currentTarget
+
+    try {
+      const response = await fetch('/api/submit-form', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          formType: 'contact',
+          source: 'contact-page',
+          firstName: formData.get('name') || '',
+          email: formData.get('email') || '',
+          subject: formData.get('subject') || '',
+          message: formData.get('message') || '',
+        }),
+      })
+
+      if (!response.ok) {
+        const result = await response.json()
+        throw new Error(result.error || 'Submission failed')
+      }
+
+      setIsSuccess(true)
+      formEl.reset()
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
     <section className="w-full bg-bg py-20">
       <div className="mx-auto max-w-container px-6">
@@ -24,61 +66,93 @@ export function ContactMain({ data }: { data: ContactMainData }): React.ReactEle
               {data.formHeading}
             </h2>
 
-            <form className="mt-6 flex flex-col gap-5">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {isSuccess ? (
+              <div className="mt-6 rounded-xl bg-bg p-8 text-center">
+                <p className="font-heading text-lg font-semibold text-dark">
+                  Thanks for reaching out!
+                </p>
+                <p className="mt-2 font-body text-sm text-muted">
+                  We&apos;ll get back to you within 24 hours.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setIsSuccess(false)}
+                  className="mt-4 font-body text-sm font-medium text-primary hover:underline"
+                >
+                  Send another message
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div>
+                    <label className="block font-body text-sm font-medium text-dark mb-1.5">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      placeholder="Your name"
+                      className="w-full rounded-lg border border-light bg-bg px-4 py-3 font-body text-sm text-body placeholder:text-muted focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-body text-sm font-medium text-dark mb-1.5">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      placeholder="you@company.com"
+                      className="w-full rounded-lg border border-light bg-bg px-4 py-3 font-body text-sm text-body placeholder:text-muted focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                    />
+                  </div>
+                </div>
+
                 <div>
                   <label className="block font-body text-sm font-medium text-dark mb-1.5">
-                    Name
+                    Subject
                   </label>
-                  <input
-                    type="text"
-                    placeholder="Your name"
-                    className="w-full rounded-lg border border-light bg-bg px-4 py-3 font-body text-sm text-body placeholder:text-muted focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-                  />
+                  <select
+                    name="subject"
+                    className="w-full rounded-lg border border-light bg-bg px-4 py-3 font-body text-sm text-body focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                  >
+                    {data.subjectOptions.map((opt) => (
+                      <option key={opt} value={opt}>
+                        {opt}
+                      </option>
+                    ))}
+                  </select>
                 </div>
+
                 <div>
                   <label className="block font-body text-sm font-medium text-dark mb-1.5">
-                    Email
+                    Message
                   </label>
-                  <input
-                    type="email"
-                    placeholder="you@company.com"
-                    className="w-full rounded-lg border border-light bg-bg px-4 py-3 font-body text-sm text-body placeholder:text-muted focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                  <textarea
+                    name="message"
+                    rows={5}
+                    required
+                    placeholder="Tell us how we can help..."
+                    className="w-full rounded-lg border border-light bg-bg px-4 py-3 font-body text-sm text-body placeholder:text-muted focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary resize-none"
                   />
                 </div>
-              </div>
 
-              <div>
-                <label className="block font-body text-sm font-medium text-dark mb-1.5">
-                  Subject
-                </label>
-                <select className="w-full rounded-lg border border-light bg-bg px-4 py-3 font-body text-sm text-body focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary">
-                  {data.subjectOptions.map((opt) => (
-                    <option key={opt} value={opt}>
-                      {opt}
-                    </option>
-                  ))}
-                </select>
-              </div>
+                {error && (
+                  <p className="font-body text-sm text-error">{error}</p>
+                )}
 
-              <div>
-                <label className="block font-body text-sm font-medium text-dark mb-1.5">
-                  Message
-                </label>
-                <textarea
-                  rows={5}
-                  placeholder="Tell us how we can help..."
-                  className="w-full rounded-lg border border-light bg-bg px-4 py-3 font-body text-sm text-body placeholder:text-muted focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary resize-none"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="self-start rounded-lg bg-primary px-6 py-3 font-body text-sm font-semibold text-white transition-colors hover:bg-primary-dark focus:ring-2 focus:ring-primary focus:ring-offset-2"
-              >
-                Send message
-              </button>
-            </form>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="self-start rounded-lg bg-primary px-6 py-3 font-body text-sm font-semibold text-white transition-colors hover:bg-primary-dark focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? 'Sending...' : 'Send message'}
+                </button>
+              </form>
+            )}
           </div>
 
           {/* Info sidebar */}

@@ -21,6 +21,7 @@
     "seed:news": "cross-env NODE_OPTIONS=--no-deprecation npx tsx src/scripts/seed-news.ts",
     "seed:legal": "cross-env NODE_OPTIONS=--no-deprecation npx tsx src/scripts/seed-legal.ts",
     "seed:resources": "cross-env NODE_OPTIONS=--no-deprecation npx tsx src/scripts/seed-resources.ts",
+    "seed:docs": "cross-env NODE_OPTIONS=--no-deprecation npx tsx src/scripts/seed-docs.ts",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
   },
   "dependencies": {
