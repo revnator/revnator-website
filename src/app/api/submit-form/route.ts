@@ -11,6 +11,16 @@ const RATE_LIMIT_MAX = 5 // max 5 submissions per minute per IP
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now()
+
+  // Lazy cleanup: purge expired entries when map grows beyond 100
+  if (rateLimitMap.size > 100) {
+    for (const [key, value] of rateLimitMap.entries()) {
+      if (now - value.firstRequest > RATE_LIMIT_WINDOW) {
+        rateLimitMap.delete(key)
+      }
+    }
+  }
+
   const entry = rateLimitMap.get(ip)
 
   if (!entry || now - entry.firstRequest > RATE_LIMIT_WINDOW) {
@@ -24,19 +34,6 @@ function isRateLimited(ip: string): boolean {
 
   entry.count++
   return false
-}
-
-// Clean up old entries every 5 minutes
-if (typeof globalThis !== 'undefined') {
-  const cleanup = (): void => {
-    const now = Date.now()
-    for (const [key, value] of rateLimitMap.entries()) {
-      if (now - value.firstRequest > RATE_LIMIT_WINDOW) {
-        rateLimitMap.delete(key)
-      }
-    }
-  }
-  setInterval(cleanup, 5 * 60 * 1000)
 }
 
 export async function POST(req: NextRequest): Promise<NextResponse> {

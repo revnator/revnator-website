@@ -10,17 +10,31 @@ import { WhyFAQ } from '@/components/sections/WhyFAQ'
 import { WhyCTA } from '@/components/sections/WhyCTA'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const page = (await getCachedGlobal('why-revnator', 1)()) as WhyRevnatorType
-  return {
-    title: page.meta?.title || 'Why Revnator',
-    description:
-      page.meta?.description ||
-      'Stop juggling 5-7 sales tools. Revnator gives you CRM, sequences, pipeline, calendar, analytics, and AI in one workspace.',
+  try {
+    const page = (await getCachedGlobal('why-revnator', 1)()) as WhyRevnatorType
+    return {
+      title: page.meta?.title || 'Why Revnator',
+      description:
+        page.meta?.description ||
+        'Stop juggling 5-7 sales tools. Revnator gives you CRM, sequences, pipeline, calendar, analytics, and AI in one workspace.',
+    }
+  } catch {
+    return { title: 'Why Revnator', description: 'Stop juggling 5-7 sales tools. Revnator gives you CRM, sequences, pipeline, calendar, analytics, and AI in one workspace.' }
   }
 }
 
 export default async function WhyRevnatorPage(): Promise<React.ReactElement> {
-  const page = (await getCachedGlobal('why-revnator', 1)()) as WhyRevnatorType
+  let page: WhyRevnatorType
+  try {
+    page = (await getCachedGlobal('why-revnator', 1)()) as WhyRevnatorType
+  } catch (error) {
+    console.error('Failed to fetch why-revnator global:', error)
+    return (
+      <main className="flex min-h-[60vh] items-center justify-center">
+        <p className="text-muted">This page is temporarily unavailable.</p>
+      </main>
+    )
+  }
 
   const heroData = {
     label: page.heroLabel || 'WHY REVNATOR',

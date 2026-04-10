@@ -12,7 +12,17 @@ import { Integrations } from '@/components/sections/Integrations'
 import { FinalCTA } from '@/components/sections/FinalCTA'
 
 export default async function HomePage(): Promise<React.ReactElement> {
-  const page = (await getCachedGlobal('home-page', 1)()) as HomePageType
+  let page: HomePageType
+  try {
+    page = (await getCachedGlobal('home-page', 1)()) as HomePageType
+  } catch (error) {
+    console.error('Failed to fetch home-page global:', error)
+    return (
+      <main className="flex min-h-[60vh] items-center justify-center">
+        <p className="text-muted">This page is temporarily unavailable.</p>
+      </main>
+    )
+  }
 
   const heroData = {
     badge: page.heroBadge || 'REVENUE ACCELERATOR',

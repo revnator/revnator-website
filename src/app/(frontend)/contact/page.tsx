@@ -7,17 +7,31 @@ import { ContactOptions } from '@/components/sections/ContactOptions'
 import { ContactMain } from '@/components/sections/ContactMain'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const page = (await getCachedGlobal('contact-page', 1)()) as ContactPageType
-  return {
-    title: page.meta?.title || 'Contact',
-    description:
-      page.meta?.description ||
-      'Get in touch with the Revnator team. Sales inquiries, support, or partnership opportunities.',
+  try {
+    const page = (await getCachedGlobal('contact-page', 1)()) as ContactPageType
+    return {
+      title: page.meta?.title || 'Contact',
+      description:
+        page.meta?.description ||
+        'Get in touch with the Revnator team. Sales inquiries, support, or partnership opportunities.',
+    }
+  } catch {
+    return { title: 'Contact', description: 'Get in touch with the Revnator team. Sales inquiries, support, or partnership opportunities.' }
   }
 }
 
 export default async function ContactPage(): Promise<React.ReactElement> {
-  const page = (await getCachedGlobal('contact-page', 1)()) as ContactPageType
+  let page: ContactPageType
+  try {
+    page = (await getCachedGlobal('contact-page', 1)()) as ContactPageType
+  } catch (error) {
+    console.error('Failed to fetch contact-page global:', error)
+    return (
+      <main className="flex min-h-[60vh] items-center justify-center">
+        <p className="text-muted">This page is temporarily unavailable.</p>
+      </main>
+    )
+  }
 
   const heroData = {
     label: page.heroLabel || 'CONTACT',

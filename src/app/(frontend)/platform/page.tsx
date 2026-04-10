@@ -9,17 +9,31 @@ import { PlatformPricingTeaser } from '@/components/sections/PlatformPricingTeas
 import { PlatformFinalCTA } from '@/components/sections/PlatformFinalCTA'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const page = (await getCachedGlobal('platform-page', 1)()) as PlatformPageType
-  return {
-    title: page.meta?.title || 'Platform',
-    description:
-      page.meta?.description ||
-      'Explore the Revnator platform — 9 integrated modules for contacts, accounts, email, pipeline, calendar, chat, AI, and more.',
+  try {
+    const page = (await getCachedGlobal('platform-page', 1)()) as PlatformPageType
+    return {
+      title: page.meta?.title || 'Platform',
+      description:
+        page.meta?.description ||
+        'Explore the Revnator platform — 9 integrated modules for contacts, accounts, email, pipeline, calendar, chat, AI, and more.',
+    }
+  } catch {
+    return { title: 'Platform', description: 'Explore the Revnator platform — 9 integrated modules for contacts, accounts, email, pipeline, calendar, chat, AI, and more.' }
   }
 }
 
 export default async function PlatformPage(): Promise<React.ReactElement> {
-  const page = (await getCachedGlobal('platform-page', 1)()) as PlatformPageType
+  let page: PlatformPageType
+  try {
+    page = (await getCachedGlobal('platform-page', 1)()) as PlatformPageType
+  } catch (error) {
+    console.error('Failed to fetch platform-page global:', error)
+    return (
+      <main className="flex min-h-[60vh] items-center justify-center">
+        <p className="text-muted">This page is temporarily unavailable.</p>
+      </main>
+    )
+  }
 
   const heroData = {
     badge: page.heroBadge || 'Platform',

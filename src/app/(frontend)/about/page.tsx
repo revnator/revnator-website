@@ -11,17 +11,31 @@ import { AboutTeam } from '@/components/sections/AboutTeam'
 import { AboutCTA } from '@/components/sections/AboutCTA'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const page = (await getCachedGlobal('about-page', 1)()) as AboutPageType
-  return {
-    title: page.meta?.title || 'About',
-    description:
-      page.meta?.description ||
-      'Learn about Revnator — the sales OS built for closers.',
+  try {
+    const page = (await getCachedGlobal('about-page', 1)()) as AboutPageType
+    return {
+      title: page.meta?.title || 'About',
+      description:
+        page.meta?.description ||
+        'Learn about Revnator — the sales OS built for closers.',
+    }
+  } catch {
+    return { title: 'About', description: 'Learn about Revnator — the sales OS built for closers.' }
   }
 }
 
 export default async function AboutPage(): Promise<React.ReactElement> {
-  const page = (await getCachedGlobal('about-page', 1)()) as AboutPageType
+  let page: AboutPageType
+  try {
+    page = (await getCachedGlobal('about-page', 1)()) as AboutPageType
+  } catch (error) {
+    console.error('Failed to fetch about-page global:', error)
+    return (
+      <main className="flex min-h-[60vh] items-center justify-center">
+        <p className="text-muted">This page is temporarily unavailable.</p>
+      </main>
+    )
+  }
 
   const heroData = {
     label: page.heroLabel || 'ABOUT REVNATOR',

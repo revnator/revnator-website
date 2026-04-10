@@ -9,17 +9,31 @@ import { SupportFAQ } from '@/components/sections/SupportFAQ'
 import { SupportCTA } from '@/components/sections/SupportCTA'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const page = (await getCachedGlobal('support-page', 1)()) as SupportPageType
-  return {
-    title: page.meta?.title || 'Support',
-    description:
-      page.meta?.description ||
-      'Get help with Revnator. Browse documentation, email our support team, or join the community.',
+  try {
+    const page = (await getCachedGlobal('support-page', 1)()) as SupportPageType
+    return {
+      title: page.meta?.title || 'Support',
+      description:
+        page.meta?.description ||
+        'Get help with Revnator. Browse documentation, email our support team, or join the community.',
+    }
+  } catch {
+    return { title: 'Support', description: 'Get help with Revnator. Browse documentation, email our support team, or join the community.' }
   }
 }
 
 export default async function SupportPage(): Promise<React.ReactElement> {
-  const page = (await getCachedGlobal('support-page', 1)()) as SupportPageType
+  let page: SupportPageType
+  try {
+    page = (await getCachedGlobal('support-page', 1)()) as SupportPageType
+  } catch (error) {
+    console.error('Failed to fetch support-page global:', error)
+    return (
+      <main className="flex min-h-[60vh] items-center justify-center">
+        <p className="text-muted">This page is temporarily unavailable.</p>
+      </main>
+    )
+  }
 
   const heroData = {
     label: page.heroLabel || 'SUPPORT',

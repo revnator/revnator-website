@@ -10,26 +10,40 @@ import { PricingFAQ } from '@/components/sections/PricingFAQ'
 import { PricingCTA } from '@/components/sections/PricingCTA'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const page = (await getCachedGlobal('pricing-page', 1)()) as PricingPageType
-  const title = page.meta?.title || 'Pricing'
-  const description =
-    page.meta?.description ||
-    "Simple, transparent pricing for Revnator. Start free, upgrade when you're ready."
-  return {
-    title,
-    description,
-    openGraph: {
+  try {
+    const page = (await getCachedGlobal('pricing-page', 1)()) as PricingPageType
+    const title = page.meta?.title || 'Pricing'
+    const description =
+      page.meta?.description ||
+      "Simple, transparent pricing for Revnator. Start free, upgrade when you're ready."
+    return {
       title,
       description,
-      images: getOgImageUrl(page.meta?.image)
-        ? [{ url: getOgImageUrl(page.meta?.image)! }]
-        : undefined,
-    },
+      openGraph: {
+        title,
+        description,
+        images: getOgImageUrl(page.meta?.image)
+          ? [{ url: getOgImageUrl(page.meta?.image)! }]
+          : undefined,
+      },
+    }
+  } catch {
+    return { title: 'Pricing', description: "Simple, transparent pricing for Revnator. Start free, upgrade when you're ready." }
   }
 }
 
 export default async function PricingPage(): Promise<React.ReactElement> {
-  const page = (await getCachedGlobal('pricing-page', 1)()) as PricingPageType
+  let page: PricingPageType
+  try {
+    page = (await getCachedGlobal('pricing-page', 1)()) as PricingPageType
+  } catch (error) {
+    console.error('Failed to fetch pricing-page global:', error)
+    return (
+      <main className="flex min-h-[60vh] items-center justify-center">
+        <p className="text-muted">This page is temporarily unavailable.</p>
+      </main>
+    )
+  }
 
   const plansData = {
     label: page.heroLabel || 'PRICING',
