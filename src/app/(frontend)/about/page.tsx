@@ -10,6 +10,8 @@ import { AboutValues } from '@/components/sections/AboutValues'
 import { AboutTeam } from '@/components/sections/AboutTeam'
 import { AboutCTA } from '@/components/sections/AboutCTA'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata(): Promise<Metadata> {
   try {
     const page = (await getCachedGlobal('about-page', 1)()) as AboutPageType

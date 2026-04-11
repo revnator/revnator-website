@@ -11,6 +11,8 @@ import { BlogFeaturedPost } from '@/components/sections/BlogFeaturedPost'
 import { BlogListingClient } from '@/components/sections/BlogListingClient'
 import type { BlogPostCard } from '@/components/sections/_blog/types'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Blog | Revnator',
   description:

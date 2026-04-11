@@ -71,19 +71,7 @@ async function getRelatedArticles(currentId: number): Promise<NewsCard[]> {
   return result.docs.map(toCard)
 }
 
-export async function generateStaticParams(): Promise<{ slug: string }[]> {
-  try {
-    const payload = await getPayload({ config })
-    const result = await payload.find({
-      collection: 'news-articles',
-      where: { status: { equals: 'published' } },
-      limit: 100,
-    })
-    return result.docs.map((doc) => ({ slug: doc.slug }))
-  } catch {
-    return []
-  }
-}
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({
   params,

@@ -42,19 +42,7 @@ const getIndustryBySlug = (slug: string) =>
     { tags: [`industry-${slug}`] },
   )
 
-export async function generateStaticParams(): Promise<{ slug: string }[]> {
-  try {
-    const payload = await getPayload({ config })
-    const result = await payload.find({
-      collection: 'industries',
-      where: { isPublished: { equals: true } },
-      limit: 100,
-    })
-    return result.docs.map((doc) => ({ slug: doc.slug }))
-  } catch {
-    return []
-  }
-}
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({
   params,

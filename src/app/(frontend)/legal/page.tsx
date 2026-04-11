@@ -8,6 +8,8 @@ import { getCachedGlobal } from '@/utilities/getGlobals'
 
 import { LegalHub } from '@/components/sections/LegalHub'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata(): Promise<Metadata> {
   try {
     const page = (await getCachedGlobal('legal-page', 1)()) as LegalPageType

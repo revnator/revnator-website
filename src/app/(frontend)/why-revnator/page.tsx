@@ -9,6 +9,8 @@ import { ValueProps } from '@/components/sections/ValueProps'
 import { WhyFAQ } from '@/components/sections/WhyFAQ'
 import { WhyCTA } from '@/components/sections/WhyCTA'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata(): Promise<Metadata> {
   try {
     const page = (await getCachedGlobal('why-revnator', 1)()) as WhyRevnatorType

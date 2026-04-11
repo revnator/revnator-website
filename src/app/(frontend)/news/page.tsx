@@ -11,6 +11,8 @@ import { NewsListingClient } from '@/components/sections/NewsListingClient'
 import { NewsPressKit } from '@/components/sections/NewsPressKit'
 import type { NewsCard } from '@/components/sections/NewsListingClient'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata(): Promise<Metadata> {
   try {
     const page = (await getCachedGlobal('news-page', 1)()) as NewsPageType

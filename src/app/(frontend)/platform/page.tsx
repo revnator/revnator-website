@@ -8,6 +8,8 @@ import { PlatformConnected } from '@/components/sections/PlatformConnected'
 import { PlatformPricingTeaser } from '@/components/sections/PlatformPricingTeaser'
 import { PlatformFinalCTA } from '@/components/sections/PlatformFinalCTA'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata(): Promise<Metadata> {
   try {
     const page = (await getCachedGlobal('platform-page', 1)()) as PlatformPageType

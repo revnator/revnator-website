@@ -9,6 +9,8 @@ import { PricingComparisonTable } from '@/components/sections/PricingComparisonT
 import { PricingFAQ } from '@/components/sections/PricingFAQ'
 import { PricingCTA } from '@/components/sections/PricingCTA'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata(): Promise<Metadata> {
   try {
     const page = (await getCachedGlobal('pricing-page', 1)()) as PricingPageType

@@ -49,6 +49,8 @@ const typeConfig: Record<
   'success-stories': { label: 'Success Stories', displayLabel: 'Success Story', cta: 'Read', icon: Trophy },
 }
 
+export const dynamic = 'force-dynamic'
+
 function isValidType(type: string): type is ResourceType {
   return validTypes.includes(type as ResourceType)
 }

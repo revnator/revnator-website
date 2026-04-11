@@ -55,6 +55,8 @@ async function getResource(type: ResourceType, slug: string): Promise<unknown | 
   return fetcher()
 }
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata({
   params,
 }: {

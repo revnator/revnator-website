@@ -17,6 +17,8 @@ import { getCachedGlobal } from '@/utilities/getGlobals'
 import { ResourcesHub } from '@/components/sections/ResourcesHub'
 import { ResourcesHubClient, type ResourceCard } from '@/components/sections/ResourcesHubClient'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata(): Promise<Metadata> {
   try {
     const page = (await getCachedGlobal('resources-page', 1)()) as ResourcesPageType

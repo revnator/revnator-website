@@ -6,6 +6,8 @@ import { ContactHero } from '@/components/sections/ContactHero'
 import { ContactOptions } from '@/components/sections/ContactOptions'
 import { ContactMain } from '@/components/sections/ContactMain'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata(): Promise<Metadata> {
   try {
     const page = (await getCachedGlobal('contact-page', 1)()) as ContactPageType

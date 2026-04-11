@@ -4,6 +4,8 @@ import { Zap, Layers, Code, Play } from 'lucide-react'
 import { DocsLayout } from '@/components/sections/DocsLayout/DocsLayout'
 import { getDocsSidebar } from '@/lib/getDocsSidebar'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Documentation | Revnator',
   description:

@@ -11,6 +11,8 @@ import { Testimonials } from '@/components/sections/Testimonials'
 import { Integrations } from '@/components/sections/Integrations'
 import { FinalCTA } from '@/components/sections/FinalCTA'
 
+export const dynamic = 'force-dynamic'
+
 export default async function HomePage(): Promise<React.ReactElement> {
   let page: HomePageType
   try {

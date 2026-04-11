@@ -59,19 +59,7 @@ const getAllLegalDocs = unstable_cache(
   { tags: ['legal-docs'] },
 )
 
-export async function generateStaticParams(): Promise<{ slug: string }[]> {
-  try {
-    const payload = await getPayload({ config })
-    const result = await payload.find({
-      collection: 'legal-documents',
-      where: { isPublished: { equals: true } },
-      limit: 100,
-    })
-    return result.docs.map((doc) => ({ slug: doc.slug }))
-  } catch {
-    return []
-  }
-}
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({
   params,

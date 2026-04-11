@@ -12,6 +12,8 @@ import { DocsBottomNav } from '@/components/sections/DocsLayout/DocsBottomNav'
 import { DocsFeedback } from '@/components/sections/DocsLayout/DocsFeedback'
 import { getDocsSidebar } from '@/lib/getDocsSidebar'
 
+export const dynamic = 'force-dynamic'
+
 // ── Helpers ──
 
 function extractH2Headings(body: DocPage['body']): string[] {

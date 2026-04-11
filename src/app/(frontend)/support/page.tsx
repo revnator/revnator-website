@@ -8,6 +8,8 @@ import { SupportCategories } from '@/components/sections/SupportCategories'
 import { SupportFAQ } from '@/components/sections/SupportFAQ'
 import { SupportCTA } from '@/components/sections/SupportCTA'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata(): Promise<Metadata> {
   try {
     const page = (await getCachedGlobal('support-page', 1)()) as SupportPageType
