@@ -18,6 +18,8 @@ import { getServerSideURL } from '@/utilities/getURL'
 import { getImageUrl } from '@/lib/getImageUrl'
 import { getOgImageUrl } from '@/lib/getOgImageUrl'
 
+export const dynamic = 'force-dynamic'
+
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700', '800'],
@@ -42,6 +44,19 @@ const dmMono = DM_Mono({
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode()
 
+  let header: React.ReactElement | null = null
+  let footer: React.ReactElement | null = null
+  try {
+    header = await Header()
+  } catch (error) {
+    console.error('Layout Header fetch failed:', error)
+  }
+  try {
+    footer = await Footer()
+  } catch (error) {
+    console.error('Layout Footer fetch failed:', error)
+  }
+
   return (
     <html className={`${jakarta.variable} ${inter.variable} ${dmMono.variable}`} lang="en" suppressHydrationWarning>
       <head>
@@ -55,9 +70,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             }}
           />
 
-          <Header />
+          {header}
           {children}
-          <Footer />
+          {footer}
         </Providers>
       </body>
     </html>
@@ -65,35 +80,48 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const settings = await getCachedGlobal('site-settings', 1)() as SiteSetting
+  try {
+    const settings = await getCachedGlobal('site-settings', 1)() as SiteSetting
 
-  const siteName = settings.siteName || 'Revnator'
-  const defaultTitle = settings.defaultMetaTitle || 'Revnator — B2B Sales OS'
-  const defaultDescription =
-    settings.defaultMetaDescription ||
-    'Revnator is the all-in-one B2B Sales OS that unifies your contacts, accounts, email, pipeline, and revenue operations.'
+    const siteName = settings.siteName || 'Revnator'
+    const defaultTitle = settings.defaultMetaTitle || 'Revnator — B2B Sales OS'
+    const defaultDescription =
+      settings.defaultMetaDescription ||
+      'Revnator is the all-in-one B2B Sales OS that unifies your contacts, accounts, email, pipeline, and revenue operations.'
 
-  const faviconUrl = getImageUrl(settings.favicon, 'favicon')
-  const ogImage =
-    getOgImageUrl(settings.defaultOgImage) || getImageUrl(settings.defaultOgImage, 'ogImage')
+    const faviconUrl = getImageUrl(settings.favicon, 'favicon')
+    const ogImage =
+      getOgImageUrl(settings.defaultOgImage) || getImageUrl(settings.defaultOgImage, 'ogImage')
 
-  return {
-    metadataBase: new URL(getServerSideURL()),
-    title: {
-      default: defaultTitle,
-      template: `%s | ${siteName}`,
-    },
-    description: defaultDescription,
-    icons: faviconUrl ? { icon: [{ url: faviconUrl }] } : undefined,
-    openGraph: mergeOpenGraph({
-      siteName,
-      title: defaultTitle,
+    return {
+      metadataBase: new URL(getServerSideURL()),
+      title: {
+        default: defaultTitle,
+        template: `%s | ${siteName}`,
+      },
       description: defaultDescription,
-      images: ogImage ? [{ url: ogImage }] : undefined,
-    }),
-    twitter: {
-      card: 'summary_large_image',
-      creator: '@revnator',
-    },
+      icons: faviconUrl ? { icon: [{ url: faviconUrl }] } : undefined,
+      openGraph: mergeOpenGraph({
+        siteName,
+        title: defaultTitle,
+        description: defaultDescription,
+        images: ogImage ? [{ url: ogImage }] : undefined,
+      }),
+      twitter: {
+        card: 'summary_large_image',
+        creator: '@revnator',
+      },
+    }
+  } catch (error) {
+    console.error('Layout metadata fetch failed:', error)
+    return {
+      metadataBase: new URL(getServerSideURL()),
+      title: {
+        default: 'Revnator — B2B Sales OS',
+        template: '%s | Revnator',
+      },
+      description:
+        'The all-in-one sales workspace for lean B2B teams.',
+    }
   }
 }
