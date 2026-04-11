@@ -2,7 +2,8 @@
 
 import React, { useState, useRef, useCallback, useEffect } from 'react'
 import Link from 'next/link'
-import { ChevronDown, Menu } from 'lucide-react'
+import { usePathname } from 'next/navigation'
+import { ChevronDown, Menu, X } from 'lucide-react'
 import { cn } from '@/utilities/ui'
 import type { Header as HeaderType, SiteSetting } from '@/payload-types'
 import { getImageUrl, getImageAlt } from '@/lib/getImageUrl'
@@ -45,7 +46,26 @@ export function HeaderClient({
   navModules = [],
 }: HeaderClientProps): React.ReactElement {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const pathname = usePathname()
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false)
+  }, [pathname])
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [mobileMenuOpen])
 
   const clearCloseTimeout = useCallback((): void => {
     if (closeTimeoutRef.current) {
@@ -265,16 +285,167 @@ export function HeaderClient({
             {header.primaryCtaText ?? 'Start free trial'}
           </Link>
 
-          {/* Mobile menu button (menu not built yet) */}
+          {/* Mobile menu button */}
           <button
             type="button"
             className="md:hidden p-2 text-body"
-            aria-label="Open menu"
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            onClick={() => setMobileMenuOpen((prev) => !prev)}
           >
-            <Menu size={24} />
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
+
+      {/* Mobile menu panel */}
+      {mobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 top-[72px] z-40 bg-white overflow-y-auto">
+          <nav className="flex flex-col px-6 py-6 gap-2">
+            {mainNav.map((item) => {
+              const label = item.label ?? ''
+
+              if (!item.hasDropdown) {
+                return (
+                  <Link
+                    key={label}
+                    href={item.directLink ?? '#'}
+                    className="font-body text-base font-medium text-body py-3 border-b border-light transition-colors duration-150 hover:text-primary"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {label}
+                  </Link>
+                )
+              }
+
+              return (
+                <MobileNavAccordion key={label} label={label}>
+                  {item.dropdownType === 'platform' && navModules.map((mod) => (
+                    <Link
+                      key={mod.href}
+                      href={mod.href}
+                      className="block py-2 pl-4 font-body text-sm text-body hover:text-primary"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {mod.name}
+                    </Link>
+                  ))}
+                  {item.dropdownType === 'salesOS' && (
+                    <>
+                      {(header.useCasesItems ?? []).map((uc) => (
+                        <Link
+                          key={uc.href}
+                          href={uc.href ?? '#'}
+                          className="block py-2 pl-4 font-body text-sm text-body hover:text-primary"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {uc.name}
+                        </Link>
+                      ))}
+                      {(header.industriesItems ?? []).map((ind) => (
+                        <Link
+                          key={ind.href}
+                          href={ind.href ?? '#'}
+                          className="block py-2 pl-4 font-body text-sm text-body hover:text-primary"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {ind.name}
+                        </Link>
+                      ))}
+                    </>
+                  )}
+                  {item.dropdownType === 'resources' && (
+                    <>
+                      {(header.learnItems ?? []).map((li) => (
+                        <Link
+                          key={li.href}
+                          href={li.href ?? '#'}
+                          className="block py-2 pl-4 font-body text-sm text-body hover:text-primary"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {li.name}
+                        </Link>
+                      ))}
+                      {(header.downloadItems ?? []).map((di) => (
+                        <Link
+                          key={di.href}
+                          href={di.href ?? '#'}
+                          className="block py-2 pl-4 font-body text-sm text-body hover:text-primary"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {di.name}
+                        </Link>
+                      ))}
+                    </>
+                  )}
+                  {item.dropdownType === 'company' && (header.companyItems ?? []).map((ci) => (
+                    <Link
+                      key={ci.href}
+                      href={ci.href ?? '#'}
+                      className="block py-2 pl-4 font-body text-sm text-body hover:text-primary"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {ci.name}
+                    </Link>
+                  ))}
+                </MobileNavAccordion>
+              )
+            })}
+
+            {/* Mobile CTAs */}
+            <div className="mt-6 flex flex-col gap-3">
+              <Link
+                href={header.loginHref ?? '/login'}
+                className="font-body text-sm font-medium text-body text-center py-3 rounded-lg border border-light transition-colors duration-150 hover:text-primary"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {header.loginText ?? 'Log in'}
+              </Link>
+              <Link
+                href={header.primaryCtaHref ?? '/signup'}
+                className="font-body text-sm font-semibold text-white text-center bg-primary px-5 py-3 rounded-lg transition-colors duration-150 hover:bg-primary-dark"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {header.primaryCtaText ?? 'Start free trial'}
+              </Link>
+            </div>
+          </nav>
+        </div>
+      )}
     </header>
+  )
+}
+
+function MobileNavAccordion({
+  label,
+  children,
+}: {
+  label: string
+  children: React.ReactNode
+}): React.ReactElement {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <div className="border-b border-light">
+      <button
+        type="button"
+        className="flex w-full items-center justify-between py-3 font-body text-base font-medium text-body transition-colors duration-150 hover:text-primary"
+        onClick={() => setOpen((prev) => !prev)}
+        aria-expanded={open}
+      >
+        {label}
+        <ChevronDown
+          size={16}
+          className={cn(
+            'transition-transform duration-150',
+            open && 'rotate-180',
+          )}
+        />
+      </button>
+      {open && (
+        <div className="pb-3">
+          {children}
+        </div>
+      )}
+    </div>
   )
 }
