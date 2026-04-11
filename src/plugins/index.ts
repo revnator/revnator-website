@@ -27,7 +27,19 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
 export const plugins: Plugin[] = [
   s3Storage({
     collections: {
-      media: true,
+      media: {
+        disablePayloadAccessControl: true,
+        generateFileURL: ({ filename, prefix }) => {
+          const base = process.env.CLOUDFLARE_R2_PUBLIC_URL
+          if (!base) {
+            return `/api/media/file/${filename}`
+          }
+          const parts = [base.replace(/\/$/, '')]
+          if (prefix) parts.push(prefix)
+          parts.push(encodeURIComponent(filename))
+          return parts.join('/')
+        },
+      },
     },
     bucket: process.env.CLOUDFLARE_R2_BUCKET!,
     config: {
