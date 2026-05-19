@@ -44,6 +44,7 @@ module.exports = {
       '/resources',
       '/docs',
       '/legal',
+      '/get-started',
       '/resources/ebooks',
       '/resources/case-studies',
       '/resources/webinars',

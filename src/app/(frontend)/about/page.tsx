@@ -95,7 +95,7 @@ export default async function AboutPage(): Promise<React.ReactElement> {
       'We\'re just getting started. Try Revnator free and see why sales teams love it.',
     primaryCta: {
       label: page.ctaPrimaryCta?.label || 'Start free trial',
-      href: page.ctaPrimaryCta?.href || '/signup',
+      href: page.ctaPrimaryCta?.href || '/get-started',
     },
     secondaryCta: {
       label: page.ctaSecondaryCta?.label || 'Contact us',

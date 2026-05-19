@@ -66,7 +66,7 @@ export const HomePage: GlobalConfig = {
                 {
                   name: 'href',
                   type: 'text',
-                  defaultValue: '/signup',
+                  defaultValue: '/get-started',
                 },
               ],
             },
@@ -475,7 +475,7 @@ export const HomePage: GlobalConfig = {
                 {
                   name: 'href',
                   type: 'text',
-                  defaultValue: '/signup',
+                  defaultValue: '/get-started',
                 },
               ],
             },

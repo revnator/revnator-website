@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
-const VALID_FORM_TYPES = ['contact', 'ebook', 'whitepaper', 'template', 'webinar'] as const
+const VALID_FORM_TYPES = ['contact', 'ebook', 'whitepaper', 'template', 'webinar', 'beta-signup'] as const
 
 // In-memory rate limiting (sufficient for launch, upgrade to Redis if needed)
 const rateLimitMap = new Map<string, { count: number; firstRequest: number }>()

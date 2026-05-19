@@ -101,7 +101,7 @@ export const UseCases: CollectionConfig = {
             {
               name: 'primaryCtaHref',
               type: 'text',
-              defaultValue: '/signup',
+              defaultValue: '/get-started',
             },
             {
               name: 'secondaryCtaText',
@@ -278,7 +278,7 @@ export const UseCases: CollectionConfig = {
             {
               name: 'ctaPrimaryHref',
               type: 'text',
-              defaultValue: '/signup',
+              defaultValue: '/get-started',
             },
             {
               name: 'ctaSecondaryText',

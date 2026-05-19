@@ -110,7 +110,7 @@ export default async function PricingPage(): Promise<React.ReactElement> {
       'Join thousands of sales teams using Revnator. Free forever for up to 3 users.',
     primaryCta: {
       label: page.ctaPrimaryCta?.label || 'Start free trial',
-      href: page.ctaPrimaryCta?.href || '/signup',
+      href: page.ctaPrimaryCta?.href || '/get-started',
     },
     secondaryCta: {
       label: page.ctaSecondaryCta?.label || 'Book a demo',

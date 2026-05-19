@@ -26,7 +26,7 @@ export function toHeroData(mod: Module): ModuleHeroData {
     description: mod.heroDescription,
     primaryCta: {
       label: mod.heroPrimaryCtaText ?? 'Start free trial',
-      href: mod.heroPrimaryCtaHref ?? '/signup',
+      href: mod.heroPrimaryCtaHref ?? '/get-started',
     },
     secondaryCta: {
       label: mod.heroSecondaryCtaText ?? 'See all features',
@@ -101,7 +101,7 @@ export function toCTAData(mod: Module): ModuleCTAData {
     subheading: mod.ctaSubheading,
     primaryCta: {
       label: mod.ctaPrimaryText ?? 'Start free trial',
-      href: mod.ctaPrimaryHref ?? '/signup',
+      href: mod.ctaPrimaryHref ?? '/get-started',
     },
     secondaryCta: {
       label: mod.ctaSecondaryText ?? 'Book a demo',

@@ -76,7 +76,7 @@ const modules: ModuleSeed[] = [
     heroDescription:
       'Organize, enrich, segment, and track every interaction across your sales pipeline. Custom fields, smart lists, and lifecycle tracking - built for teams that move fast.',
     heroPrimaryCtaText: 'Start free trial',
-    heroPrimaryCtaHref: '/signup',
+    heroPrimaryCtaHref: '/get-started',
     heroSecondaryCtaText: 'See all features',
     heroSecondaryCtaHref: '#features',
     capabilities: [
@@ -99,7 +99,7 @@ const modules: ModuleSeed[] = [
           { text: 'Company and account association' },
         ],
         ctaText: 'Start free trial',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
       {
         label: 'SEGMENT',
@@ -141,7 +141,7 @@ const modules: ModuleSeed[] = [
           { text: 'Visual lifecycle funnel dashboard' },
         ],
         ctaText: 'Start free trial',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
     ],
     comparisonLabel: 'WHY REVNATOR',
@@ -172,7 +172,7 @@ const modules: ModuleSeed[] = [
     ctaSubheading:
       'Free for up to 3 users. No credit card required. Set up in under 5 minutes.',
     ctaPrimaryText: 'Start free trial',
-    ctaPrimaryHref: '/signup',
+    ctaPrimaryHref: '/get-started',
     ctaSecondaryText: 'Book a demo',
     ctaSecondaryHref: '/demo',
   },
@@ -195,7 +195,7 @@ const modules: ModuleSeed[] = [
     heroDescription:
       '360\u00B0 account views, health scores, stakeholder mapping, and full account timelines. Built for teams selling to companies, not just individuals.',
     heroPrimaryCtaText: 'Start free trial',
-    heroPrimaryCtaHref: '/signup',
+    heroPrimaryCtaHref: '/get-started',
     heroSecondaryCtaText: 'See all features',
     heroSecondaryCtaHref: '#features',
     capabilities: [
@@ -218,7 +218,7 @@ const modules: ModuleSeed[] = [
           { text: 'Activity feed across the team' },
         ],
         ctaText: 'Start free trial',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
       {
         label: 'HEALTH',
@@ -260,7 +260,7 @@ const modules: ModuleSeed[] = [
           { text: 'Account-based reporting' },
         ],
         ctaText: 'Start free trial',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
     ],
     comparisonLabel: 'WHY REVNATOR',
@@ -291,7 +291,7 @@ const modules: ModuleSeed[] = [
     ctaSubheading:
       'Free for up to 3 users. No credit card required. Built for B2B sales teams.',
     ctaPrimaryText: 'Start free trial',
-    ctaPrimaryHref: '/signup',
+    ctaPrimaryHref: '/get-started',
     ctaSecondaryText: 'Book a demo',
     ctaSecondaryHref: '/demo',
   },
@@ -314,7 +314,7 @@ const modules: ModuleSeed[] = [
     heroDescription:
       'Multi-step sequences with personalization, A/B testing, and automated follow-ups. Built-in deliverability tools so your emails land in the inbox, not spam.',
     heroPrimaryCtaText: 'Start free trial',
-    heroPrimaryCtaHref: '/signup',
+    heroPrimaryCtaHref: '/get-started',
     heroSecondaryCtaText: 'See all features',
     heroSecondaryCtaHref: '#features',
     capabilities: [
@@ -337,7 +337,7 @@ const modules: ModuleSeed[] = [
           { text: 'Pause sequences automatically when prospects reply' },
         ],
         ctaText: 'Start free trial',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
       {
         label: 'PERSONALIZATION',
@@ -379,7 +379,7 @@ const modules: ModuleSeed[] = [
           { text: 'Sequence performance reports' },
         ],
         ctaText: 'Start free trial',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
     ],
     comparisonLabel: 'WHY REVNATOR',
@@ -410,7 +410,7 @@ const modules: ModuleSeed[] = [
     ctaSubheading:
       'Free for up to 3 users. No credit card. Includes warm-up.',
     ctaPrimaryText: 'Start free trial',
-    ctaPrimaryHref: '/signup',
+    ctaPrimaryHref: '/get-started',
     ctaSecondaryText: 'Book a demo',
     ctaSecondaryHref: '/demo',
   },
@@ -433,7 +433,7 @@ const modules: ModuleSeed[] = [
     heroDescription:
       'Visual Kanban pipeline with deal tracking, stage progression, and revenue forecasting. Drag-and-drop simplicity for the closers, powerful reporting for the leaders.',
     heroPrimaryCtaText: 'Start free trial',
-    heroPrimaryCtaHref: '/signup',
+    heroPrimaryCtaHref: '/get-started',
     heroSecondaryCtaText: 'See all features',
     heroSecondaryCtaHref: '#features',
     capabilities: [
@@ -456,7 +456,7 @@ const modules: ModuleSeed[] = [
           { text: 'Filter by owner, value, date' },
         ],
         ctaText: 'Start free trial',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
       {
         label: 'FORECASTING',
@@ -498,7 +498,7 @@ const modules: ModuleSeed[] = [
           { text: 'Custom date range reports' },
         ],
         ctaText: 'Start free trial',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
     ],
     comparisonLabel: 'WHY REVNATOR',
@@ -529,7 +529,7 @@ const modules: ModuleSeed[] = [
     ctaSubheading:
       'Free for up to 3 users. Visual deal management. No credit card.',
     ctaPrimaryText: 'Start free trial',
-    ctaPrimaryHref: '/signup',
+    ctaPrimaryHref: '/get-started',
     ctaSecondaryText: 'Book a demo',
     ctaSecondaryHref: '/demo',
   },
@@ -552,7 +552,7 @@ const modules: ModuleSeed[] = [
     heroDescription:
       'Tasks, missions, calendar, and team coordination - all in one workspace. Stop juggling Asana, Google Calendar, and Slack. Run your day from Revnator.',
     heroPrimaryCtaText: 'Start free trial',
-    heroPrimaryCtaHref: '/signup',
+    heroPrimaryCtaHref: '/get-started',
     heroSecondaryCtaText: 'See all features',
     heroSecondaryCtaHref: '#features',
     capabilities: [
@@ -575,7 +575,7 @@ const modules: ModuleSeed[] = [
           { text: 'Team task assignment' },
         ],
         ctaText: 'Start free trial',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
       {
         label: 'MISSIONS',
@@ -617,7 +617,7 @@ const modules: ModuleSeed[] = [
           { text: 'Coaching recommendations' },
         ],
         ctaText: 'Start free trial',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
     ],
     comparisonLabel: 'WHY REVNATOR',
@@ -648,7 +648,7 @@ const modules: ModuleSeed[] = [
     ctaSubheading:
       'Free for up to 3 users. No credit card required. One unified workspace.',
     ctaPrimaryText: 'Start free trial',
-    ctaPrimaryHref: '/signup',
+    ctaPrimaryHref: '/get-started',
     ctaSecondaryText: 'Book a demo',
     ctaSecondaryHref: '/demo',
   },
@@ -671,7 +671,7 @@ const modules: ModuleSeed[] = [
     heroDescription:
       'Full calendar with Calendly-style booking pages. Share your link, let prospects book directly into your schedule. No more "what times work for you?" emails.',
     heroPrimaryCtaText: 'Start free trial',
-    heroPrimaryCtaHref: '/signup',
+    heroPrimaryCtaHref: '/get-started',
     heroSecondaryCtaText: 'See all features',
     heroSecondaryCtaHref: '#features',
     capabilities: [
@@ -694,7 +694,7 @@ const modules: ModuleSeed[] = [
           { text: 'Branded booking page' },
         ],
         ctaText: 'Start free trial',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
       {
         label: 'CALENDAR',
@@ -736,7 +736,7 @@ const modules: ModuleSeed[] = [
           { text: 'Two-way sync with Google/Outlook' },
         ],
         ctaText: 'Start free trial',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
     ],
     comparisonLabel: 'WHY REVNATOR',
@@ -767,7 +767,7 @@ const modules: ModuleSeed[] = [
     ctaSubheading:
       'Free for up to 3 users. No credit card. Booking pages included.',
     ctaPrimaryText: 'Start free trial',
-    ctaPrimaryHref: '/signup',
+    ctaPrimaryHref: '/get-started',
     ctaSecondaryText: 'Book a demo',
     ctaSecondaryHref: '/demo',
   },
@@ -790,7 +790,7 @@ const modules: ModuleSeed[] = [
     heroDescription:
       'Real-time team chat built into your sales workspace. Channels for deals, accounts, and projects. No more switching to Slack for quick questions.',
     heroPrimaryCtaText: 'Start free trial',
-    heroPrimaryCtaHref: '/signup',
+    heroPrimaryCtaHref: '/get-started',
     heroSecondaryCtaText: 'See all features',
     heroSecondaryCtaHref: '#features',
     capabilities: [
@@ -813,7 +813,7 @@ const modules: ModuleSeed[] = [
           { text: 'Message reactions' },
         ],
         ctaText: 'Start free trial',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
       {
         label: 'CHANNELS',
@@ -855,7 +855,7 @@ const modules: ModuleSeed[] = [
           { text: 'Saved searches' },
         ],
         ctaText: 'Start free trial',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
     ],
     comparisonLabel: 'WHY REVNATOR',
@@ -886,7 +886,7 @@ const modules: ModuleSeed[] = [
     ctaSubheading:
       'Free for up to 3 users. Real-time messaging included.',
     ctaPrimaryText: 'Start free trial',
-    ctaPrimaryHref: '/signup',
+    ctaPrimaryHref: '/get-started',
     ctaSecondaryText: 'Book a demo',
     ctaSecondaryHref: '/demo',
   },
@@ -909,7 +909,7 @@ const modules: ModuleSeed[] = [
     heroDescription:
       'AI-powered email drafting, account research, and next-step suggestions. Your reps focus on selling. Revnator\'s AI handles the grunt work.',
     heroPrimaryCtaText: 'Start free trial',
-    heroPrimaryCtaHref: '/signup',
+    heroPrimaryCtaHref: '/get-started',
     heroSecondaryCtaText: 'See all features',
     heroSecondaryCtaHref: '#features',
     capabilities: [
@@ -932,7 +932,7 @@ const modules: ModuleSeed[] = [
           { text: 'One-click rewrite suggestions' },
         ],
         ctaText: 'Start free trial',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
       {
         label: 'RESEARCH',
@@ -974,7 +974,7 @@ const modules: ModuleSeed[] = [
           { text: 'Win/loss pattern analysis' },
         ],
         ctaText: 'Start free trial',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
     ],
     comparisonLabel: 'WHY REVNATOR',
@@ -1005,7 +1005,7 @@ const modules: ModuleSeed[] = [
     ctaSubheading:
       'Free trial of all AI features in Pro plan. No credit card.',
     ctaPrimaryText: 'Start free trial',
-    ctaPrimaryHref: '/signup',
+    ctaPrimaryHref: '/get-started',
     ctaSecondaryText: 'Book a demo',
     ctaSecondaryHref: '/demo',
   },
@@ -1028,7 +1028,7 @@ const modules: ModuleSeed[] = [
     heroDescription:
       'Build forms in Revnator, embed them on your website, and watch leads flow directly into your contact lists. Drag-and-drop builder, no code needed.',
     heroPrimaryCtaText: 'Start free trial',
-    heroPrimaryCtaHref: '/signup',
+    heroPrimaryCtaHref: '/get-started',
     heroSecondaryCtaText: 'See all features',
     heroSecondaryCtaHref: '#features',
     capabilities: [
@@ -1051,7 +1051,7 @@ const modules: ModuleSeed[] = [
           { text: 'Multi-page forms' },
         ],
         ctaText: 'Start free trial',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
       {
         label: 'EMBED',
@@ -1093,7 +1093,7 @@ const modules: ModuleSeed[] = [
           { text: 'Custom validation rules' },
         ],
         ctaText: 'Start free trial',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
     ],
     comparisonLabel: 'WHY REVNATOR',
@@ -1124,7 +1124,7 @@ const modules: ModuleSeed[] = [
     ctaSubheading:
       'Free for up to 3 users. Unlimited forms. Built into your CRM.',
     ctaPrimaryText: 'Start free trial',
-    ctaPrimaryHref: '/signup',
+    ctaPrimaryHref: '/get-started',
     ctaSecondaryText: 'Book a demo',
     ctaSecondaryHref: '/demo',
   },

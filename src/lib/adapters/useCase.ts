@@ -18,7 +18,7 @@ export function toHeroData(uc: UseCase): UseCaseHeroData {
     description: uc.heroDescription,
     primaryCta: {
       label: uc.primaryCtaText ?? 'Start free trial',
-      href: uc.primaryCtaHref ?? '/signup',
+      href: uc.primaryCtaHref ?? '/get-started',
     },
     secondaryCta: {
       label: uc.secondaryCtaText ?? 'See pricing',
@@ -84,7 +84,7 @@ export function toCTAData(uc: UseCase): UseCaseCTAData {
     subheading: uc.ctaSubheading ?? 'Free for up to 3 users.',
     primaryCta: {
       label: uc.ctaPrimaryText ?? 'Start free trial',
-      href: uc.ctaPrimaryHref ?? '/signup',
+      href: uc.ctaPrimaryHref ?? '/get-started',
     },
     secondaryCta: {
       label: uc.ctaSecondaryText ?? 'Book a demo',

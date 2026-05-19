@@ -44,7 +44,7 @@ export const PlatformPage: GlobalConfig = {
               type: 'group',
               fields: [
                 { name: 'label', type: 'text', defaultValue: 'Start free trial' },
-                { name: 'href', type: 'text', defaultValue: '/signup' },
+                { name: 'href', type: 'text', defaultValue: '/get-started' },
               ],
             },
             {
@@ -169,7 +169,7 @@ export const PlatformPage: GlobalConfig = {
               type: 'group',
               fields: [
                 { name: 'label', type: 'text', defaultValue: 'Start free trial' },
-                { name: 'href', type: 'text', defaultValue: '/signup' },
+                { name: 'href', type: 'text', defaultValue: '/get-started' },
               ],
             },
             {

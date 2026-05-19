@@ -55,7 +55,7 @@ const useCases: UseCaseSeed[] = [
     heroDescription:
       'Automate daily workflows, manage tasks, run missions, and coordinate your team — all from one command center.',
     primaryCtaText: 'Start free trial',
-    primaryCtaHref: '/signup',
+    primaryCtaHref: '/get-started',
     secondaryCtaText: 'See pricing',
     secondaryCtaHref: '/pricing',
     painSectionLabel: "WHAT YOU'RE FACING",
@@ -112,7 +112,7 @@ const useCases: UseCaseSeed[] = [
     ctaHeading: 'Take control of your sales operations',
     ctaSubheading: 'Free for up to 3 users. No credit card required.',
     ctaPrimaryText: 'Start free trial',
-    ctaPrimaryHref: '/signup',
+    ctaPrimaryHref: '/get-started',
     ctaSecondaryText: 'Book a demo',
     ctaSecondaryHref: '/demo',
   },
@@ -125,7 +125,7 @@ const useCases: UseCaseSeed[] = [
     heroDescription:
       "Stop fighting your CRM. Revnator's contact management is built for speed, not for admins.",
     primaryCtaText: 'Start free trial',
-    primaryCtaHref: '/signup',
+    primaryCtaHref: '/get-started',
     secondaryCtaText: 'See pricing',
     secondaryCtaHref: '/pricing',
     painSectionLabel: "WHAT YOU'RE FACING",
@@ -181,7 +181,7 @@ const useCases: UseCaseSeed[] = [
     ctaHeading: "Try a CRM that doesn't fight you",
     ctaSubheading: 'Free forever for up to 100 contacts.',
     ctaPrimaryText: 'Start free trial',
-    ctaPrimaryHref: '/signup',
+    ctaPrimaryHref: '/get-started',
     ctaSecondaryText: 'Book a demo',
     ctaSecondaryHref: '/demo',
   },
@@ -194,7 +194,7 @@ const useCases: UseCaseSeed[] = [
     heroDescription:
       'Forms, sequences, and pipeline — connected end to end. No more leads falling through the cracks.',
     primaryCtaText: 'Start free trial',
-    primaryCtaHref: '/signup',
+    primaryCtaHref: '/get-started',
     secondaryCtaText: 'See pricing',
     secondaryCtaHref: '/pricing',
     painSectionLabel: "WHAT YOU'RE FACING",
@@ -251,7 +251,7 @@ const useCases: UseCaseSeed[] = [
     ctaSubheading:
       'Free for up to 3 users. Forms and sequences included.',
     ctaPrimaryText: 'Start free trial',
-    ctaPrimaryHref: '/signup',
+    ctaPrimaryHref: '/get-started',
     ctaSecondaryText: 'Book a demo',
     ctaSecondaryHref: '/demo',
   },
@@ -264,7 +264,7 @@ const useCases: UseCaseSeed[] = [
     heroDescription:
       'Weighted pipeline forecasting, revenue projections, and sales planning — all driven by real deal data, not guesswork.',
     primaryCtaText: 'Start free trial',
-    primaryCtaHref: '/signup',
+    primaryCtaHref: '/get-started',
     secondaryCtaText: 'See pricing',
     secondaryCtaHref: '/pricing',
     painSectionLabel: "WHAT YOU'RE FACING",
@@ -321,7 +321,7 @@ const useCases: UseCaseSeed[] = [
     ctaSubheading:
       'Free for up to 3 users. Pipeline forecasting included.',
     ctaPrimaryText: 'Start free trial',
-    ctaPrimaryHref: '/signup',
+    ctaPrimaryHref: '/get-started',
     ctaSecondaryText: 'Book a demo',
     ctaSecondaryHref: '/demo',
   },
@@ -334,7 +334,7 @@ const useCases: UseCaseSeed[] = [
     heroDescription:
       'From cold outreach to account expansion — manage the full lifecycle of your B2B relationships.',
     primaryCtaText: 'Start free trial',
-    primaryCtaHref: '/signup',
+    primaryCtaHref: '/get-started',
     secondaryCtaText: 'See pricing',
     secondaryCtaHref: '/pricing',
     painSectionLabel: "WHAT YOU'RE FACING",
@@ -390,7 +390,7 @@ const useCases: UseCaseSeed[] = [
     ctaSubheading:
       'Free for up to 3 users. Account management included.',
     ctaPrimaryText: 'Start free trial',
-    ctaPrimaryHref: '/signup',
+    ctaPrimaryHref: '/get-started',
     ctaSecondaryText: 'Book a demo',
     ctaSecondaryHref: '/demo',
   },

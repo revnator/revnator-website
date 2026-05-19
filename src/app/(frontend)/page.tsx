@@ -35,7 +35,7 @@ export default async function HomePage(): Promise<React.ReactElement> {
       'Everything your sales team needs in one place — contacts, email sequences, deal pipeline, calendar, and analytics. No more switching between five tools.',
     primaryCta: {
       label: page.heroPrimaryCta?.label || 'Start free trial',
-      href: page.heroPrimaryCta?.href || '/signup',
+      href: page.heroPrimaryCta?.href || '/get-started',
     },
     secondaryCta: {
       label: page.heroSecondaryCta?.label || 'Book a demo',
@@ -102,7 +102,7 @@ export default async function HomePage(): Promise<React.ReactElement> {
       'Join the early access program. Free for up to 3 users. No credit card required.',
     primaryCta: {
       label: page.ctaPrimaryCta?.label || 'Start free trial',
-      href: page.ctaPrimaryCta?.href || '/signup',
+      href: page.ctaPrimaryCta?.href || '/get-started',
     },
     secondaryCta: {
       label: page.ctaSecondaryCta?.label || 'Book a demo',

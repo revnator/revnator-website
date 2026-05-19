@@ -58,7 +58,7 @@ async function seed(): Promise<void> {
       heroDescription:
         'Manage prospects, pitch new business, and onboard clients without juggling 5 different tools. Built for agencies that win by being responsive.',
       primaryCtaText: 'Start free trial',
-      primaryCtaHref: '/signup',
+      primaryCtaHref: '/get-started',
       secondaryCtaText: 'See agency case studies',
       secondaryCtaHref: '/resources',
       builtForLabel: 'Trusted by agency teams of all sizes',
@@ -127,7 +127,7 @@ async function seed(): Promise<void> {
       ctaHeading: 'Ready to streamline your agency?',
       ctaSubheading: 'Free for up to 3 users. No credit card. Built for agencies.',
       ctaPrimaryText: 'Start free trial',
-      ctaPrimaryHref: '/signup',
+      ctaPrimaryHref: '/get-started',
       ctaSecondaryText: 'Talk to our team',
       ctaSecondaryHref: '/demo',
     },

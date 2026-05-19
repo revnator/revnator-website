@@ -143,7 +143,7 @@ export const Modules: CollectionConfig = {
             {
               name: 'heroPrimaryCtaHref',
               type: 'text',
-              defaultValue: '/signup',
+              defaultValue: '/get-started',
             },
             {
               name: 'heroSecondaryCtaText',
@@ -254,7 +254,7 @@ export const Modules: CollectionConfig = {
                   name: 'ctaHref',
                   type: 'text',
                   required: true,
-                  defaultValue: '/signup',
+                  defaultValue: '/get-started',
                 },
                 {
                   name: 'image',
@@ -382,7 +382,7 @@ export const Modules: CollectionConfig = {
             {
               name: 'ctaPrimaryHref',
               type: 'text',
-              defaultValue: '/signup',
+              defaultValue: '/get-started',
             },
             {
               name: 'ctaSecondaryText',

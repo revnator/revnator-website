@@ -103,7 +103,7 @@ export function CaseStudyLayout({
             Get similar results for your team
           </p>
           <Link
-            href="/signup"
+            href="/get-started"
             className="mt-4 inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3.5 font-body text-sm font-semibold text-white transition-all hover:bg-primary-dark hover:scale-[1.02] focus:ring-2 focus:ring-primary focus:ring-offset-2"
           >
             Start free trial

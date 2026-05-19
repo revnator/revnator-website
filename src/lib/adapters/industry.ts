@@ -19,7 +19,7 @@ export function toHeroData(ind: Industry): IndustryHeroData {
     description: ind.heroDescription,
     primaryCta: {
       label: ind.primaryCtaText ?? 'Start free trial',
-      href: ind.primaryCtaHref ?? '/signup',
+      href: ind.primaryCtaHref ?? '/get-started',
     },
     secondaryCta: {
       label: ind.secondaryCtaText ?? '',
@@ -104,7 +104,7 @@ export function toCTAData(ind: Industry): IndustryCTAData {
     subheading: ind.ctaSubheading ?? '',
     primaryCta: {
       label: ind.ctaPrimaryText ?? 'Start free trial',
-      href: ind.ctaPrimaryHref ?? '/signup',
+      href: ind.ctaPrimaryHref ?? '/get-started',
     },
     secondaryCta: {
       label: ind.ctaSecondaryText ?? '',

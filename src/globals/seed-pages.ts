@@ -38,7 +38,7 @@ async function seedPages(): Promise<void> {
       heroHeadlineAccent: 'closers',
       heroSubheadline:
         'Everything your sales team needs in one place — contacts, email sequences, deal pipeline, calendar, and analytics. No more switching between five tools.',
-      heroPrimaryCta: { label: 'Start free trial', href: '/signup' },
+      heroPrimaryCta: { label: 'Start free trial', href: '/get-started' },
       heroSecondaryCta: { label: 'Book a demo', href: '/demo' },
       heroTrustLine: 'No credit card required · Free for up to 3 users',
       heroStats: [
@@ -188,7 +188,7 @@ async function seedPages(): Promise<void> {
       ctaHeading: 'Ready to close more deals?',
       ctaSubheading:
         'Join the early access program. Free for up to 3 users. No credit card required.',
-      ctaPrimaryCta: { label: 'Start free trial', href: '/signup' },
+      ctaPrimaryCta: { label: 'Start free trial', href: '/get-started' },
       ctaSecondaryCta: { label: 'Book a demo', href: '/demo' },
     },
   })
@@ -229,7 +229,7 @@ async function seedPages(): Promise<void> {
             { text: 'No calendar booking', included: false },
           ],
           ctaLabel: 'Get started free',
-          ctaHref: '/signup',
+          ctaHref: '/get-started',
           highlighted: false,
         },
         {
@@ -252,7 +252,7 @@ async function seedPages(): Promise<void> {
             { text: 'No team chat', included: false },
           ],
           ctaLabel: 'Start free trial',
-          ctaHref: '/signup',
+          ctaHref: '/get-started',
           highlighted: false,
         },
         {
@@ -276,7 +276,7 @@ async function seedPages(): Promise<void> {
             { text: 'Priority support', included: true },
           ],
           ctaLabel: 'Start free trial',
-          ctaHref: '/signup',
+          ctaHref: '/get-started',
           highlighted: true,
         },
         {
@@ -298,7 +298,7 @@ async function seedPages(): Promise<void> {
             { text: 'SLA guarantee', included: true },
           ],
           ctaLabel: 'Start free trial',
-          ctaHref: '/signup',
+          ctaHref: '/get-started',
           highlighted: false,
         },
       ],
@@ -422,7 +422,7 @@ async function seedPages(): Promise<void> {
       // Final CTA
       ctaHeading: 'Start closing more deals today',
       ctaSubheading: '14-day free trial. No credit card. Cancel anytime.',
-      ctaPrimaryCta: { label: 'Start free trial', href: '/signup' },
+      ctaPrimaryCta: { label: 'Start free trial', href: '/get-started' },
       ctaSecondaryCta: { label: 'Compare plans', href: '#comparison' },
     },
   })
@@ -439,7 +439,7 @@ async function seedPages(): Promise<void> {
       heroHeading: 'The sales OS that replaces your entire stack',
       heroSubheading:
         'Most sales teams juggle 5-7 tools. Revnator gives you everything in one workspace — CRM, sequences, pipeline, calendar, analytics, and AI.',
-      heroPrimaryCta: { label: 'Start free trial', href: '/signup' },
+      heroPrimaryCta: { label: 'Start free trial', href: '/get-started' },
       heroSecondaryCta: { label: 'See pricing', href: '/pricing' },
 
       // Pain Points
@@ -564,7 +564,7 @@ async function seedPages(): Promise<void> {
       // Final CTA
       ctaHeading: 'Ready to simplify your sales stack?',
       ctaSubheading: 'Free for up to 3 users. Set up in 5 minutes.',
-      ctaPrimaryCta: { label: 'Start free trial', href: '/signup' },
+      ctaPrimaryCta: { label: 'Start free trial', href: '/get-started' },
       ctaSecondaryCta: { label: 'Book a demo', href: '/demo' },
     },
   })
@@ -663,7 +663,7 @@ async function seedPages(): Promise<void> {
       // Final CTA
       ctaHeading: 'Join us in building the future of sales',
       ctaSubheading: 'Try Revnator free, or get in touch.',
-      ctaPrimaryCta: { label: 'Start free trial', href: '/signup' },
+      ctaPrimaryCta: { label: 'Start free trial', href: '/get-started' },
       ctaSecondaryCta: { label: 'Contact us', href: '/contact' },
     },
   })
@@ -680,7 +680,7 @@ async function seedPages(): Promise<void> {
       heroHeading: 'Everything your sales team needs. One platform.',
       heroSubheading:
         '9 integrated modules built to work together — no plugins, no integrations, no duct tape.',
-      heroPrimaryCta: { label: 'Start free trial', href: '/signup' },
+      heroPrimaryCta: { label: 'Start free trial', href: '/get-started' },
       heroSecondaryCta: { label: 'Book a demo', href: '/demo' },
 
       // Modules Grid
@@ -712,7 +712,7 @@ async function seedPages(): Promise<void> {
       // Final CTA
       ctaHeading: 'See the full platform in action',
       ctaSubheading: '14-day free trial. No credit card required.',
-      ctaPrimaryCta: { label: 'Start free trial', href: '/signup' },
+      ctaPrimaryCta: { label: 'Start free trial', href: '/get-started' },
       ctaSecondaryCta: { label: 'Book a demo', href: '/demo' },
     },
   })

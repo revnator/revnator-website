@@ -46,7 +46,7 @@ export default async function WhyRevnatorPage(): Promise<React.ReactElement> {
       'Revnator replaces your entire sales stack with one connected workspace.',
     primaryCta: {
       label: page.heroPrimaryCta?.label || 'Start free trial',
-      href: page.heroPrimaryCta?.href || '/signup',
+      href: page.heroPrimaryCta?.href || '/get-started',
     },
     secondaryCta: {
       label: page.heroSecondaryCta?.label || 'See pricing',
@@ -102,7 +102,7 @@ export default async function WhyRevnatorPage(): Promise<React.ReactElement> {
       page.ctaSubheading || 'Start free. No credit card required. Set up in 5 minutes.',
     primaryCta: {
       label: page.ctaPrimaryCta?.label || 'Start free trial',
-      href: page.ctaPrimaryCta?.href || '/signup',
+      href: page.ctaPrimaryCta?.href || '/get-started',
     },
     secondaryCta: {
       label: page.ctaSecondaryCta?.label || 'Compare plans',

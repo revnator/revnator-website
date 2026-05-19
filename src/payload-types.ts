@@ -2029,7 +2029,7 @@ export interface LeadSubmission {
   /**
    * Which form was submitted
    */
-  formType: 'contact' | 'ebook' | 'whitepaper' | 'template' | 'webinar';
+  formType: 'contact' | 'ebook' | 'whitepaper' | 'template' | 'webinar' | 'beta-signup';
   /**
    * The page/resource that generated this submission (e.g., "cold-email-playbook")
    */

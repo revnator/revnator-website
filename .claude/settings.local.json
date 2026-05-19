@@ -4,7 +4,10 @@
       "Bash(npm run:*)",
       "Bash(npx tsc:*)",
       "Bash(npx eslint:*)",
-      "Bash(curl -s http://localhost:3000)"
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(NODE_OPTIONS=--no-deprecation npx tsx -e ' *)",
+      "Bash(grep -vE \"^\\\\[|^\\\\\\(node|Pulling schema|SECURITY|To prepare|If you|See https|major version|libpq|^\\\\s*$\")",
+      "Bash(NODE_OPTIONS=--no-deprecation npx tsx src/scripts/verify-cta-urls.ts)"
     ]
   }
 }

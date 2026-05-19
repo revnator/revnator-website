@@ -275,7 +275,7 @@ export function HeaderClient({
             {header.loginText ?? 'Log in'}
           </Link>
           <Link
-            href={header.primaryCtaHref ?? '/signup'}
+            href={header.primaryCtaHref ?? '/get-started'}
             className={cn(
               'hidden md:inline-block font-body text-sm font-semibold text-white',
               'bg-primary px-5 py-3 rounded-lg',
@@ -401,7 +401,7 @@ export function HeaderClient({
                 {header.loginText ?? 'Log in'}
               </Link>
               <Link
-                href={header.primaryCtaHref ?? '/signup'}
+                href={header.primaryCtaHref ?? '/get-started'}
                 className="font-body text-sm font-semibold text-white text-center bg-primary px-5 py-3 rounded-lg transition-colors duration-150 hover:bg-primary-dark"
                 onClick={() => setMobileMenuOpen(false)}
               >

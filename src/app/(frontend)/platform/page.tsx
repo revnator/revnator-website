@@ -45,7 +45,7 @@ export default async function PlatformPage(): Promise<React.ReactElement> {
       'Every tool your revenue team needs — CRM, outreach, pipeline, calendar, docs, chat, forms, and AI — unified in a single workspace.',
     primaryCta: {
       label: page.heroPrimaryCta?.label || 'Start free trial',
-      href: page.heroPrimaryCta?.href || '/signup',
+      href: page.heroPrimaryCta?.href || '/get-started',
     },
     secondaryCta: {
       label: page.heroSecondaryCta?.label || 'See pricing',
@@ -86,7 +86,7 @@ export default async function PlatformPage(): Promise<React.ReactElement> {
     subheading: page.ctaSubheading || 'Free for up to 3 users. No credit card required.',
     primaryCta: {
       label: page.ctaPrimaryCta?.label || 'Start free trial',
-      href: page.ctaPrimaryCta?.href || '/signup',
+      href: page.ctaPrimaryCta?.href || '/get-started',
     },
     secondaryCta: {
       label: page.ctaSecondaryCta?.label || 'Book a demo',

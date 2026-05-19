@@ -126,7 +126,7 @@ export const PricingPage: GlobalConfig = {
                   name: 'ctaHref',
                   type: 'text',
                   required: true,
-                  defaultValue: '/signup',
+                  defaultValue: '/get-started',
                 },
                 {
                   name: 'highlighted',
@@ -297,7 +297,7 @@ export const PricingPage: GlobalConfig = {
                 {
                   name: 'href',
                   type: 'text',
-                  defaultValue: '/signup',
+                  defaultValue: '/get-started',
                 },
               ],
             },

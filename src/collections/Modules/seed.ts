@@ -80,7 +80,7 @@ const modules: ModuleSeed[] = [
           { text: 'Company and account association' },
         ],
         ctaText: 'Start free trial →',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
       {
         label: 'SEGMENT',
@@ -122,7 +122,7 @@ const modules: ModuleSeed[] = [
           { text: 'Visual lifecycle funnel dashboard' },
         ],
         ctaText: 'Start free trial →',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
     ],
     comparisonHeading: 'Not just another CRM. A sales-first contact system.',
@@ -188,7 +188,7 @@ const modules: ModuleSeed[] = [
           { text: 'Hierarchical account structures' },
         ],
         ctaText: 'Start free trial →',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
       {
         label: 'TRACK',
@@ -268,7 +268,7 @@ const modules: ModuleSeed[] = [
           { text: 'A/B testing for subject lines' },
         ],
         ctaText: 'Start free trial →',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
       {
         label: 'TRACK',
@@ -348,7 +348,7 @@ const modules: ModuleSeed[] = [
           { text: 'Multi-pipeline support' },
         ],
         ctaText: 'Start free trial →',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
       {
         label: 'FORECAST',
@@ -428,7 +428,7 @@ const modules: ModuleSeed[] = [
           { text: 'Team workload visibility' },
         ],
         ctaText: 'Start free trial →',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
       {
         label: 'TRACK',
@@ -508,7 +508,7 @@ const modules: ModuleSeed[] = [
           { text: 'Confirmation and reminder emails' },
         ],
         ctaText: 'Start free trial →',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
       {
         label: 'MANAGE',
@@ -588,7 +588,7 @@ const modules: ModuleSeed[] = [
           { text: '@mention notifications' },
         ],
         ctaText: 'Start free trial →',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
       {
         label: 'CONNECT',
@@ -668,7 +668,7 @@ const modules: ModuleSeed[] = [
           { text: 'Smart lead prioritization' },
         ],
         ctaText: 'Start free trial →',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
       {
         label: 'LEARN',
@@ -748,7 +748,7 @@ const modules: ModuleSeed[] = [
           { text: 'Custom field mapping to CRM' },
         ],
         ctaText: 'Start free trial →',
-        ctaHref: '/signup',
+        ctaHref: '/get-started',
       },
       {
         label: 'ROUTE',

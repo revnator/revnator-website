@@ -110,7 +110,7 @@ export const Footer: GlobalConfig = {
                 {
                   title: 'Get started',
                   links: [
-                    { label: 'Sign up free', href: '/signup' },
+                    { label: 'Sign up free', href: '/get-started' },
                     { label: 'Book a demo', href: '/demo' },
                     { label: 'Login', href: '/login' },
                     { label: 'API Docs', href: '/docs/api/authentication' },

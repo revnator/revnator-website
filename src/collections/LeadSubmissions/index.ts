@@ -25,6 +25,7 @@ export const LeadSubmissions: CollectionConfig = {
         { label: 'Whitepaper', value: 'whitepaper' },
         { label: 'Template', value: 'template' },
         { label: 'Webinar', value: 'webinar' },
+        { label: 'Beta Signup', value: 'beta-signup' },
       ],
       admin: {
         description: 'Which form was submitted',

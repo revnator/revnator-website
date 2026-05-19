@@ -473,7 +473,7 @@ export const Header: GlobalConfig = {
             {
               name: 'primaryCtaHref',
               type: 'text',
-              defaultValue: '/signup',
+              defaultValue: '/get-started',
             },
           ],
         },
