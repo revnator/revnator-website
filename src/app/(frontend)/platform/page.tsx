@@ -17,10 +17,10 @@ export async function generateMetadata(): Promise<Metadata> {
       title: page.meta?.title || 'Platform',
       description:
         page.meta?.description ||
-        'Explore the Revnator platform — 9 integrated modules for contacts, accounts, email, pipeline, calendar, chat, AI, and more.',
+        'Explore the Revnator platform — 12 integrated modules for contacts, accounts, email, pipeline, social media, AI, and more.',
     }
   } catch {
-    return { title: 'Platform', description: 'Explore the Revnator platform — 9 integrated modules for contacts, accounts, email, pipeline, calendar, chat, AI, and more.' }
+    return { title: 'Platform', description: 'Explore the Revnator platform — 12 integrated modules for contacts, accounts, email, pipeline, social media, AI, and more.' }
   }
 }
 
@@ -39,7 +39,7 @@ export default async function PlatformPage(): Promise<React.ReactElement> {
 
   const heroData = {
     badge: page.heroBadge || 'Platform',
-    heading: page.heroHeading || 'One platform. Nine modules. Zero compromises.',
+    heading: page.heroHeading || 'One platform. Twelve modules. Zero compromises.',
     subheading:
       page.heroSubheading ||
       'Every tool your revenue team needs — CRM, outreach, pipeline, calendar, docs, chat, forms, and AI — unified in a single workspace.',

@@ -316,15 +316,18 @@ html[data-theme='light'] {
 }
 
 .blog-prose blockquote {
+  background-color: #F5F3FA;
   border-left: 3px solid #6E33B1;
-  padding-left: 20px;
-  font-style: italic;
-  color: #9b8fad;
+  padding: 16px 20px;
   margin: 24px 0;
+  border-radius: 0 8px 8px 0;
+  color: #2D2640;
+  font-style: normal;
 }
 
 .blog-prose blockquote p {
   color: inherit;
+  margin-bottom: 0;
 }
 
 .blog-prose pre {
@@ -437,15 +440,18 @@ html[data-theme='light'] {
 }
 
 .docs-richtext blockquote {
+  background-color: #F5F3FA;
   border-left: 3px solid #6E33B1;
-  padding-left: 20px;
-  font-style: italic;
-  color: #9b8fad;
+  padding: 16px 20px;
   margin: 24px 0;
+  border-radius: 0 8px 8px 0;
+  color: #2D2640;
+  font-style: normal;
 }
 
 .docs-richtext blockquote p {
   color: inherit;
+  margin-bottom: 0;
 }
 
 .docs-richtext pre {

@@ -7,7 +7,20 @@
       "Bash(curl -s http://localhost:3000)",
       "Bash(NODE_OPTIONS=--no-deprecation npx tsx -e ' *)",
       "Bash(grep -vE \"^\\\\[|^\\\\\\(node|Pulling schema|SECURITY|To prepare|If you|See https|major version|libpq|^\\\\s*$\")",
-      "Bash(NODE_OPTIONS=--no-deprecation npx tsx src/scripts/verify-cta-urls.ts)"
+      "Bash(NODE_OPTIONS=--no-deprecation npx tsx src/scripts/verify-cta-urls.ts)",
+      "Read(//d/9. Developments/3. Revnator/sales-os/**)",
+      "Read(//d/9. Developments/3. Revnator/**)",
+      "Read(//mnt/skills/**)",
+      "Read(//mnt/skills/user/**)",
+      "Read(//c/Users/ADMIN/.claude/**)",
+      "Bash(cat src/lib/api-keys.ts)",
+      "Bash(cat src/lib/api-middleware.ts)",
+      "Bash(npx tsx *)",
+      "Bash(ls src/app/app/social/)",
+      "Bash(ls src/app/app/settings/)",
+      "Bash(ls src/modules/)",
+      "Bash(curl -s http://localhost:3001/__TRACKED_VAR__)",
+      "Bash(curl -s __TRACKED_VAR__/platform)"
     ]
   }
 }

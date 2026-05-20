@@ -31,7 +31,7 @@ export const PlatformPage: GlobalConfig = {
             {
               name: 'heroHeading',
               type: 'text',
-              defaultValue: 'One platform. Nine modules. Zero compromises.',
+              defaultValue: 'One platform. Twelve modules. Zero compromises.',
             },
             {
               name: 'heroSubheading',
