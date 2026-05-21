@@ -141,6 +141,14 @@ export const SiteSettings: GlobalConfig = {
                 description: 'Plausible script source URL (leave blank for default cloud)',
               },
             },
+            {
+              name: 'googleAnalyticsId',
+              type: 'text',
+              admin: {
+                description:
+                  'Google Analytics 4 Measurement ID (e.g., G-XXXXXXXXXX). Leave blank to disable — no GA script will load.',
+              },
+            },
           ],
         },
         {

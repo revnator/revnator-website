@@ -3846,6 +3846,10 @@ export interface SiteSetting {
    * Plausible script source URL (leave blank for default cloud)
    */
   plausibleSrc?: string | null;
+  /**
+   * Google Analytics 4 Measurement ID (e.g., G-XXXXXXXXXX). Leave blank to disable — no GA script will load.
+   */
+  googleAnalyticsId?: string | null;
   contactEmail?: string | null;
   supportEmail?: string | null;
   address?: string | null;
@@ -5116,6 +5120,7 @@ export interface SiteSettingsSelect<T extends boolean = true> {
       };
   plausibleDomain?: T;
   plausibleSrc?: T;
+  googleAnalyticsId?: T;
   contactEmail?: T;
   supportEmail?: T;
   address?: T;

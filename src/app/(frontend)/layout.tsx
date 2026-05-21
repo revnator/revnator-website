@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import type { SiteSetting } from '@/payload-types'
 
 import { Plus_Jakarta_Sans, Inter, DM_Mono } from 'next/font/google'
+import Script from 'next/script'
 import React from 'react'
 
 import { AdminBar } from '@/components/AdminBar'
@@ -57,12 +58,35 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     console.error('Layout Footer fetch failed:', error)
   }
 
+  let siteSettings: SiteSetting | null = null
+  try {
+    siteSettings = (await getCachedGlobal('site-settings', 1)()) as SiteSetting
+  } catch (error) {
+    console.error('Layout site settings fetch failed:', error)
+  }
+
   return (
     <html className={`${jakarta.variable} ${inter.variable} ${dmMono.variable}`} lang="en" suppressHydrationWarning>
       <head>
         <InitTheme />
       </head>
       <body>
+        {siteSettings?.googleAnalyticsId && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${siteSettings.googleAnalyticsId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${siteSettings.googleAnalyticsId}');
+              `}
+            </Script>
+          </>
+        )}
         <Providers>
           <AdminBar
             adminBarProps={{
